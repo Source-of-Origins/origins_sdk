@@ -1,0 +1,5854 @@
+{
+  "$schema": "https://github.com/ash-project/ash_typescript/blob/main/json-manifest-schema.json",
+  "actions": [
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Get the current authenticated user",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_current_user",
+      "get": true,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": true,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "User",
+      "see": [],
+      "types": {
+        "fields": "GetCurrentUserFields",
+        "filterInput": "UserFilterInput",
+        "inferResult": "InferGetCurrentUserResult",
+        "result": "GetCurrentUserResult"
+      },
+      "variantNames": {
+        "channel": "get_current_user_channel",
+        "validation": "validate_get_current_user"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "List all users (super admin only)",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_all_users",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "User",
+      "see": [],
+      "types": {
+        "fields": "ListAllUsersFields",
+        "filterInput": "UserFilterInput",
+        "inferResult": "InferListAllUsersResult",
+        "result": "ListAllUsersResult"
+      },
+      "variantNames": {
+        "channel": "list_all_users_channel",
+        "validation": "validate_list_all_users"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Register a new user via waitlist invitation token.",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "register_with_invitation",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "User",
+      "see": [],
+      "types": {
+        "fields": "RegisterWithInvitationFields",
+        "inferResult": "InferRegisterWithInvitationResult",
+        "input": "RegisterWithInvitationInput",
+        "result": "RegisterWithInvitationResult"
+      },
+      "variantNames": {
+        "channel": "register_with_invitation_channel",
+        "validation": "validate_register_with_invitation"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Register a new user with a email and password.",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "register_with_password",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "User",
+      "see": [],
+      "types": {
+        "fields": "RegisterWithPasswordFields",
+        "inferResult": "InferRegisterWithPasswordResult",
+        "input": "RegisterWithPasswordInput",
+        "result": "RegisterWithPasswordResult"
+      },
+      "variantNames": {
+        "channel": "register_with_password_channel",
+        "validation": "validate_register_with_password"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Attempt to sign in using a email and password.",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "sign_in_with_password",
+      "get": true,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": true,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "User",
+      "see": [],
+      "types": {
+        "fields": "SignInWithPasswordFields",
+        "filterInput": "UserFilterInput",
+        "inferResult": "InferSignInWithPasswordResult",
+        "input": "SignInWithPasswordInput",
+        "result": "SignInWithPasswordResult"
+      },
+      "variantNames": {
+        "channel": "sign_in_with_password_channel",
+        "validation": "validate_sign_in_with_password"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Update an existing WaitlistEntry",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "approve_waitlist_entry",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "WaitlistEntry",
+      "see": [],
+      "types": {
+        "fields": "ApproveWaitlistEntryFields",
+        "inferResult": "InferApproveWaitlistEntryResult",
+        "result": "ApproveWaitlistEntryResult"
+      },
+      "variantNames": {
+        "channel": "approve_waitlist_entry_channel",
+        "validation": "validate_approve_waitlist_entry"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "destroy",
+      "deprecated": false,
+      "description": "Delete a WaitlistEntry",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "delete_waitlist_entry",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "WaitlistEntry",
+      "see": [],
+      "types": {
+        "result": "DeleteWaitlistEntryResult"
+      },
+      "variantNames": {
+        "channel": "delete_waitlist_entry_channel",
+        "validation": "validate_delete_waitlist_entry"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read WaitlistEntry records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_waitlist_entry_by_token",
+      "get": true,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": true,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "WaitlistEntry",
+      "see": [],
+      "types": {
+        "fields": "GetWaitlistEntryByTokenFields",
+        "filterInput": "WaitlistEntryFilterInput",
+        "inferResult": "InferGetWaitlistEntryByTokenResult",
+        "input": "GetWaitlistEntryByTokenInput",
+        "result": "GetWaitlistEntryByTokenResult"
+      },
+      "variantNames": {
+        "channel": "get_waitlist_entry_by_token_channel",
+        "validation": "validate_get_waitlist_entry_by_token"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read WaitlistEntry records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_waitlist_entries",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": true,
+        "required": false,
+        "supported": true
+      },
+      "resource": "WaitlistEntry",
+      "see": [],
+      "types": {
+        "config": "ListWaitlistEntriesConfig",
+        "fields": "ListWaitlistEntriesFields",
+        "filterInput": "WaitlistEntryFilterInput",
+        "inferResult": "InferListWaitlistEntriesResult",
+        "result": "ListWaitlistEntriesResult"
+      },
+      "variantNames": {
+        "channel": "list_waitlist_entries_channel",
+        "validation": "validate_list_waitlist_entries"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Update an existing WaitlistEntry",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "reject_waitlist_entry",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "WaitlistEntry",
+      "see": [],
+      "types": {
+        "fields": "RejectWaitlistEntryFields",
+        "inferResult": "InferRejectWaitlistEntryResult",
+        "result": "RejectWaitlistEntryResult"
+      },
+      "variantNames": {
+        "channel": "reject_waitlist_entry_channel",
+        "validation": "validate_reject_waitlist_entry"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new WaitlistEntry",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "submit_waitlist_entry",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "WaitlistEntry",
+      "see": [],
+      "types": {
+        "fields": "SubmitWaitlistEntryFields",
+        "inferResult": "InferSubmitWaitlistEntryResult",
+        "input": "SubmitWaitlistEntryInput",
+        "result": "SubmitWaitlistEntryResult"
+      },
+      "variantNames": {
+        "channel": "submit_waitlist_entry_channel",
+        "validation": "validate_submit_waitlist_entry"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Public chat with an Origin (brand or avatar) using Letta agents",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "avatar_public_chat",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Conversation",
+      "see": [],
+      "types": {
+        "input": "AvatarPublicChatInput",
+        "result": "AvatarPublicChatResult"
+      },
+      "variantNames": {
+        "channel": "avatar_public_chat_channel",
+        "validation": "validate_avatar_public_chat"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new Conversation",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "create_conversation",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Conversation",
+      "see": [],
+      "types": {
+        "fields": "CreateConversationFields",
+        "inferResult": "InferCreateConversationResult",
+        "input": "CreateConversationInput",
+        "result": "CreateConversationResult"
+      },
+      "variantNames": {
+        "channel": "create_conversation_channel",
+        "validation": "validate_create_conversation"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Find the root conversation for an Origin and user/session (with Letta agent)",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "find_root_conversation",
+      "get": true,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": true,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Conversation",
+      "see": [],
+      "types": {
+        "fields": "FindRootConversationFields",
+        "filterInput": "PublicConversationFilterInput",
+        "inferResult": "InferFindRootConversationResult",
+        "input": "FindRootConversationInput",
+        "result": "FindRootConversationResult"
+      },
+      "variantNames": {
+        "channel": "find_root_conversation_channel",
+        "validation": "validate_find_root_conversation"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Generate contextual chat suggestions based on conversation history",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "generate_chat_suggestions",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Conversation",
+      "see": [],
+      "types": {
+        "input": "GenerateChatSuggestionsInput",
+        "result": "GenerateChatSuggestionsResult"
+      },
+      "variantNames": {
+        "channel": "generate_chat_suggestions_channel",
+        "validation": "validate_generate_chat_suggestions"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Get users with their conversation statistics for a specific Origin",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_brand_users",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Conversation",
+      "see": [],
+      "types": {
+        "input": "GetBrandUsersInput",
+        "result": "GetBrandUsersResult"
+      },
+      "variantNames": {
+        "channel": "get_brand_users_channel",
+        "validation": "validate_get_brand_users"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Get conversation history from Letta agent",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_conversation_history",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Conversation",
+      "see": [],
+      "types": {
+        "input": "GetConversationHistoryInput",
+        "result": "GetConversationHistoryResult"
+      },
+      "variantNames": {
+        "channel": "get_conversation_history_channel",
+        "validation": "validate_get_conversation_history"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read Conversation records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_conversations",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": true,
+        "required": false,
+        "supported": true
+      },
+      "resource": "Conversation",
+      "see": [],
+      "types": {
+        "config": "ListConversationsConfig",
+        "fields": "ListConversationsFields",
+        "filterInput": "PublicConversationFilterInput",
+        "inferResult": "InferListConversationsResult",
+        "result": "ListConversationsResult"
+      },
+      "variantNames": {
+        "channel": "list_conversations_channel",
+        "validation": "validate_list_conversations"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read Conversation records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_my_conversations",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Conversation",
+      "see": [],
+      "types": {
+        "fields": "ListMyConversationsFields",
+        "filterInput": "PublicConversationFilterInput",
+        "inferResult": "InferListMyConversationsResult",
+        "input": "ListMyConversationsInput",
+        "result": "ListMyConversationsResult"
+      },
+      "variantNames": {
+        "channel": "list_my_conversations_channel",
+        "validation": "validate_list_my_conversations"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Preview chat for testing brand/avatar Origin configuration",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "preview_chat",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Conversation",
+      "see": [],
+      "types": {
+        "input": "PreviewChatInput",
+        "result": "PreviewChatResult"
+      },
+      "variantNames": {
+        "channel": "preview_chat_channel",
+        "validation": "validate_preview_chat"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Update an existing Conversation",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "update_conversation",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Conversation",
+      "see": [],
+      "types": {
+        "fields": "UpdateConversationFields",
+        "inferResult": "InferUpdateConversationResult",
+        "input": "UpdateConversationInput",
+        "result": "UpdateConversationResult"
+      },
+      "variantNames": {
+        "channel": "update_conversation_channel",
+        "validation": "validate_update_conversation"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Generate a presigned URL for accessing a storage file",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "presign_storage_url",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "MessageAttachment",
+      "see": [],
+      "types": {
+        "input": "PresignStorageUrlInput",
+        "result": "PresignStorageUrlResult"
+      },
+      "variantNames": {
+        "channel": "presign_storage_url_channel",
+        "validation": "validate_presign_storage_url"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Upload a file attachment for a chat message",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "upload_chat_attachment",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "MessageAttachment",
+      "see": [],
+      "types": {
+        "input": "UploadChatAttachmentInput",
+        "result": "UploadChatAttachmentResult"
+      },
+      "variantNames": {
+        "channel": "upload_chat_attachment_channel",
+        "validation": "validate_upload_chat_attachment"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new ExpertPage",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "create_expert_page",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "ExpertPage",
+      "see": [],
+      "types": {
+        "fields": "CreateExpertPageFields",
+        "inferResult": "InferCreateExpertPageResult",
+        "input": "CreateExpertPageInput",
+        "result": "CreateExpertPageResult"
+      },
+      "variantNames": {
+        "channel": "create_expert_page_channel",
+        "validation": "validate_create_expert_page"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read ExpertPage records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_expert_page",
+      "get": true,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": true,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "ExpertPage",
+      "see": [],
+      "types": {
+        "fields": "GetExpertPageFields",
+        "filterInput": "ExpertPageFilterInput",
+        "inferResult": "InferGetExpertPageResult",
+        "input": "GetExpertPageInput",
+        "result": "GetExpertPageResult"
+      },
+      "variantNames": {
+        "channel": "get_expert_page_channel",
+        "validation": "validate_get_expert_page"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read ExpertPage records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_expert_pages_for_origin",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "ExpertPage",
+      "see": [],
+      "types": {
+        "fields": "ListExpertPagesForOriginFields",
+        "filterInput": "ExpertPageFilterInput",
+        "inferResult": "InferListExpertPagesForOriginResult",
+        "input": "ListExpertPagesForOriginInput",
+        "result": "ListExpertPagesForOriginResult"
+      },
+      "variantNames": {
+        "channel": "list_expert_pages_for_origin_channel",
+        "validation": "validate_list_expert_pages_for_origin"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Execute generic action on ExpertPage",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "parse_app_blocks",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "ExpertPage",
+      "see": [],
+      "types": {
+        "input": "ParseAppBlocksInput",
+        "result": "ParseAppBlocksResult"
+      },
+      "variantNames": {
+        "channel": "parse_app_blocks_channel",
+        "validation": "validate_parse_app_blocks"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Execute generic action on ExpertPage",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "parse_assessment_blocks",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "ExpertPage",
+      "see": [],
+      "types": {
+        "input": "ParseAssessmentBlocksInput",
+        "result": "ParseAssessmentBlocksResult"
+      },
+      "variantNames": {
+        "channel": "parse_assessment_blocks_channel",
+        "validation": "validate_parse_assessment_blocks"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Execute generic action on ExpertPage",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "parse_expert_blocks",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "ExpertPage",
+      "see": [],
+      "types": {
+        "input": "ParseExpertBlocksInput",
+        "result": "ParseExpertBlocksResult"
+      },
+      "variantNames": {
+        "channel": "parse_expert_blocks_channel",
+        "validation": "validate_parse_expert_blocks"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Restore content from a paper trail version snapshot",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "restore_expert_page_version",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "ExpertPage",
+      "see": [],
+      "types": {
+        "fields": "RestoreExpertPageVersionFields",
+        "inferResult": "InferRestoreExpertPageVersionResult",
+        "input": "RestoreExpertPageVersionInput",
+        "result": "RestoreExpertPageVersionResult"
+      },
+      "variantNames": {
+        "channel": "restore_expert_page_version_channel",
+        "validation": "validate_restore_expert_page_version"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Send a chat message to the expert page's persistent Letta agent",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "send_expert_chat_message",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "ExpertPage",
+      "see": [],
+      "types": {
+        "input": "SendExpertChatMessageInput",
+        "result": "SendExpertChatMessageResult"
+      },
+      "variantNames": {
+        "channel": "send_expert_chat_message_channel",
+        "validation": "validate_send_expert_chat_message"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Update an existing ExpertPage",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "update_expert_page",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "ExpertPage",
+      "see": [],
+      "types": {
+        "fields": "UpdateExpertPageFields",
+        "inferResult": "InferUpdateExpertPageResult",
+        "input": "UpdateExpertPageInput",
+        "result": "UpdateExpertPageResult"
+      },
+      "variantNames": {
+        "channel": "update_expert_page_channel",
+        "validation": "validate_update_expert_page"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read Version records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_expert_page_versions",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": true,
+        "required": false,
+        "supported": true
+      },
+      "resource": "Version",
+      "see": [],
+      "types": {
+        "config": "ListExpertPageVersionsConfig",
+        "fields": "ListExpertPageVersionsFields",
+        "filterInput": "ExpertPageVersionFilterInput",
+        "inferResult": "InferListExpertPageVersionsResult",
+        "result": "ListExpertPageVersionsResult"
+      },
+      "variantNames": {
+        "channel": "list_expert_page_versions_channel",
+        "validation": "validate_list_expert_page_versions"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new ExpertPageLibrary",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "attach_library_to_expert_page",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "ExpertPageLibrary",
+      "see": [],
+      "types": {
+        "fields": "AttachLibraryToExpertPageFields",
+        "inferResult": "InferAttachLibraryToExpertPageResult",
+        "input": "AttachLibraryToExpertPageInput",
+        "result": "AttachLibraryToExpertPageResult"
+      },
+      "variantNames": {
+        "channel": "attach_library_to_expert_page_channel",
+        "validation": "validate_attach_library_to_expert_page"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "destroy",
+      "deprecated": false,
+      "description": "Delete a ExpertPageLibrary",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "detach_library_from_expert_page",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "ExpertPageLibrary",
+      "see": [],
+      "types": {
+        "result": "DetachLibraryFromExpertPageResult"
+      },
+      "variantNames": {
+        "channel": "detach_library_from_expert_page_channel",
+        "validation": "validate_detach_library_from_expert_page"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read ExpertPageLibrary records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_expert_page_libraries",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": true,
+        "required": false,
+        "supported": true
+      },
+      "resource": "ExpertPageLibrary",
+      "see": [],
+      "types": {
+        "config": "ListExpertPageLibrariesConfig",
+        "fields": "ListExpertPageLibrariesFields",
+        "filterInput": "ExpertPageLibraryFilterInput",
+        "inferResult": "InferListExpertPageLibrariesResult",
+        "result": "ListExpertPageLibrariesResult"
+      },
+      "variantNames": {
+        "channel": "list_expert_page_libraries_channel",
+        "validation": "validate_list_expert_page_libraries"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "All libraries attached to a given expert page.",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_libraries_for_expert_page",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "ExpertPageLibrary",
+      "see": [],
+      "types": {
+        "fields": "ListLibrariesForExpertPageFields",
+        "filterInput": "ExpertPageLibraryFilterInput",
+        "inferResult": "InferListLibrariesForExpertPageResult",
+        "input": "ListLibrariesForExpertPageInput",
+        "result": "ListLibrariesForExpertPageResult"
+      },
+      "variantNames": {
+        "channel": "list_libraries_for_expert_page_channel",
+        "validation": "validate_list_libraries_for_expert_page"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new FeatureFlag",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "create_feature_flag",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "FeatureFlag",
+      "see": [],
+      "types": {
+        "fields": "CreateFeatureFlagFields",
+        "inferResult": "InferCreateFeatureFlagResult",
+        "input": "CreateFeatureFlagInput",
+        "result": "CreateFeatureFlagResult"
+      },
+      "variantNames": {
+        "channel": "create_feature_flag_channel",
+        "validation": "validate_create_feature_flag"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "destroy",
+      "deprecated": false,
+      "description": "Delete a FeatureFlag",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "delete_feature_flag",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "FeatureFlag",
+      "see": [],
+      "types": {
+        "result": "DeleteFeatureFlagResult"
+      },
+      "variantNames": {
+        "channel": "delete_feature_flag_channel",
+        "validation": "validate_delete_feature_flag"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read FeatureFlag records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_feature_flags",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "FeatureFlag",
+      "see": [],
+      "types": {
+        "fields": "ListFeatureFlagsFields",
+        "filterInput": "FeatureFlagFilterInput",
+        "inferResult": "InferListFeatureFlagsResult",
+        "result": "ListFeatureFlagsResult"
+      },
+      "variantNames": {
+        "channel": "list_feature_flags_channel",
+        "validation": "validate_list_feature_flags"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Update an existing FeatureFlag",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "update_feature_flag",
+      "get": false,
+      "input": "optional",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "FeatureFlag",
+      "see": [],
+      "types": {
+        "fields": "UpdateFeatureFlagFields",
+        "inferResult": "InferUpdateFeatureFlagResult",
+        "input": "UpdateFeatureFlagInput",
+        "result": "UpdateFeatureFlagResult"
+      },
+      "variantNames": {
+        "channel": "update_feature_flag_channel",
+        "validation": "validate_update_feature_flag"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new Feedback",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "create_feedback",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Feedback",
+      "see": [],
+      "types": {
+        "fields": "CreateFeedbackFields",
+        "inferResult": "InferCreateFeedbackResult",
+        "input": "CreateFeedbackInput",
+        "result": "CreateFeedbackResult"
+      },
+      "variantNames": {
+        "channel": "create_feedback_channel",
+        "validation": "validate_create_feedback"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read Feedback records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_feedback",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": true,
+        "required": false,
+        "supported": true
+      },
+      "resource": "Feedback",
+      "see": [],
+      "types": {
+        "config": "ListFeedbackConfig",
+        "fields": "ListFeedbackFields",
+        "filterInput": "FeedbackFilterInput",
+        "inferResult": "InferListFeedbackResult",
+        "result": "ListFeedbackResult"
+      },
+      "variantNames": {
+        "channel": "list_feedback_channel",
+        "validation": "validate_list_feedback"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Update an existing Feedback",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "update_feedback",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Feedback",
+      "see": [],
+      "types": {
+        "fields": "UpdateFeedbackFields",
+        "inferResult": "InferUpdateFeedbackResult",
+        "input": "UpdateFeedbackInput",
+        "result": "UpdateFeedbackResult"
+      },
+      "variantNames": {
+        "channel": "update_feedback_channel",
+        "validation": "validate_update_feedback"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new HomepageCard",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "create_homepage_card",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "HomepageCard",
+      "see": [],
+      "types": {
+        "fields": "CreateHomepageCardFields",
+        "inferResult": "InferCreateHomepageCardResult",
+        "input": "CreateHomepageCardInput",
+        "result": "CreateHomepageCardResult"
+      },
+      "variantNames": {
+        "channel": "create_homepage_card_channel",
+        "validation": "validate_create_homepage_card"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "destroy",
+      "deprecated": false,
+      "description": "Delete a HomepageCard",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "delete_homepage_card",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "HomepageCard",
+      "see": [],
+      "types": {
+        "result": "DeleteHomepageCardResult"
+      },
+      "variantNames": {
+        "channel": "delete_homepage_card_channel",
+        "validation": "validate_delete_homepage_card"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read HomepageCard records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_homepage_cards",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "HomepageCard",
+      "see": [],
+      "types": {
+        "fields": "ListHomepageCardsFields",
+        "filterInput": "HomepageCardFilterInput",
+        "inferResult": "InferListHomepageCardsResult",
+        "result": "ListHomepageCardsResult"
+      },
+      "variantNames": {
+        "channel": "list_homepage_cards_channel",
+        "validation": "validate_list_homepage_cards"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Update an existing HomepageCard",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "update_homepage_card",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "HomepageCard",
+      "see": [],
+      "types": {
+        "fields": "UpdateHomepageCardFields",
+        "inferResult": "InferUpdateHomepageCardResult",
+        "input": "UpdateHomepageCardInput",
+        "result": "UpdateHomepageCardResult"
+      },
+      "variantNames": {
+        "channel": "update_homepage_card_channel",
+        "validation": "validate_update_homepage_card"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new ChatConfig",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "create_chat_config",
+      "get": false,
+      "input": "optional",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "ChatConfig",
+      "see": [],
+      "types": {
+        "fields": "CreateChatConfigFields",
+        "inferResult": "InferCreateChatConfigResult",
+        "input": "CreateChatConfigInput",
+        "result": "CreateChatConfigResult"
+      },
+      "variantNames": {
+        "channel": "create_chat_config_channel",
+        "validation": "validate_create_chat_config"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read ChatConfig records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_chat_configs",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": true,
+        "required": false,
+        "supported": true
+      },
+      "resource": "ChatConfig",
+      "see": [],
+      "types": {
+        "config": "ListChatConfigsConfig",
+        "fields": "ListChatConfigsFields",
+        "filterInput": "ChatConfigFilterInput",
+        "inferResult": "InferListChatConfigsResult",
+        "result": "ListChatConfigsResult"
+      },
+      "variantNames": {
+        "channel": "list_chat_configs_channel",
+        "validation": "validate_list_chat_configs"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Update an existing ChatConfig",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "update_chat_config",
+      "get": false,
+      "input": "optional",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "ChatConfig",
+      "see": [],
+      "types": {
+        "fields": "UpdateChatConfigFields",
+        "inferResult": "InferUpdateChatConfigResult",
+        "input": "UpdateChatConfigInput",
+        "result": "UpdateChatConfigResult"
+      },
+      "variantNames": {
+        "channel": "update_chat_config_channel",
+        "validation": "validate_update_chat_config"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new OriginAsset",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "create_origin_asset",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginAsset",
+      "see": [],
+      "types": {
+        "fields": "CreateOriginAssetFields",
+        "inferResult": "InferCreateOriginAssetResult",
+        "input": "CreateOriginAssetInput",
+        "result": "CreateOriginAssetResult"
+      },
+      "variantNames": {
+        "channel": "create_origin_asset_channel",
+        "validation": "validate_create_origin_asset"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Execute generic action on OriginAsset",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "edit_asset_image",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginAsset",
+      "see": [],
+      "types": {
+        "input": "EditAssetImageInput",
+        "result": "EditAssetImageResult"
+      },
+      "variantNames": {
+        "channel": "edit_asset_image_channel",
+        "validation": "validate_edit_asset_image"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read OriginAsset records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_origin_assets",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": false,
+        "required": false,
+        "supported": true
+      },
+      "resource": "OriginAsset",
+      "see": [],
+      "types": {
+        "config": "ListOriginAssetsConfig",
+        "fields": "ListOriginAssetsFields",
+        "filterInput": "OriginAssetFilterInput",
+        "inferResult": "InferListOriginAssetsResult",
+        "result": "ListOriginAssetsResult"
+      },
+      "variantNames": {
+        "channel": "list_origin_assets_channel",
+        "validation": "validate_list_origin_assets"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Update an existing OriginAsset",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "update_origin_asset",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginAsset",
+      "see": [],
+      "types": {
+        "fields": "UpdateOriginAssetFields",
+        "inferResult": "InferUpdateOriginAssetResult",
+        "input": "UpdateOriginAssetInput",
+        "result": "UpdateOriginAssetResult"
+      },
+      "variantNames": {
+        "channel": "update_origin_asset_channel",
+        "validation": "validate_update_origin_asset"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Clone a voice using Cartesia API",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "clone_cartesia_voice",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntity",
+      "see": [],
+      "types": {
+        "input": "CloneCartesiaVoiceInput",
+        "result": "CloneCartesiaVoiceResult"
+      },
+      "variantNames": {
+        "channel": "clone_cartesia_voice_channel",
+        "validation": "validate_clone_cartesia_voice"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new OriginEntity",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "create_origin_entity",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntity",
+      "see": [],
+      "types": {
+        "fields": "CreateOriginEntityFields",
+        "inferResult": "InferCreateOriginEntityResult",
+        "input": "CreateOriginEntityInput",
+        "result": "CreateOriginEntityResult"
+      },
+      "variantNames": {
+        "channel": "create_origin_entity_channel",
+        "validation": "validate_create_origin_entity"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "destroy",
+      "deprecated": false,
+      "description": "Delete a OriginEntity",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "delete_origin_entity",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntity",
+      "see": [],
+      "types": {
+        "result": "DeleteOriginEntityResult"
+      },
+      "variantNames": {
+        "channel": "delete_origin_entity_channel",
+        "validation": "validate_delete_origin_entity"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Combined: scrape website + discover links + structure profile in one step",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "discover_and_extract_profile",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntity",
+      "see": [],
+      "types": {
+        "input": "DiscoverAndExtractProfileInput",
+        "result": "DiscoverAndExtractProfileResult"
+      },
+      "variantNames": {
+        "channel": "discover_and_extract_profile_channel",
+        "validation": "validate_discover_and_extract_profile"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Discover social media links and official website for an entity using AI with confidence scores",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "discover_entity_links",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntity",
+      "see": [],
+      "types": {
+        "input": "DiscoverEntityLinksInput",
+        "result": "DiscoverEntityLinksResult"
+      },
+      "variantNames": {
+        "channel": "discover_entity_links_channel",
+        "validation": "validate_discover_entity_links"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Generate or enhance a profile description using AI",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "generate_profile_description",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntity",
+      "see": [],
+      "types": {
+        "input": "GenerateProfileDescriptionInput",
+        "result": "GenerateProfileDescriptionResult"
+      },
+      "variantNames": {
+        "channel": "generate_profile_description_channel",
+        "validation": "validate_generate_profile_description"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Generate AI soul configuration (personality, purpose, speaking style, etc.)",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "generate_soul_config",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntity",
+      "see": [],
+      "types": {
+        "input": "GenerateSoulConfigInput",
+        "result": "GenerateSoulConfigResult"
+      },
+      "variantNames": {
+        "channel": "generate_soul_config_channel",
+        "validation": "validate_generate_soul_config"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read OriginEntity records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_origin_entity",
+      "get": true,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": true,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntity",
+      "see": [],
+      "types": {
+        "fields": "GetOriginEntityFields",
+        "filterInput": "OriginEntityFilterInput",
+        "inferResult": "InferGetOriginEntityResult",
+        "input": "GetOriginEntityInput",
+        "result": "GetOriginEntityResult"
+      },
+      "variantNames": {
+        "channel": "get_origin_entity_channel",
+        "validation": "validate_get_origin_entity"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read OriginEntity records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_origin_entity_by_slug",
+      "get": true,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": true,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntity",
+      "see": [],
+      "types": {
+        "fields": "GetOriginEntityBySlugFields",
+        "filterInput": "OriginEntityFilterInput",
+        "inferResult": "InferGetOriginEntityBySlugResult",
+        "input": "GetOriginEntityBySlugInput",
+        "result": "GetOriginEntityBySlugResult"
+      },
+      "variantNames": {
+        "channel": "get_origin_entity_by_slug_channel",
+        "validation": "validate_get_origin_entity_by_slug"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Execute generic action on OriginEntity",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_cartesia_voices",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntity",
+      "see": [],
+      "types": {
+        "result": "ListCartesiaVoicesResult"
+      },
+      "variantNames": {
+        "channel": "list_cartesia_voices_channel",
+        "validation": "validate_list_cartesia_voices"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read OriginEntity records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_origin_entities",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": false,
+        "required": false,
+        "supported": true
+      },
+      "resource": "OriginEntity",
+      "see": [],
+      "types": {
+        "config": "ListOriginEntitiesConfig",
+        "fields": "ListOriginEntitiesFields",
+        "filterInput": "OriginEntityFilterInput",
+        "inferResult": "InferListOriginEntitiesResult",
+        "result": "ListOriginEntitiesResult"
+      },
+      "variantNames": {
+        "channel": "list_origin_entities_channel",
+        "validation": "validate_list_origin_entities"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "List Origins accessible to the current user (direct membership or ancestor membership)",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_origin_entities_for_user",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": false,
+        "required": false,
+        "supported": true
+      },
+      "resource": "OriginEntity",
+      "see": [],
+      "types": {
+        "config": "ListOriginEntitiesForUserConfig",
+        "fields": "ListOriginEntitiesForUserFields",
+        "filterInput": "OriginEntityFilterInput",
+        "inferResult": "InferListOriginEntitiesForUserResult",
+        "result": "ListOriginEntitiesForUserResult"
+      },
+      "variantNames": {
+        "channel": "list_origin_entities_for_user_channel",
+        "validation": "validate_list_origin_entities_for_user"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "List only public Origins",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_public_origin_entities",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": false,
+        "required": false,
+        "supported": true
+      },
+      "resource": "OriginEntity",
+      "see": [],
+      "types": {
+        "config": "ListPublicOriginEntitiesConfig",
+        "fields": "ListPublicOriginEntitiesFields",
+        "filterInput": "OriginEntityFilterInput",
+        "inferResult": "InferListPublicOriginEntitiesResult",
+        "result": "ListPublicOriginEntitiesResult"
+      },
+      "variantNames": {
+        "channel": "list_public_origin_entities_channel",
+        "validation": "validate_list_public_origin_entities"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Scrape and extract content from a website URL",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "scrape_website_content",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntity",
+      "see": [],
+      "types": {
+        "fields": "ScrapeWebsiteContentFields",
+        "inferResult": "InferScrapeWebsiteContentResult",
+        "input": "ScrapeWebsiteContentInput",
+        "result": "ScrapeWebsiteContentResult"
+      },
+      "variantNames": {
+        "channel": "scrape_website_content_channel",
+        "validation": "validate_scrape_website_content"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Transcribe audio data to text",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "speech_to_text",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntity",
+      "see": [],
+      "types": {
+        "input": "SpeechToTextInput",
+        "result": "SpeechToTextResult"
+      },
+      "variantNames": {
+        "channel": "speech_to_text_channel",
+        "validation": "validate_speech_to_text"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Generate speech from text using Cartesia API",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "text_to_speech",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntity",
+      "see": [],
+      "types": {
+        "input": "TextToSpeechInput",
+        "result": "TextToSpeechResult"
+      },
+      "variantNames": {
+        "channel": "text_to_speech_channel",
+        "validation": "validate_text_to_speech"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Update an existing OriginEntity",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "update_origin_entity",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntity",
+      "see": [],
+      "types": {
+        "fields": "UpdateOriginEntityFields",
+        "inferResult": "InferUpdateOriginEntityResult",
+        "input": "UpdateOriginEntityInput",
+        "result": "UpdateOriginEntityResult"
+      },
+      "variantNames": {
+        "channel": "update_origin_entity_channel",
+        "validation": "validate_update_origin_entity"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Update profile config without triggering Letta folder provisioning",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "update_origin_entity_profile_config",
+      "get": false,
+      "input": "optional",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntity",
+      "see": [],
+      "types": {
+        "fields": "UpdateOriginEntityProfileConfigFields",
+        "inferResult": "InferUpdateOriginEntityProfileConfigResult",
+        "input": "UpdateOriginEntityProfileConfigInput",
+        "result": "UpdateOriginEntityProfileConfigResult"
+      },
+      "variantNames": {
+        "channel": "update_origin_entity_profile_config_channel",
+        "validation": "validate_update_origin_entity_profile_config"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Accept an invitation",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "accept_membership_invitation",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntityMembership",
+      "see": [],
+      "types": {
+        "fields": "AcceptMembershipInvitationFields",
+        "inferResult": "InferAcceptMembershipInvitationResult",
+        "input": "AcceptMembershipInvitationInput",
+        "result": "AcceptMembershipInvitationResult"
+      },
+      "variantNames": {
+        "channel": "accept_membership_invitation_channel",
+        "validation": "validate_accept_membership_invitation"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Activate a suspended membership",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "activate_membership",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntityMembership",
+      "see": [],
+      "types": {
+        "fields": "ActivateMembershipFields",
+        "inferResult": "InferActivateMembershipResult",
+        "result": "ActivateMembershipResult"
+      },
+      "variantNames": {
+        "channel": "activate_membership_channel",
+        "validation": "validate_activate_membership"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new OriginEntityMembership",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "create_origin_entity_membership",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntityMembership",
+      "see": [],
+      "types": {
+        "fields": "CreateOriginEntityMembershipFields",
+        "inferResult": "InferCreateOriginEntityMembershipResult",
+        "input": "CreateOriginEntityMembershipInput",
+        "result": "CreateOriginEntityMembershipResult"
+      },
+      "variantNames": {
+        "channel": "create_origin_entity_membership_channel",
+        "validation": "validate_create_origin_entity_membership"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "destroy",
+      "deprecated": false,
+      "description": "Delete a OriginEntityMembership",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "delete_origin_entity_membership",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntityMembership",
+      "see": [],
+      "types": {
+        "result": "DeleteOriginEntityMembershipResult"
+      },
+      "variantNames": {
+        "channel": "delete_origin_entity_membership_channel",
+        "validation": "validate_delete_origin_entity_membership"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Get memberships inherited from any ancestor Origin (excluding self)",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_inherited_memberships",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntityMembership",
+      "see": [],
+      "types": {
+        "fields": "GetInheritedMembershipsFields",
+        "filterInput": "OriginEntityMembershipFilterInput",
+        "inferResult": "InferGetInheritedMembershipsResult",
+        "input": "GetInheritedMembershipsInput",
+        "result": "GetInheritedMembershipsResult"
+      },
+      "variantNames": {
+        "channel": "get_inherited_memberships_channel",
+        "validation": "validate_get_inherited_memberships"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read OriginEntityMembership records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_membership_by_token",
+      "get": true,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": true,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntityMembership",
+      "see": [],
+      "types": {
+        "fields": "GetMembershipByTokenFields",
+        "filterInput": "OriginEntityMembershipFilterInput",
+        "inferResult": "InferGetMembershipByTokenResult",
+        "input": "GetMembershipByTokenInput",
+        "result": "GetMembershipByTokenResult"
+      },
+      "variantNames": {
+        "channel": "get_membership_by_token_channel",
+        "validation": "validate_get_membership_by_token"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "List memberships for an Origin, including memberships on any ancestor (cascading down)",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_memberships_for_origin",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntityMembership",
+      "see": [],
+      "types": {
+        "fields": "GetMembershipsForOriginFields",
+        "filterInput": "OriginEntityMembershipFilterInput",
+        "inferResult": "InferGetMembershipsForOriginResult",
+        "input": "GetMembershipsForOriginInput",
+        "result": "GetMembershipsForOriginResult"
+      },
+      "variantNames": {
+        "channel": "get_memberships_for_origin_channel",
+        "validation": "validate_get_memberships_for_origin"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read OriginEntityMembership records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_memberships_for_user",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntityMembership",
+      "see": [],
+      "types": {
+        "fields": "GetMembershipsForUserFields",
+        "filterInput": "OriginEntityMembershipFilterInput",
+        "inferResult": "InferGetMembershipsForUserResult",
+        "input": "GetMembershipsForUserInput",
+        "result": "GetMembershipsForUserResult"
+      },
+      "variantNames": {
+        "channel": "get_memberships_for_user_channel",
+        "validation": "validate_get_memberships_for_user"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read OriginEntityMembership records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_origin_entity_membership",
+      "get": true,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": true,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntityMembership",
+      "see": [],
+      "types": {
+        "fields": "GetOriginEntityMembershipFields",
+        "filterInput": "OriginEntityMembershipFilterInput",
+        "inferResult": "InferGetOriginEntityMembershipResult",
+        "input": "GetOriginEntityMembershipInput",
+        "result": "GetOriginEntityMembershipResult"
+      },
+      "variantNames": {
+        "channel": "get_origin_entity_membership_channel",
+        "validation": "validate_get_origin_entity_membership"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read OriginEntityMembership records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_pending_memberships",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntityMembership",
+      "see": [],
+      "types": {
+        "fields": "GetPendingMembershipsFields",
+        "filterInput": "OriginEntityMembershipFilterInput",
+        "inferResult": "InferGetPendingMembershipsResult",
+        "input": "GetPendingMembershipsInput",
+        "result": "GetPendingMembershipsResult"
+      },
+      "variantNames": {
+        "channel": "get_pending_memberships_channel",
+        "validation": "validate_get_pending_memberships"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Invite a user to an Origin by email",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "invite_to_origin",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntityMembership",
+      "see": [],
+      "types": {
+        "fields": "InviteToOriginFields",
+        "inferResult": "InferInviteToOriginResult",
+        "input": "InviteToOriginInput",
+        "result": "InviteToOriginResult"
+      },
+      "variantNames": {
+        "channel": "invite_to_origin_channel",
+        "validation": "validate_invite_to_origin"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read OriginEntityMembership records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_origin_entity_memberships",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": true,
+        "required": false,
+        "supported": true
+      },
+      "resource": "OriginEntityMembership",
+      "see": [],
+      "types": {
+        "config": "ListOriginEntityMembershipsConfig",
+        "fields": "ListOriginEntityMembershipsFields",
+        "filterInput": "OriginEntityMembershipFilterInput",
+        "inferResult": "InferListOriginEntityMembershipsResult",
+        "result": "ListOriginEntityMembershipsResult"
+      },
+      "variantNames": {
+        "channel": "list_origin_entity_memberships_channel",
+        "validation": "validate_list_origin_entity_memberships"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Suspend a membership",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "suspend_membership",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntityMembership",
+      "see": [],
+      "types": {
+        "fields": "SuspendMembershipFields",
+        "inferResult": "InferSuspendMembershipResult",
+        "result": "SuspendMembershipResult"
+      },
+      "variantNames": {
+        "channel": "suspend_membership_channel",
+        "validation": "validate_suspend_membership"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Update an existing OriginEntityMembership",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "update_origin_entity_membership",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntityMembership",
+      "see": [],
+      "types": {
+        "fields": "UpdateOriginEntityMembershipFields",
+        "inferResult": "InferUpdateOriginEntityMembershipResult",
+        "input": "UpdateOriginEntityMembershipInput",
+        "result": "UpdateOriginEntityMembershipResult"
+      },
+      "variantNames": {
+        "channel": "update_origin_entity_membership_channel",
+        "validation": "validate_update_origin_entity_membership"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new PromptContext",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "create_prompt_context",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "PromptContext",
+      "see": [],
+      "types": {
+        "fields": "CreatePromptContextFields",
+        "inferResult": "InferCreatePromptContextResult",
+        "input": "CreatePromptContextInput",
+        "result": "CreatePromptContextResult"
+      },
+      "variantNames": {
+        "channel": "create_prompt_context_channel",
+        "validation": "validate_create_prompt_context"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "destroy",
+      "deprecated": false,
+      "description": "Delete a PromptContext",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "delete_prompt_context",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "PromptContext",
+      "see": [],
+      "types": {
+        "result": "DeletePromptContextResult"
+      },
+      "variantNames": {
+        "channel": "delete_prompt_context_channel",
+        "validation": "validate_delete_prompt_context"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Execute generic action on PromptContext",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_prompt_context_public_title",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "PromptContext",
+      "see": [],
+      "types": {
+        "input": "GetPromptContextPublicTitleInput",
+        "result": "GetPromptContextPublicTitleResult"
+      },
+      "variantNames": {
+        "channel": "get_prompt_context_public_title_channel",
+        "validation": "validate_get_prompt_context_public_title"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read PromptContext records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_prompt_contexts_for_origin",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "PromptContext",
+      "see": [],
+      "types": {
+        "fields": "ListPromptContextsForOriginFields",
+        "filterInput": "PromptContextFilterInput",
+        "inferResult": "InferListPromptContextsForOriginResult",
+        "input": "ListPromptContextsForOriginInput",
+        "result": "ListPromptContextsForOriginResult"
+      },
+      "variantNames": {
+        "channel": "list_prompt_contexts_for_origin_channel",
+        "validation": "validate_list_prompt_contexts_for_origin"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Update an existing PromptContext",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "update_prompt_context",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "PromptContext",
+      "see": [],
+      "types": {
+        "fields": "UpdatePromptContextFields",
+        "inferResult": "InferUpdatePromptContextResult",
+        "input": "UpdatePromptContextInput",
+        "result": "UpdatePromptContextResult"
+      },
+      "variantNames": {
+        "channel": "update_prompt_context_channel",
+        "validation": "validate_update_prompt_context"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new PromptTool",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "create_prompt_tool",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "PromptTool",
+      "see": [],
+      "types": {
+        "fields": "CreatePromptToolFields",
+        "inferResult": "InferCreatePromptToolResult",
+        "input": "CreatePromptToolInput",
+        "result": "CreatePromptToolResult"
+      },
+      "variantNames": {
+        "channel": "create_prompt_tool_channel",
+        "validation": "validate_create_prompt_tool"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "destroy",
+      "deprecated": false,
+      "description": "Delete a PromptTool",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "delete_prompt_tool",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "PromptTool",
+      "see": [],
+      "types": {
+        "result": "DeletePromptToolResult"
+      },
+      "variantNames": {
+        "channel": "delete_prompt_tool_channel",
+        "validation": "validate_delete_prompt_tool"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read PromptTool records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_prompt_tools_for_origin",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "PromptTool",
+      "see": [],
+      "types": {
+        "fields": "ListPromptToolsForOriginFields",
+        "filterInput": "PromptToolFilterInput",
+        "inferResult": "InferListPromptToolsForOriginResult",
+        "input": "ListPromptToolsForOriginInput",
+        "result": "ListPromptToolsForOriginResult"
+      },
+      "variantNames": {
+        "channel": "list_prompt_tools_for_origin_channel",
+        "validation": "validate_list_prompt_tools_for_origin"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Update an existing PromptTool",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "update_prompt_tool",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "PromptTool",
+      "see": [],
+      "types": {
+        "fields": "UpdatePromptToolFields",
+        "inferResult": "InferUpdatePromptToolResult",
+        "input": "UpdatePromptToolInput",
+        "result": "UpdatePromptToolResult"
+      },
+      "variantNames": {
+        "channel": "update_prompt_tool_channel",
+        "validation": "validate_update_prompt_tool"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new SetupProgress",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "create_setup_progress",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "SetupProgress",
+      "see": [],
+      "types": {
+        "fields": "CreateSetupProgressFields",
+        "inferResult": "InferCreateSetupProgressResult",
+        "input": "CreateSetupProgressInput",
+        "result": "CreateSetupProgressResult"
+      },
+      "variantNames": {
+        "channel": "create_setup_progress_channel",
+        "validation": "validate_create_setup_progress"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read SetupProgress records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_setup_progress",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": true,
+        "required": false,
+        "supported": true
+      },
+      "resource": "SetupProgress",
+      "see": [],
+      "types": {
+        "config": "ListSetupProgressConfig",
+        "fields": "ListSetupProgressFields",
+        "filterInput": "SetupProgressFilterInput",
+        "inferResult": "InferListSetupProgressResult",
+        "result": "ListSetupProgressResult"
+      },
+      "variantNames": {
+        "channel": "list_setup_progress_channel",
+        "validation": "validate_list_setup_progress"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Update an existing SetupProgress",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "update_setup_progress",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "SetupProgress",
+      "see": [],
+      "types": {
+        "fields": "UpdateSetupProgressFields",
+        "inferResult": "InferUpdateSetupProgressResult",
+        "input": "UpdateSetupProgressInput",
+        "result": "UpdateSetupProgressResult"
+      },
+      "variantNames": {
+        "channel": "update_setup_progress_channel",
+        "validation": "validate_update_setup_progress"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new SoulConfig",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "create_soul_config",
+      "get": false,
+      "input": "optional",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "SoulConfig",
+      "see": [],
+      "types": {
+        "fields": "CreateSoulConfigFields",
+        "inferResult": "InferCreateSoulConfigResult",
+        "input": "CreateSoulConfigInput",
+        "result": "CreateSoulConfigResult"
+      },
+      "variantNames": {
+        "channel": "create_soul_config_channel",
+        "validation": "validate_create_soul_config"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Generate conversation starters from episode transcript or origin profile using AI",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "generate_conversation_starters",
+      "get": false,
+      "input": "optional",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "SoulConfig",
+      "see": [],
+      "types": {
+        "input": "GenerateConversationStartersInput",
+        "result": "GenerateConversationStartersResult"
+      },
+      "variantNames": {
+        "channel": "generate_conversation_starters_channel",
+        "validation": "validate_generate_conversation_starters"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read SoulConfig records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_soul_configs",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": true,
+        "required": false,
+        "supported": true
+      },
+      "resource": "SoulConfig",
+      "see": [],
+      "types": {
+        "config": "ListSoulConfigsConfig",
+        "fields": "ListSoulConfigsFields",
+        "filterInput": "SoulConfigFilterInput",
+        "inferResult": "InferListSoulConfigsResult",
+        "result": "ListSoulConfigsResult"
+      },
+      "variantNames": {
+        "channel": "list_soul_configs_channel",
+        "validation": "validate_list_soul_configs"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Update an existing SoulConfig",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "update_soul_config",
+      "get": false,
+      "input": "optional",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "SoulConfig",
+      "see": [],
+      "types": {
+        "fields": "UpdateSoulConfigFields",
+        "inferResult": "InferUpdateSoulConfigResult",
+        "input": "UpdateSoulConfigInput",
+        "result": "UpdateSoulConfigResult"
+      },
+      "variantNames": {
+        "channel": "update_soul_config_channel",
+        "validation": "validate_update_soul_config"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read UserProfile records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_user_profiles",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": true,
+        "required": false,
+        "supported": true
+      },
+      "resource": "UserProfile",
+      "see": [],
+      "types": {
+        "config": "ListUserProfilesConfig",
+        "fields": "ListUserProfilesFields",
+        "filterInput": "UserProfileFilterInput",
+        "inferResult": "InferListUserProfilesResult",
+        "result": "ListUserProfilesResult"
+      },
+      "variantNames": {
+        "channel": "list_user_profiles_channel",
+        "validation": "validate_list_user_profiles"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Update an existing UserProfile",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "update_user_profile",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "UserProfile",
+      "see": [],
+      "types": {
+        "fields": "UpdateUserProfileFields",
+        "inferResult": "InferUpdateUserProfileResult",
+        "input": "UpdateUserProfileInput",
+        "result": "UpdateUserProfileResult"
+      },
+      "variantNames": {
+        "channel": "update_user_profile_channel",
+        "validation": "validate_update_user_profile"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read InterviewGeneratedContent records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_interview_generated_contents",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": true,
+        "required": false,
+        "supported": true
+      },
+      "resource": "InterviewGeneratedContent",
+      "see": [],
+      "types": {
+        "config": "ListInterviewGeneratedContentsConfig",
+        "fields": "ListInterviewGeneratedContentsFields",
+        "filterInput": "InterviewGeneratedContentFilterInput",
+        "inferResult": "InferListInterviewGeneratedContentsResult",
+        "result": "ListInterviewGeneratedContentsResult"
+      },
+      "variantNames": {
+        "channel": "list_interview_generated_contents_channel",
+        "validation": "validate_list_interview_generated_contents"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Update an existing InterviewGeneratedContent",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "update_interview_generated_content",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "InterviewGeneratedContent",
+      "see": [],
+      "types": {
+        "fields": "UpdateInterviewGeneratedContentFields",
+        "inferResult": "InferUpdateInterviewGeneratedContentResult",
+        "input": "UpdateInterviewGeneratedContentInput",
+        "result": "UpdateInterviewGeneratedContentResult"
+      },
+      "variantNames": {
+        "channel": "update_interview_generated_content_channel",
+        "validation": "validate_update_interview_generated_content"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Generate a presigned URL for downloading the recording",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "presign_recording_download_url",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "InterviewRecording",
+      "see": [],
+      "types": {
+        "input": "PresignRecordingDownloadUrlInput",
+        "result": "PresignRecordingDownloadUrlResult"
+      },
+      "variantNames": {
+        "channel": "presign_recording_download_url_channel",
+        "validation": "validate_presign_recording_download_url"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new InterviewSession",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "create_interview_session",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "InterviewSession",
+      "see": [],
+      "types": {
+        "fields": "CreateInterviewSessionFields",
+        "inferResult": "InferCreateInterviewSessionResult",
+        "input": "CreateInterviewSessionInput",
+        "result": "CreateInterviewSessionResult"
+      },
+      "variantNames": {
+        "channel": "create_interview_session_channel",
+        "validation": "validate_create_interview_session"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Finish an interview and trigger the finalization pipeline",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "finish_interview_session",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "InterviewSession",
+      "see": [],
+      "types": {
+        "fields": "FinishInterviewSessionFields",
+        "inferResult": "InferFinishInterviewSessionResult",
+        "result": "FinishInterviewSessionResult"
+      },
+      "variantNames": {
+        "channel": "finish_interview_session_channel",
+        "validation": "validate_finish_interview_session"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Generate the next interview question using a Letta agent",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "generate_interview_question",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "InterviewSession",
+      "see": [],
+      "types": {
+        "input": "GenerateInterviewQuestionInput",
+        "result": "GenerateInterviewQuestionResult"
+      },
+      "variantNames": {
+        "channel": "generate_interview_question_channel",
+        "validation": "validate_generate_interview_question"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read InterviewSession records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_interview_session",
+      "get": true,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": true,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "InterviewSession",
+      "see": [],
+      "types": {
+        "fields": "GetInterviewSessionFields",
+        "filterInput": "InterviewSessionFilterInput",
+        "inferResult": "InferGetInterviewSessionResult",
+        "input": "GetInterviewSessionInput",
+        "result": "GetInterviewSessionResult"
+      },
+      "variantNames": {
+        "channel": "get_interview_session_channel",
+        "validation": "validate_get_interview_session"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read InterviewSession records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_interview_sessions",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": true,
+        "required": false,
+        "supported": true
+      },
+      "resource": "InterviewSession",
+      "see": [],
+      "types": {
+        "config": "ListInterviewSessionsConfig",
+        "fields": "ListInterviewSessionsFields",
+        "filterInput": "InterviewSessionFilterInput",
+        "inferResult": "InferListInterviewSessionsResult",
+        "result": "ListInterviewSessionsResult"
+      },
+      "variantNames": {
+        "channel": "list_interview_sessions_channel",
+        "validation": "validate_list_interview_sessions"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Update an existing InterviewSession",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "update_interview_session",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "InterviewSession",
+      "see": [],
+      "types": {
+        "fields": "UpdateInterviewSessionFields",
+        "inferResult": "InferUpdateInterviewSessionResult",
+        "input": "UpdateInterviewSessionInput",
+        "result": "UpdateInterviewSessionResult"
+      },
+      "variantNames": {
+        "channel": "update_interview_session_channel",
+        "validation": "validate_update_interview_session"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new InterviewTurn",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "create_interview_turn",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "InterviewTurn",
+      "see": [],
+      "types": {
+        "fields": "CreateInterviewTurnFields",
+        "inferResult": "InferCreateInterviewTurnResult",
+        "input": "CreateInterviewTurnInput",
+        "result": "CreateInterviewTurnResult"
+      },
+      "variantNames": {
+        "channel": "create_interview_turn_channel",
+        "validation": "validate_create_interview_turn"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read DriveConnection records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_drive_connection_for_entity",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "DriveConnection",
+      "see": [],
+      "types": {
+        "fields": "GetDriveConnectionForEntityFields",
+        "filterInput": "DriveConnectionFilterInput",
+        "inferResult": "InferGetDriveConnectionForEntityResult",
+        "input": "GetDriveConnectionForEntityInput",
+        "result": "GetDriveConnectionForEntityResult"
+      },
+      "variantNames": {
+        "channel": "get_drive_connection_for_entity_channel",
+        "validation": "validate_get_drive_connection_for_entity"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Generate OAuth URL and state for Google Drive authentication",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "initiate_drive_oauth",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "DriveConnection",
+      "see": [],
+      "types": {
+        "input": "InitiateDriveOauthInput",
+        "result": "InitiateDriveOauthResult"
+      },
+      "variantNames": {
+        "channel": "initiate_drive_oauth_channel",
+        "validation": "validate_initiate_drive_oauth"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read GithubConnection records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_github_connection_for_entity",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "GithubConnection",
+      "see": [],
+      "types": {
+        "fields": "GetGithubConnectionForEntityFields",
+        "filterInput": "GithubConnectionFilterInput",
+        "inferResult": "InferGetGithubConnectionForEntityResult",
+        "input": "GetGithubConnectionForEntityInput",
+        "result": "GetGithubConnectionForEntityResult"
+      },
+      "variantNames": {
+        "channel": "get_github_connection_for_entity_channel",
+        "validation": "validate_get_github_connection_for_entity"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Generate GitHub App install URL + signed state token.",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "initiate_github_oauth",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "GithubConnection",
+      "see": [],
+      "types": {
+        "input": "InitiateGithubOauthInput",
+        "result": "InitiateGithubOauthResult"
+      },
+      "variantNames": {
+        "channel": "initiate_github_oauth_channel",
+        "validation": "validate_initiate_github_oauth"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "List branches of a repository, scoped to a connection.",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_github_branches",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "GithubConnection",
+      "see": [],
+      "types": {
+        "input": "ListGithubBranchesInput",
+        "result": "ListGithubBranchesResult"
+      },
+      "variantNames": {
+        "channel": "list_github_branches_channel",
+        "validation": "validate_list_github_branches"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "List repositories accessible to this App installation.",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_github_repositories",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "GithubConnection",
+      "see": [],
+      "types": {
+        "input": "ListGithubRepositoriesInput",
+        "result": "ListGithubRepositoriesResult"
+      },
+      "variantNames": {
+        "channel": "list_github_repositories_channel",
+        "validation": "validate_list_github_repositories"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new Library",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "create_library",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Library",
+      "see": [],
+      "types": {
+        "fields": "CreateLibraryFields",
+        "inferResult": "InferCreateLibraryResult",
+        "input": "CreateLibraryInput",
+        "result": "CreateLibraryResult"
+      },
+      "variantNames": {
+        "channel": "create_library_channel",
+        "validation": "validate_create_library"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "destroy",
+      "deprecated": false,
+      "description": "Delete a Library",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "delete_library",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Library",
+      "see": [],
+      "types": {
+        "result": "DeleteLibraryResult"
+      },
+      "variantNames": {
+        "channel": "delete_library_channel",
+        "validation": "validate_delete_library"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read Library records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_library",
+      "get": true,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": true,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Library",
+      "see": [],
+      "types": {
+        "fields": "GetLibraryFields",
+        "filterInput": "LibraryFilterInput",
+        "inferResult": "InferGetLibraryResult",
+        "input": "GetLibraryInput",
+        "result": "GetLibraryResult"
+      },
+      "variantNames": {
+        "channel": "get_library_channel",
+        "validation": "validate_get_library"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Run a bash command against one or more attached Libraries.",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "library_shell_exec",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Library",
+      "see": [],
+      "types": {
+        "input": "LibraryShellExecInput",
+        "result": "LibraryShellExecResult"
+      },
+      "variantNames": {
+        "channel": "library_shell_exec_channel",
+        "validation": "validate_library_shell_exec"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "List every file path visible across the given Libraries.",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "library_shell_list_tree",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Library",
+      "see": [],
+      "types": {
+        "input": "LibraryShellListTreeInput",
+        "result": "LibraryShellListTreeResult"
+      },
+      "variantNames": {
+        "channel": "library_shell_list_tree_channel",
+        "validation": "validate_library_shell_list_tree"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Read a single file from one of the given Libraries.",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "library_shell_read",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Library",
+      "see": [],
+      "types": {
+        "input": "LibraryShellReadInput",
+        "result": "LibraryShellReadResult"
+      },
+      "variantNames": {
+        "channel": "library_shell_read_channel",
+        "validation": "validate_library_shell_read"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read Library records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_libraries",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": false,
+        "required": false,
+        "supported": true
+      },
+      "resource": "Library",
+      "see": [],
+      "types": {
+        "config": "ListLibrariesConfig",
+        "fields": "ListLibrariesFields",
+        "filterInput": "LibraryFilterInput",
+        "inferResult": "InferListLibrariesResult",
+        "result": "ListLibrariesResult"
+      },
+      "variantNames": {
+        "channel": "list_libraries_channel",
+        "validation": "validate_list_libraries"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "All Libraries owned by an Origin AND any descendant Origins (to\narbitrary depth). Powers the brand `/:slug/knowledge` management\nsurface where the operator expects to see everything across their\ntenancy. Restores the pre-cutover behavior of\n`KnowledgeItem.list_for_origin`. Access stays gated by\n`LibraryReadable` — the preparation just widens the candidate set.\n",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_libraries_for_origin",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": false,
+        "required": false,
+        "supported": true
+      },
+      "resource": "Library",
+      "see": [],
+      "types": {
+        "config": "ListLibrariesForOriginConfig",
+        "fields": "ListLibrariesForOriginFields",
+        "filterInput": "LibraryFilterInput",
+        "inferResult": "InferListLibrariesForOriginResult",
+        "input": "ListLibrariesForOriginInput",
+        "result": "ListLibrariesForOriginResult"
+      },
+      "variantNames": {
+        "channel": "list_libraries_for_origin_channel",
+        "validation": "validate_list_libraries_for_origin"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Run a one-shot source-adapter sync for this Library.",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "sync_library_now",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Library",
+      "see": [],
+      "types": {
+        "input": "SyncLibraryNowInput",
+        "result": "SyncLibraryNowResult"
+      },
+      "variantNames": {
+        "channel": "sync_library_now_channel",
+        "validation": "validate_sync_library_now"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Update an existing Library",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "update_library",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Library",
+      "see": [],
+      "types": {
+        "fields": "UpdateLibraryFields",
+        "inferResult": "InferUpdateLibraryResult",
+        "input": "UpdateLibraryInput",
+        "result": "UpdateLibraryResult"
+      },
+      "variantNames": {
+        "channel": "update_library_channel",
+        "validation": "validate_update_library"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new LibraryAccessGrant",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "create_library_access_grant",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "LibraryAccessGrant",
+      "see": [],
+      "types": {
+        "fields": "CreateLibraryAccessGrantFields",
+        "inferResult": "InferCreateLibraryAccessGrantResult",
+        "input": "CreateLibraryAccessGrantInput",
+        "result": "CreateLibraryAccessGrantResult"
+      },
+      "variantNames": {
+        "channel": "create_library_access_grant_channel",
+        "validation": "validate_create_library_access_grant"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "destroy",
+      "deprecated": false,
+      "description": "Delete a LibraryAccessGrant",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "delete_library_access_grant",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "LibraryAccessGrant",
+      "see": [],
+      "types": {
+        "result": "DeleteLibraryAccessGrantResult"
+      },
+      "variantNames": {
+        "channel": "delete_library_access_grant_channel",
+        "validation": "validate_delete_library_access_grant"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read LibraryAccessGrant records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_library_access_grants",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": true,
+        "required": false,
+        "supported": true
+      },
+      "resource": "LibraryAccessGrant",
+      "see": [],
+      "types": {
+        "config": "ListLibraryAccessGrantsConfig",
+        "fields": "ListLibraryAccessGrantsFields",
+        "filterInput": "LibraryAccessGrantFilterInput",
+        "inferResult": "InferListLibraryAccessGrantsResult",
+        "result": "ListLibraryAccessGrantsResult"
+      },
+      "variantNames": {
+        "channel": "list_library_access_grants_channel",
+        "validation": "validate_list_library_access_grants"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new LibraryFile",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "create_library_file",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "LibraryFile",
+      "see": [],
+      "types": {
+        "fields": "CreateLibraryFileFields",
+        "inferResult": "InferCreateLibraryFileResult",
+        "input": "CreateLibraryFileInput",
+        "result": "CreateLibraryFileResult"
+      },
+      "variantNames": {
+        "channel": "create_library_file_channel",
+        "validation": "validate_create_library_file"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new LibraryFile",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "create_library_file_inline",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "LibraryFile",
+      "see": [],
+      "types": {
+        "fields": "CreateLibraryFileInlineFields",
+        "inferResult": "InferCreateLibraryFileInlineResult",
+        "input": "CreateLibraryFileInlineInput",
+        "result": "CreateLibraryFileInlineResult"
+      },
+      "variantNames": {
+        "channel": "create_library_file_inline_channel",
+        "validation": "validate_create_library_file_inline"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "destroy",
+      "deprecated": false,
+      "description": "Delete a LibraryFile",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "delete_library_file",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "LibraryFile",
+      "see": [],
+      "types": {
+        "result": "DeleteLibraryFileResult"
+      },
+      "variantNames": {
+        "channel": "delete_library_file_channel",
+        "validation": "validate_delete_library_file"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read LibraryFile records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_library_file",
+      "get": true,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": true,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "LibraryFile",
+      "see": [],
+      "types": {
+        "fields": "GetLibraryFileFields",
+        "filterInput": "LibraryFileFilterInput",
+        "inferResult": "InferGetLibraryFileResult",
+        "input": "GetLibraryFileInput",
+        "result": "GetLibraryFileResult"
+      },
+      "variantNames": {
+        "channel": "get_library_file_channel",
+        "validation": "validate_get_library_file"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read LibraryFile records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_library_files",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": false,
+        "required": false,
+        "supported": true
+      },
+      "resource": "LibraryFile",
+      "see": [],
+      "types": {
+        "config": "ListLibraryFilesConfig",
+        "fields": "ListLibraryFilesFields",
+        "filterInput": "LibraryFileFilterInput",
+        "inferResult": "InferListLibraryFilesResult",
+        "result": "ListLibraryFilesResult"
+      },
+      "variantNames": {
+        "channel": "list_library_files_channel",
+        "validation": "validate_list_library_files"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "All LibraryFiles in a Library.",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_library_files_for_library",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": false,
+        "required": false,
+        "supported": true
+      },
+      "resource": "LibraryFile",
+      "see": [],
+      "types": {
+        "config": "ListLibraryFilesForLibraryConfig",
+        "fields": "ListLibraryFilesForLibraryFields",
+        "filterInput": "LibraryFileFilterInput",
+        "inferResult": "InferListLibraryFilesForLibraryResult",
+        "input": "ListLibraryFilesForLibraryInput",
+        "result": "ListLibraryFilesForLibraryResult"
+      },
+      "variantNames": {
+        "channel": "list_library_files_for_library_channel",
+        "validation": "validate_list_library_files_for_library"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Update an existing LibraryFile",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "update_library_file",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "LibraryFile",
+      "see": [],
+      "types": {
+        "fields": "UpdateLibraryFileFields",
+        "inferResult": "InferUpdateLibraryFileResult",
+        "input": "UpdateLibraryFileInput",
+        "result": "UpdateLibraryFileResult"
+      },
+      "variantNames": {
+        "channel": "update_library_file_channel",
+        "validation": "validate_update_library_file"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Create or update a website-scrape file in a Library, keyed by (library_id, source_metadata.url).",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "upsert_website_scrape_library_file",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "LibraryFile",
+      "see": [],
+      "types": {
+        "fields": "UpsertWebsiteScrapeLibraryFileFields",
+        "inferResult": "InferUpsertWebsiteScrapeLibraryFileResult",
+        "input": "UpsertWebsiteScrapeLibraryFileInput",
+        "result": "UpsertWebsiteScrapeLibraryFileResult"
+      },
+      "variantNames": {
+        "channel": "upsert_website_scrape_library_file_channel",
+        "validation": "validate_upsert_website_scrape_library_file"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "destroy",
+      "deprecated": false,
+      "description": "Delete a ChatBinding",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "destroy_chat_binding",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "ChatBinding",
+      "see": [],
+      "types": {
+        "result": "DestroyChatBindingResult"
+      },
+      "variantNames": {
+        "channel": "destroy_chat_binding_channel",
+        "validation": "validate_destroy_chat_binding"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "First user/assistant exchange from the latest bound conversation for an OE.",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_binding_preview",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "ChatBinding",
+      "see": [],
+      "types": {
+        "input": "GetBindingPreviewInput",
+        "result": "GetBindingPreviewResult"
+      },
+      "variantNames": {
+        "channel": "get_binding_preview_channel",
+        "validation": "validate_get_binding_preview"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read ChatBinding records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_all_chat_bindings",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": true,
+        "required": false,
+        "supported": true
+      },
+      "resource": "ChatBinding",
+      "see": [],
+      "types": {
+        "config": "ListAllChatBindingsConfig",
+        "fields": "ListAllChatBindingsFields",
+        "filterInput": "ChatBindingFilterInput",
+        "inferResult": "InferListAllChatBindingsResult",
+        "result": "ListAllChatBindingsResult"
+      },
+      "variantNames": {
+        "channel": "list_all_chat_bindings_channel",
+        "validation": "validate_list_all_chat_bindings"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read ChatBinding records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_chat_bindings_for_origin_entity",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "ChatBinding",
+      "see": [],
+      "types": {
+        "fields": "ListChatBindingsForOriginEntityFields",
+        "filterInput": "ChatBindingFilterInput",
+        "inferResult": "InferListChatBindingsForOriginEntityResult",
+        "input": "ListChatBindingsForOriginEntityInput",
+        "result": "ListChatBindingsForOriginEntityResult"
+      },
+      "variantNames": {
+        "channel": "list_chat_bindings_for_origin_entity_channel",
+        "validation": "validate_list_chat_bindings_for_origin_entity"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new ChatBinding",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "register_prospect",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "ChatBinding",
+      "see": [],
+      "types": {
+        "fields": "RegisterProspectFields",
+        "inferResult": "InferRegisterProspectResult",
+        "input": "RegisterProspectInput",
+        "result": "RegisterProspectResult"
+      },
+      "variantNames": {
+        "channel": "register_prospect_channel",
+        "validation": "validate_register_prospect"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Resolve the messaging line + source for an OriginEntity.",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "resolve_messaging_line",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "ChatBinding",
+      "see": [],
+      "types": {
+        "input": "ResolveMessagingLineInput",
+        "result": "ResolveMessagingLineResult"
+      },
+      "variantNames": {
+        "channel": "resolve_messaging_line_channel",
+        "validation": "validate_resolve_messaging_line"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new PodcastConfig",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "create_podcast_config",
+      "get": false,
+      "input": "optional",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "PodcastConfig",
+      "see": [],
+      "types": {
+        "fields": "CreatePodcastConfigFields",
+        "inferResult": "InferCreatePodcastConfigResult",
+        "input": "CreatePodcastConfigInput",
+        "result": "CreatePodcastConfigResult"
+      },
+      "variantNames": {
+        "channel": "create_podcast_config_channel",
+        "validation": "validate_create_podcast_config"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read PodcastConfig records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_podcast_configs",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": true,
+        "required": false,
+        "supported": true
+      },
+      "resource": "PodcastConfig",
+      "see": [],
+      "types": {
+        "config": "ListPodcastConfigsConfig",
+        "fields": "ListPodcastConfigsFields",
+        "filterInput": "PodcastConfigFilterInput",
+        "inferResult": "InferListPodcastConfigsResult",
+        "result": "ListPodcastConfigsResult"
+      },
+      "variantNames": {
+        "channel": "list_podcast_configs_channel",
+        "validation": "validate_list_podcast_configs"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Sync YouTube playlist episodes",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "sync_podcast_episodes",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "PodcastConfig",
+      "see": [],
+      "types": {
+        "input": "SyncPodcastEpisodesInput",
+        "result": "SyncPodcastEpisodesResult"
+      },
+      "variantNames": {
+        "channel": "sync_podcast_episodes_channel",
+        "validation": "validate_sync_podcast_episodes"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Update an existing PodcastConfig",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "update_podcast_config",
+      "get": false,
+      "input": "optional",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "PodcastConfig",
+      "see": [],
+      "types": {
+        "fields": "UpdatePodcastConfigFields",
+        "inferResult": "InferUpdatePodcastConfigResult",
+        "input": "UpdatePodcastConfigInput",
+        "result": "UpdatePodcastConfigResult"
+      },
+      "variantNames": {
+        "channel": "update_podcast_config_channel",
+        "validation": "validate_update_podcast_config"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read PodcastEpisodeSettings records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_podcast_episode_settings_for_character",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "PodcastEpisodeSettings",
+      "see": [],
+      "types": {
+        "fields": "GetPodcastEpisodeSettingsForCharacterFields",
+        "filterInput": "PodcastEpisodeSettingsFilterInput",
+        "inferResult": "InferGetPodcastEpisodeSettingsForCharacterResult",
+        "input": "GetPodcastEpisodeSettingsForCharacterInput",
+        "result": "GetPodcastEpisodeSettingsForCharacterResult"
+      },
+      "variantNames": {
+        "channel": "get_podcast_episode_settings_for_character_channel",
+        "validation": "validate_get_podcast_episode_settings_for_character"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read PodcastEpisodeSettings records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_podcast_episode_settings_for_podcast_config",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "PodcastEpisodeSettings",
+      "see": [],
+      "types": {
+        "fields": "GetPodcastEpisodeSettingsForPodcastConfigFields",
+        "filterInput": "PodcastEpisodeSettingsFilterInput",
+        "inferResult": "InferGetPodcastEpisodeSettingsForPodcastConfigResult",
+        "input": "GetPodcastEpisodeSettingsForPodcastConfigInput",
+        "result": "GetPodcastEpisodeSettingsForPodcastConfigResult"
+      },
+      "variantNames": {
+        "channel": "get_podcast_episode_settings_for_podcast_config_channel",
+        "validation": "validate_get_podcast_episode_settings_for_podcast_config"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read PodcastEpisodeSettings records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_podcast_episode_settings",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": true,
+        "required": false,
+        "supported": true
+      },
+      "resource": "PodcastEpisodeSettings",
+      "see": [],
+      "types": {
+        "config": "ListPodcastEpisodeSettingsConfig",
+        "fields": "ListPodcastEpisodeSettingsFields",
+        "filterInput": "PodcastEpisodeSettingsFilterInput",
+        "inferResult": "InferListPodcastEpisodeSettingsResult",
+        "result": "ListPodcastEpisodeSettingsResult"
+      },
+      "variantNames": {
+        "channel": "list_podcast_episode_settings_channel",
+        "validation": "validate_list_podcast_episode_settings"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new PodcastEpisodeSettings",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "upsert_podcast_episode_settings",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "PodcastEpisodeSettings",
+      "see": [],
+      "types": {
+        "fields": "UpsertPodcastEpisodeSettingsFields",
+        "inferResult": "InferUpsertPodcastEpisodeSettingsResult",
+        "input": "UpsertPodcastEpisodeSettingsInput",
+        "result": "UpsertPodcastEpisodeSettingsResult"
+      },
+      "variantNames": {
+        "channel": "upsert_podcast_episode_settings_channel",
+        "validation": "validate_upsert_podcast_episode_settings"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new YoutubeEpisode",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "create_youtube_episode",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "YoutubeEpisode",
+      "see": [],
+      "types": {
+        "fields": "CreateYoutubeEpisodeFields",
+        "inferResult": "InferCreateYoutubeEpisodeResult",
+        "input": "CreateYoutubeEpisodeInput",
+        "result": "CreateYoutubeEpisodeResult"
+      },
+      "variantNames": {
+        "channel": "create_youtube_episode_channel",
+        "validation": "validate_create_youtube_episode"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "destroy",
+      "deprecated": false,
+      "description": "Delete a YoutubeEpisode",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "delete_youtube_episode",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "YoutubeEpisode",
+      "see": [],
+      "types": {
+        "result": "DeleteYoutubeEpisodeResult"
+      },
+      "variantNames": {
+        "channel": "delete_youtube_episode_channel",
+        "validation": "validate_delete_youtube_episode"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Fetch a single video from YouTube and save it as an episode",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "fetch_youtube_single_video",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "YoutubeEpisode",
+      "see": [],
+      "types": {
+        "input": "FetchYoutubeSingleVideoInput",
+        "result": "FetchYoutubeSingleVideoResult"
+      },
+      "variantNames": {
+        "channel": "fetch_youtube_single_video_channel",
+        "validation": "validate_fetch_youtube_single_video"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Fetch transcript/captions from a YouTube video",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "fetch_youtube_transcript",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "YoutubeEpisode",
+      "see": [],
+      "types": {
+        "input": "FetchYoutubeTranscriptInput",
+        "result": "FetchYoutubeTranscriptResult"
+      },
+      "variantNames": {
+        "channel": "fetch_youtube_transcript_channel",
+        "validation": "validate_fetch_youtube_transcript"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read YoutubeEpisode records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_youtube_episode",
+      "get": true,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": true,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "YoutubeEpisode",
+      "see": [],
+      "types": {
+        "fields": "GetYoutubeEpisodeFields",
+        "filterInput": "YoutubeEpisodeFilterInput",
+        "inferResult": "InferGetYoutubeEpisodeResult",
+        "input": "GetYoutubeEpisodeInput",
+        "result": "GetYoutubeEpisodeResult"
+      },
+      "variantNames": {
+        "channel": "get_youtube_episode_channel",
+        "validation": "validate_get_youtube_episode"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read YoutubeEpisode records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_youtube_episodes",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": true,
+        "offset": true,
+        "required": false,
+        "supported": true
+      },
+      "resource": "YoutubeEpisode",
+      "see": [],
+      "types": {
+        "config": "ListYoutubeEpisodesConfig",
+        "fields": "ListYoutubeEpisodesFields",
+        "filterInput": "YoutubeEpisodeFilterInput",
+        "inferResult": "InferListYoutubeEpisodesResult",
+        "result": "ListYoutubeEpisodesResult"
+      },
+      "variantNames": {
+        "channel": "list_youtube_episodes_channel",
+        "validation": "validate_list_youtube_episodes"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Update an existing YoutubeEpisode",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "update_youtube_episode",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "YoutubeEpisode",
+      "see": [],
+      "types": {
+        "fields": "UpdateYoutubeEpisodeFields",
+        "inferResult": "InferUpdateYoutubeEpisodeResult",
+        "input": "UpdateYoutubeEpisodeInput",
+        "result": "UpdateYoutubeEpisodeResult"
+      },
+      "variantNames": {
+        "channel": "update_youtube_episode_channel",
+        "validation": "validate_update_youtube_episode"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Fetch public data from a YouTube channel URL and upsert episodes",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "youtube_fetch_public_data",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "YoutubeEpisode",
+      "see": [],
+      "types": {
+        "input": "YoutubeFetchPublicDataInput",
+        "result": "YoutubeFetchPublicDataResult"
+      },
+      "variantNames": {
+        "channel": "youtube_fetch_public_data_channel",
+        "validation": "validate_youtube_fetch_public_data"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    }
+  ],
+  "files": {
+    "rpc": {
+      "filename": "./ash_rpc.ts",
+      "importPath": "./ash_rpc"
+    },
+    "types": {
+      "filename": "./ash_types.ts",
+      "importPath": "./ash_types"
+    }
+  },
+  "generatedAt": "2026-05-26",
+  "typedControllerRoutes": [],
+  "version": "1.0"
+}

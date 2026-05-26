@@ -1,0 +1,23 @@
+defmodule OriginsSdk.Identity.GetMembershipsForUser do
+  @moduledoc """
+  Input + metadata types for `get_memberships_for_user`. Generated — do not edit by hand.
+  """
+
+  defmodule Input do
+    @moduledoc "Required arguments for `get_memberships_for_user`."
+
+    @type t :: %__MODULE__{
+          user_id: String.t()
+        }
+
+    @enforce_keys [:user_id]
+    defstruct [:user_id]
+
+    @doc false
+    def to_json(%__MODULE__{} = input) do
+      %{"user_id" => input.user_id}
+    end
+  end
+
+
+end
