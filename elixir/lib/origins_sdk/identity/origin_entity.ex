@@ -44,6 +44,7 @@ defmodule OriginsSdk.Identity.OriginEntity do
     slug: String.t(),
     social_links: list() | nil,
     target_audience: String.t() | nil,
+    tenant_id: String.t(),
     title: String.t() | nil,
     tone_of_voice: String.t() | nil,
     updated_at: DateTime.t(),
@@ -96,6 +97,7 @@ defmodule OriginsSdk.Identity.OriginEntity do
     :slug,
     :social_links,
     :target_audience,
+    :tenant_id,
     :title,
     :tone_of_voice,
     :updated_at,
@@ -108,7 +110,7 @@ defmodule OriginsSdk.Identity.OriginEntity do
     :youtube_sync_settings
   ]
 
-  @primitive_fields ~w(accent_colors ai_generated_summary appearance_config banner_key banner_url categories content_tabs_config content_themes core_values created_at description engagement_metrics extracted_content guardrails_settings id is_active is_featured is_public key_messaging last_website_scrape mission_statement name page_sections_config parent_origin_entity_id personality_traits picture_key picture_url podcast_button_color podcast_button_link podcast_button_text podcast_button_text_color podcast_button_visible podcast_config podcast_content_settings public_profile_config setup_progress_id slug social_links target_audience title tone_of_voice updated_at voice_config voice_settings website_content youtube_channel_data youtube_channel_id youtube_content_settings youtube_sync_settings)a
+  @primitive_fields ~w(accent_colors ai_generated_summary appearance_config banner_key banner_url categories content_tabs_config content_themes core_values created_at description engagement_metrics extracted_content guardrails_settings id is_active is_featured is_public key_messaging last_website_scrape mission_statement name page_sections_config parent_origin_entity_id personality_traits picture_key picture_url podcast_button_color podcast_button_link podcast_button_text podcast_button_text_color podcast_button_visible podcast_config podcast_content_settings public_profile_config setup_progress_id slug social_links target_audience tenant_id title tone_of_voice updated_at voice_config voice_settings website_content youtube_channel_data youtube_channel_id youtube_content_settings youtube_sync_settings)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -158,6 +160,7 @@ defmodule OriginsSdk.Identity.OriginEntity do
       slug: map["slug"],
       social_links: map["social_links"],
       target_audience: map["target_audience"],
+      tenant_id: map["tenant_id"],
       title: map["title"],
       tone_of_voice: map["tone_of_voice"],
       updated_at: OriginsSdk.Internal.decode_datetime(map["updated_at"]),

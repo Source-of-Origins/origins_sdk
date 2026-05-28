@@ -1,10 +1,11 @@
-defmodule OriginsSdk.ExpertPages.ExpertPage do
+defmodule OriginsSdk.Apps.App do
   @moduledoc """
-  Mirror of `Origins.ExpertPages.ExpertPage` over the wire.
+  Mirror of `Origins.Apps.App` over the wire.
   Generated — do not edit by hand.
   """
 
   @type t :: %__MODULE__{
+    app_type: String.t(),
     created_at: DateTime.t(),
     generation_error: String.t() | nil,
     generation_format: String.t() | nil,
@@ -15,12 +16,14 @@ defmodule OriginsSdk.ExpertPages.ExpertPage do
     markdoc_content: String.t(),
     meta: map() | nil,
     origin_entity_id: String.t(),
-    page_type: String.t(),
+    slug: String.t(),
+    source: String.t(),
     title: String.t() | nil,
     updated_at: DateTime.t()
     }
 
   defstruct [
+    :app_type,
     :created_at,
     :generation_error,
     :generation_format,
@@ -31,12 +34,13 @@ defmodule OriginsSdk.ExpertPages.ExpertPage do
     :markdoc_content,
     :meta,
     :origin_entity_id,
-    :page_type,
+    :slug,
+    :source,
     :title,
     :updated_at
   ]
 
-  @primitive_fields ~w(created_at generation_error generation_format generation_prompt generation_status id is_published markdoc_content meta origin_entity_id page_type title updated_at)a
+  @primitive_fields ~w(app_type created_at generation_error generation_format generation_prompt generation_status id is_published markdoc_content meta origin_entity_id slug source title updated_at)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -47,6 +51,7 @@ defmodule OriginsSdk.ExpertPages.ExpertPage do
 
   def from_json(map) when is_map(map) do
     %__MODULE__{
+      app_type: map["app_type"],
       created_at: OriginsSdk.Internal.decode_datetime(map["created_at"]),
       generation_error: map["generation_error"],
       generation_format: map["generation_format"],
@@ -57,7 +62,8 @@ defmodule OriginsSdk.ExpertPages.ExpertPage do
       markdoc_content: map["markdoc_content"],
       meta: map["meta"],
       origin_entity_id: map["origin_entity_id"],
-      page_type: map["page_type"],
+      slug: map["slug"],
+      source: map["source"],
       title: map["title"],
       updated_at: OriginsSdk.Internal.decode_datetime(map["updated_at"])
     }

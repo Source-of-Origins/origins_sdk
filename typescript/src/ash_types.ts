@@ -8,11 +8,40 @@ export type UUID = string;
 export type UtcDateTime = string;
 export type UtcDateTimeUsec = string;
 
+// Tenant Schema
+export type TenantResourceSchema = {
+  __type: "Resource";
+  __primitiveFields: "id" | "name" | "slug" | "status" | "archived_at" | "created_at" | "updated_at";
+  id: UUID;
+  name: string;
+  slug: string;
+  status: "active" | "archived";
+  archived_at: UtcDateTimeUsec | null;
+  created_at: UtcDateTimeUsec;
+  updated_at: UtcDateTimeUsec;
+};
+
+
+
+export type TenantAttributesOnlySchema = {
+  __type: "Resource";
+  __primitiveFields: "id" | "name" | "slug" | "status" | "archived_at" | "created_at" | "updated_at";
+  id: UUID;
+  name: string;
+  slug: string;
+  status: "active" | "archived";
+  archived_at: UtcDateTimeUsec | null;
+  created_at: UtcDateTimeUsec;
+  updated_at: UtcDateTimeUsec;
+};
+
+
 // User Schema
 export type UserResourceSchema = {
   __type: "Resource";
-  __primitiveFields: "id" | "instance_id" | "aud" | "role" | "email" | "email_confirmed_at" | "invited_at" | "confirmation_sent_at" | "recovery_sent_at" | "last_sign_in_at" | "raw_app_meta_data" | "raw_user_meta_data" | "is_super_admin" | "created_at" | "updated_at" | "phone" | "phone_confirmed_at" | "phone_change_sent_at" | "confirmed_at" | "deleted_at" | "reauthentication_sent_at" | "banned_until";
+  __primitiveFields: "id" | "tenant_id" | "instance_id" | "aud" | "role" | "email" | "email_confirmed_at" | "invited_at" | "confirmation_sent_at" | "recovery_sent_at" | "last_sign_in_at" | "raw_app_meta_data" | "raw_user_meta_data" | "is_super_admin" | "created_at" | "updated_at" | "phone" | "phone_confirmed_at" | "phone_change_sent_at" | "confirmed_at" | "deleted_at" | "reauthentication_sent_at" | "banned_until";
   id: UUID;
+  tenant_id: UUID;
   instance_id: UUID | null;
   aud: string | null;
   role: string | null;
@@ -34,6 +63,7 @@ export type UserResourceSchema = {
   deleted_at: UtcDateTimeUsec | null;
   reauthentication_sent_at: UtcDateTimeUsec | null;
   banned_until: UtcDateTimeUsec | null;
+  tenant: { __type: "Relationship"; __resource: TenantResourceSchema; };
   profile: { __type: "Relationship"; __resource: UserProfileResourceSchema | null; };
   origin_entity_memberships: { __type: "Relationship"; __array: true; __resource: OriginEntityMembershipResourceSchema; };
   origin_entities: { __type: "Relationship"; __array: true; __resource: OriginEntityResourceSchema; };
@@ -43,8 +73,9 @@ export type UserResourceSchema = {
 
 export type UserAttributesOnlySchema = {
   __type: "Resource";
-  __primitiveFields: "id" | "instance_id" | "aud" | "role" | "email" | "email_confirmed_at" | "invited_at" | "confirmation_sent_at" | "recovery_sent_at" | "last_sign_in_at" | "raw_app_meta_data" | "raw_user_meta_data" | "is_super_admin" | "created_at" | "updated_at" | "phone" | "phone_confirmed_at" | "phone_change_sent_at" | "confirmed_at" | "deleted_at" | "reauthentication_sent_at" | "banned_until";
+  __primitiveFields: "id" | "tenant_id" | "instance_id" | "aud" | "role" | "email" | "email_confirmed_at" | "invited_at" | "confirmation_sent_at" | "recovery_sent_at" | "last_sign_in_at" | "raw_app_meta_data" | "raw_user_meta_data" | "is_super_admin" | "created_at" | "updated_at" | "phone" | "phone_confirmed_at" | "phone_change_sent_at" | "confirmed_at" | "deleted_at" | "reauthentication_sent_at" | "banned_until";
   id: UUID;
+  tenant_id: UUID;
   instance_id: UUID | null;
   aud: string | null;
   role: string | null;
@@ -237,13 +268,15 @@ export type MessageAttachmentAttributesOnlySchema = {
 };
 
 
-// ExpertPage Schema
-export type ExpertPageResourceSchema = {
+// App Schema
+export type AppResourceSchema = {
   __type: "Resource";
-  __primitiveFields: "id" | "page_type" | "title" | "markdoc_content" | "generation_status" | "generation_error" | "generation_format" | "generation_prompt" | "is_published" | "meta" | "created_at" | "updated_at" | "origin_entity_id" | "has_letta_agent";
+  __primitiveFields: "id" | "app_type" | "title" | "slug" | "source" | "markdoc_content" | "generation_status" | "generation_error" | "generation_format" | "generation_prompt" | "is_published" | "meta" | "created_at" | "updated_at" | "origin_entity_id" | "has_letta_agent";
   id: UUID;
-  page_type: string;
+  app_type: string;
   title: string | null;
+  slug: string;
+  source: string;
   markdoc_content: string;
   generation_status: string;
   generation_error: string | null;
@@ -257,18 +290,20 @@ export type ExpertPageResourceSchema = {
   has_letta_agent: boolean | null;
   generation_history: { __type: "ComplexCalculation"; __returnType: Array<GenerationHistoryEntryResourceSchema> | null; __args: { limit?: number | null; before?: string | null }; };
   origin_entity: { __type: "Relationship"; __resource: OriginEntityResourceSchema; };
-  expert_page_libraries: { __type: "Relationship"; __array: true; __resource: ExpertPageLibraryResourceSchema; };
+  app_libraries: { __type: "Relationship"; __array: true; __resource: AppLibraryResourceSchema; };
   libraries: { __type: "Relationship"; __array: true; __resource: LibraryResourceSchema; };
 };
 
 
 
-export type ExpertPageAttributesOnlySchema = {
+export type AppAttributesOnlySchema = {
   __type: "Resource";
-  __primitiveFields: "id" | "page_type" | "title" | "markdoc_content" | "generation_status" | "generation_error" | "generation_format" | "generation_prompt" | "is_published" | "meta" | "created_at" | "updated_at" | "origin_entity_id";
+  __primitiveFields: "id" | "app_type" | "title" | "slug" | "source" | "markdoc_content" | "generation_status" | "generation_error" | "generation_format" | "generation_prompt" | "is_published" | "meta" | "created_at" | "updated_at" | "origin_entity_id";
   id: UUID;
-  page_type: string;
+  app_type: string;
   title: string | null;
+  slug: string;
+  source: string;
   markdoc_content: string;
   generation_status: string;
   generation_error: string | null;
@@ -282,8 +317,8 @@ export type ExpertPageAttributesOnlySchema = {
 };
 
 
-// ExpertPageVersion Schema
-export type ExpertPageVersionResourceSchema = {
+// AppVersion Schema
+export type AppVersionResourceSchema = {
   __type: "Resource";
   __primitiveFields: "id" | "version_action_type" | "version_action_name" | "version_source_id" | "changes" | "version_inserted_at" | "version_updated_at";
   id: UUID;
@@ -293,12 +328,12 @@ export type ExpertPageVersionResourceSchema = {
   changes: Record<string, any> | null;
   version_inserted_at: UtcDateTimeUsec;
   version_updated_at: UtcDateTimeUsec;
-  version_source: { __type: "Relationship"; __resource: ExpertPageResourceSchema; };
+  version_source: { __type: "Relationship"; __resource: AppResourceSchema; };
 };
 
 
 
-export type ExpertPageVersionAttributesOnlySchema = {
+export type AppVersionAttributesOnlySchema = {
   __type: "Resource";
   __primitiveFields: "id" | "version_action_type" | "version_action_name" | "version_source_id" | "changes" | "version_inserted_at" | "version_updated_at";
   id: UUID;
@@ -311,28 +346,28 @@ export type ExpertPageVersionAttributesOnlySchema = {
 };
 
 
-// ExpertPageLibrary Schema
-export type ExpertPageLibraryResourceSchema = {
+// AppLibrary Schema
+export type AppLibraryResourceSchema = {
   __type: "Resource";
-  __primitiveFields: "id" | "created_at" | "updated_at" | "expert_page_id" | "library_id";
+  __primitiveFields: "id" | "created_at" | "updated_at" | "app_id" | "library_id";
   id: UUID;
   created_at: UtcDateTimeUsec;
   updated_at: UtcDateTimeUsec;
-  expert_page_id: UUID;
+  app_id: UUID;
   library_id: UUID;
-  expert_page: { __type: "Relationship"; __resource: ExpertPageResourceSchema; };
+  app: { __type: "Relationship"; __resource: AppResourceSchema; };
   library: { __type: "Relationship"; __resource: LibraryResourceSchema; };
 };
 
 
 
-export type ExpertPageLibraryAttributesOnlySchema = {
+export type AppLibraryAttributesOnlySchema = {
   __type: "Resource";
-  __primitiveFields: "id" | "created_at" | "updated_at" | "expert_page_id" | "library_id";
+  __primitiveFields: "id" | "created_at" | "updated_at" | "app_id" | "library_id";
   id: UUID;
   created_at: UtcDateTimeUsec;
   updated_at: UtcDateTimeUsec;
-  expert_page_id: UUID;
+  app_id: UUID;
   library_id: UUID;
 };
 
@@ -376,6 +411,36 @@ export type GenerationHistoryEntryInputSchema = {
   tool_return?: string | null;
   tool_return_status?: string | null;
   created_at?: string | null;
+};
+
+
+// AppTemplate Schema
+export type AppTemplateResourceSchema = {
+  __type: "Resource";
+  __primitiveFields: "id" | "name" | "description" | "app_type" | "seed_markdoc_content" | "sort_order" | "created_at" | "updated_at";
+  id: UUID;
+  name: string;
+  description: string;
+  app_type: string;
+  seed_markdoc_content: string;
+  sort_order: number;
+  created_at: UtcDateTimeUsec;
+  updated_at: UtcDateTimeUsec;
+};
+
+
+
+export type AppTemplateAttributesOnlySchema = {
+  __type: "Resource";
+  __primitiveFields: "id" | "name" | "description" | "app_type" | "seed_markdoc_content" | "sort_order" | "created_at" | "updated_at";
+  id: UUID;
+  name: string;
+  description: string;
+  app_type: string;
+  seed_markdoc_content: string;
+  sort_order: number;
+  created_at: UtcDateTimeUsec;
+  updated_at: UtcDateTimeUsec;
 };
 
 
@@ -763,8 +828,9 @@ export type OriginAssetAttributesOnlySchema = {
 // OriginEntity Schema
 export type OriginEntityResourceSchema = {
   __type: "Resource";
-  __primitiveFields: "id" | "parent_origin_entity_id" | "name" | "description" | "title" | "personality_traits" | "mission_statement" | "core_values" | "accent_colors" | "tone_of_voice" | "key_messaging" | "target_audience" | "content_themes" | "categories" | "picture_url" | "picture_key" | "banner_url" | "banner_key" | "voice_settings" | "voice_config" | "guardrails_settings" | "engagement_metrics" | "extracted_content" | "ai_generated_summary" | "is_public" | "is_active" | "is_featured" | "slug" | "website_content" | "last_website_scrape" | "page_sections_config" | "content_tabs_config" | "youtube_channel_id" | "youtube_channel_data" | "youtube_sync_settings" | "youtube_content_settings" | "podcast_content_settings" | "podcast_config" | "podcast_button_visible" | "podcast_button_link" | "podcast_button_text" | "podcast_button_color" | "podcast_button_text_color" | "created_at" | "updated_at" | "setup_progress_id" | "presigned_picture_url" | "presigned_banner_url";
+  __primitiveFields: "id" | "tenant_id" | "parent_origin_entity_id" | "name" | "description" | "title" | "personality_traits" | "mission_statement" | "core_values" | "accent_colors" | "tone_of_voice" | "key_messaging" | "target_audience" | "content_themes" | "categories" | "picture_url" | "picture_key" | "banner_url" | "banner_key" | "voice_settings" | "voice_config" | "guardrails_settings" | "engagement_metrics" | "extracted_content" | "ai_generated_summary" | "is_public" | "is_active" | "is_featured" | "slug" | "website_content" | "last_website_scrape" | "page_sections_config" | "content_tabs_config" | "youtube_channel_id" | "youtube_channel_data" | "youtube_sync_settings" | "youtube_content_settings" | "podcast_content_settings" | "podcast_config" | "podcast_button_visible" | "podcast_button_link" | "podcast_button_text" | "podcast_button_color" | "podcast_button_text_color" | "created_at" | "updated_at" | "setup_progress_id" | "presigned_picture_url" | "presigned_banner_url";
   id: UUID;
+  tenant_id: UUID;
   parent_origin_entity_id: UUID | null;
   name: string;
   description: string | null;
@@ -816,6 +882,7 @@ export type OriginEntityResourceSchema = {
   appearance_config: { __type: "Relationship"; __resource: OriginsIdentityAppearanceConfigResourceSchema | null; };
   public_profile_config: { __type: "Relationship"; __resource: OriginsIdentityPublicProfileConfigResourceSchema | null; };
   scraped_website_content_type: { __type: "Relationship"; __resource: ScrapedWebsiteContentResourceSchema | null; };
+  tenant: { __type: "Relationship"; __resource: TenantResourceSchema; };
   setup_progress: { __type: "Relationship"; __resource: SetupProgressResourceSchema | null; };
   parent_origin_entity: { __type: "Relationship"; __resource: OriginEntityResourceSchema | null; };
   child_origin_entities: { __type: "Relationship"; __array: true; __resource: OriginEntityResourceSchema; };
@@ -824,7 +891,7 @@ export type OriginEntityResourceSchema = {
   chat_config: { __type: "Relationship"; __resource: ChatConfigResourceSchema | null; };
   origin_assets: { __type: "Relationship"; __array: true; __resource: OriginAssetResourceSchema; };
   youtube_episodes: { __type: "Relationship"; __array: true; __resource: YoutubeEpisodeResourceSchema; };
-  expert_pages: { __type: "Relationship"; __array: true; __resource: ExpertPageResourceSchema; };
+  apps: { __type: "Relationship"; __array: true; __resource: AppResourceSchema; };
   interview_sessions: { __type: "Relationship"; __array: true; __resource: InterviewSessionResourceSchema; };
   prompt_tools: { __type: "Relationship"; __array: true; __resource: PromptToolResourceSchema; };
   prompt_contexts: { __type: "Relationship"; __array: true; __resource: PromptContextResourceSchema; };
@@ -837,8 +904,9 @@ export type OriginEntityResourceSchema = {
 
 export type OriginEntityAttributesOnlySchema = {
   __type: "Resource";
-  __primitiveFields: "id" | "parent_origin_entity_id" | "name" | "description" | "title" | "personality_traits" | "mission_statement" | "core_values" | "accent_colors" | "tone_of_voice" | "key_messaging" | "target_audience" | "content_themes" | "categories" | "picture_url" | "picture_key" | "banner_url" | "banner_key" | "voice_settings" | "voice_config" | "guardrails_settings" | "engagement_metrics" | "extracted_content" | "ai_generated_summary" | "is_public" | "is_active" | "is_featured" | "slug" | "website_content" | "last_website_scrape" | "page_sections_config" | "content_tabs_config" | "youtube_channel_id" | "youtube_channel_data" | "youtube_sync_settings" | "youtube_content_settings" | "podcast_content_settings" | "podcast_config" | "podcast_button_visible" | "podcast_button_link" | "podcast_button_text" | "podcast_button_color" | "podcast_button_text_color" | "created_at" | "updated_at" | "setup_progress_id";
+  __primitiveFields: "id" | "tenant_id" | "parent_origin_entity_id" | "name" | "description" | "title" | "personality_traits" | "mission_statement" | "core_values" | "accent_colors" | "tone_of_voice" | "key_messaging" | "target_audience" | "content_themes" | "categories" | "picture_url" | "picture_key" | "banner_url" | "banner_key" | "voice_settings" | "voice_config" | "guardrails_settings" | "engagement_metrics" | "extracted_content" | "ai_generated_summary" | "is_public" | "is_active" | "is_featured" | "slug" | "website_content" | "last_website_scrape" | "page_sections_config" | "content_tabs_config" | "youtube_channel_id" | "youtube_channel_data" | "youtube_sync_settings" | "youtube_content_settings" | "podcast_content_settings" | "podcast_config" | "podcast_button_visible" | "podcast_button_link" | "podcast_button_text" | "podcast_button_color" | "podcast_button_text_color" | "created_at" | "updated_at" | "setup_progress_id";
   id: UUID;
+  tenant_id: UUID;
   parent_origin_entity_id: UUID | null;
   name: string;
   description: string | null;
@@ -1946,12 +2014,81 @@ export type YoutubeEpisodeAttributesOnlySchema = {
 };
 
 
+export type TenantFilterInput = {
+  and?: Array<TenantFilterInput>;
+  or?: Array<TenantFilterInput>;
+  not?: Array<TenantFilterInput>;
+
+  id?: {
+    eq?: UUID;
+    not_eq?: UUID;
+    in?: Array<UUID>;
+  };
+
+  name?: {
+    eq?: string;
+    not_eq?: string;
+    in?: Array<string>;
+  };
+
+  slug?: {
+    eq?: string;
+    not_eq?: string;
+    in?: Array<string>;
+  };
+
+  status?: {
+    eq?: "active" | "archived";
+    not_eq?: "active" | "archived";
+    in?: Array<"active" | "archived">;
+  };
+
+  archived_at?: {
+    eq?: UtcDateTimeUsec;
+    not_eq?: UtcDateTimeUsec;
+    greater_than?: UtcDateTimeUsec;
+    greater_than_or_equal?: UtcDateTimeUsec;
+    less_than?: UtcDateTimeUsec;
+    less_than_or_equal?: UtcDateTimeUsec;
+    in?: Array<UtcDateTimeUsec>;
+    is_nil?: boolean;
+  };
+
+  created_at?: {
+    eq?: UtcDateTimeUsec;
+    not_eq?: UtcDateTimeUsec;
+    greater_than?: UtcDateTimeUsec;
+    greater_than_or_equal?: UtcDateTimeUsec;
+    less_than?: UtcDateTimeUsec;
+    less_than_or_equal?: UtcDateTimeUsec;
+    in?: Array<UtcDateTimeUsec>;
+  };
+
+  updated_at?: {
+    eq?: UtcDateTimeUsec;
+    not_eq?: UtcDateTimeUsec;
+    greater_than?: UtcDateTimeUsec;
+    greater_than_or_equal?: UtcDateTimeUsec;
+    less_than?: UtcDateTimeUsec;
+    less_than_or_equal?: UtcDateTimeUsec;
+    in?: Array<UtcDateTimeUsec>;
+  };
+
+
+
+};
 export type UserFilterInput = {
   and?: Array<UserFilterInput>;
   or?: Array<UserFilterInput>;
   not?: Array<UserFilterInput>;
 
   id?: {
+    eq?: UUID;
+    not_eq?: UUID;
+    in?: Array<UUID>;
+  };
+
+  tenant_id?: {
     eq?: UUID;
     not_eq?: UUID;
     in?: Array<UUID>;
@@ -2153,6 +2290,8 @@ export type UserFilterInput = {
     is_nil?: boolean;
   };
 
+
+  tenant?: TenantFilterInput;
 
   profile?: UserProfileFilterInput;
 
@@ -2614,10 +2753,10 @@ export type MessageAttachmentFilterInput = {
 
 
 };
-export type ExpertPageFilterInput = {
-  and?: Array<ExpertPageFilterInput>;
-  or?: Array<ExpertPageFilterInput>;
-  not?: Array<ExpertPageFilterInput>;
+export type AppFilterInput = {
+  and?: Array<AppFilterInput>;
+  or?: Array<AppFilterInput>;
+  not?: Array<AppFilterInput>;
 
   id?: {
     eq?: UUID;
@@ -2625,7 +2764,7 @@ export type ExpertPageFilterInput = {
     in?: Array<UUID>;
   };
 
-  page_type?: {
+  app_type?: {
     eq?: string;
     not_eq?: string;
     in?: Array<string>;
@@ -2636,6 +2775,18 @@ export type ExpertPageFilterInput = {
     not_eq?: string;
     in?: Array<string>;
     is_nil?: boolean;
+  };
+
+  slug?: {
+    eq?: string;
+    not_eq?: string;
+    in?: Array<string>;
+  };
+
+  source?: {
+    eq?: string;
+    not_eq?: string;
+    in?: Array<string>;
   };
 
   markdoc_content?: {
@@ -2726,15 +2877,15 @@ export type ExpertPageFilterInput = {
 
   origin_entity?: OriginEntityFilterInput;
 
-  expert_page_libraries?: ExpertPageLibraryFilterInput;
+  app_libraries?: AppLibraryFilterInput;
 
   libraries?: LibraryFilterInput;
 
 };
-export type ExpertPageVersionFilterInput = {
-  and?: Array<ExpertPageVersionFilterInput>;
-  or?: Array<ExpertPageVersionFilterInput>;
-  not?: Array<ExpertPageVersionFilterInput>;
+export type AppVersionFilterInput = {
+  and?: Array<AppVersionFilterInput>;
+  or?: Array<AppVersionFilterInput>;
+  not?: Array<AppVersionFilterInput>;
 
   id?: {
     eq?: UUID;
@@ -2788,13 +2939,13 @@ export type ExpertPageVersionFilterInput = {
   };
 
 
-  version_source?: ExpertPageFilterInput;
+  version_source?: AppFilterInput;
 
 };
-export type ExpertPageLibraryFilterInput = {
-  and?: Array<ExpertPageLibraryFilterInput>;
-  or?: Array<ExpertPageLibraryFilterInput>;
-  not?: Array<ExpertPageLibraryFilterInput>;
+export type AppLibraryFilterInput = {
+  and?: Array<AppLibraryFilterInput>;
+  or?: Array<AppLibraryFilterInput>;
+  not?: Array<AppLibraryFilterInput>;
 
   id?: {
     eq?: UUID;
@@ -2822,7 +2973,7 @@ export type ExpertPageLibraryFilterInput = {
     in?: Array<UtcDateTimeUsec>;
   };
 
-  expert_page_id?: {
+  app_id?: {
     eq?: UUID;
     not_eq?: UUID;
     in?: Array<UUID>;
@@ -2835,7 +2986,7 @@ export type ExpertPageLibraryFilterInput = {
   };
 
 
-  expert_page?: ExpertPageFilterInput;
+  app?: AppFilterInput;
 
   library?: LibraryFilterInput;
 
@@ -2897,6 +3048,74 @@ export type GenerationHistoryEntryFilterInput = {
     not_eq?: string;
     in?: Array<string>;
     is_nil?: boolean;
+  };
+
+
+
+};
+export type AppTemplateFilterInput = {
+  and?: Array<AppTemplateFilterInput>;
+  or?: Array<AppTemplateFilterInput>;
+  not?: Array<AppTemplateFilterInput>;
+
+  id?: {
+    eq?: UUID;
+    not_eq?: UUID;
+    in?: Array<UUID>;
+  };
+
+  name?: {
+    eq?: string;
+    not_eq?: string;
+    in?: Array<string>;
+  };
+
+  description?: {
+    eq?: string;
+    not_eq?: string;
+    in?: Array<string>;
+  };
+
+  app_type?: {
+    eq?: string;
+    not_eq?: string;
+    in?: Array<string>;
+  };
+
+  seed_markdoc_content?: {
+    eq?: string;
+    not_eq?: string;
+    in?: Array<string>;
+  };
+
+  sort_order?: {
+    eq?: number;
+    not_eq?: number;
+    greater_than?: number;
+    greater_than_or_equal?: number;
+    less_than?: number;
+    less_than_or_equal?: number;
+    in?: Array<number>;
+  };
+
+  created_at?: {
+    eq?: UtcDateTimeUsec;
+    not_eq?: UtcDateTimeUsec;
+    greater_than?: UtcDateTimeUsec;
+    greater_than_or_equal?: UtcDateTimeUsec;
+    less_than?: UtcDateTimeUsec;
+    less_than_or_equal?: UtcDateTimeUsec;
+    in?: Array<UtcDateTimeUsec>;
+  };
+
+  updated_at?: {
+    eq?: UtcDateTimeUsec;
+    not_eq?: UtcDateTimeUsec;
+    greater_than?: UtcDateTimeUsec;
+    greater_than_or_equal?: UtcDateTimeUsec;
+    less_than?: UtcDateTimeUsec;
+    less_than_or_equal?: UtcDateTimeUsec;
+    in?: Array<UtcDateTimeUsec>;
   };
 
 
@@ -3865,6 +4084,12 @@ export type OriginEntityFilterInput = {
     in?: Array<UUID>;
   };
 
+  tenant_id?: {
+    eq?: UUID;
+    not_eq?: UUID;
+    in?: Array<UUID>;
+  };
+
   parent_origin_entity_id?: {
     eq?: UUID;
     not_eq?: UUID;
@@ -4227,6 +4452,8 @@ export type OriginEntityFilterInput = {
   };
 
 
+  tenant?: TenantFilterInput;
+
   setup_progress?: SetupProgressFilterInput;
 
   parent_origin_entity?: OriginEntityFilterInput;
@@ -4243,7 +4470,7 @@ export type OriginEntityFilterInput = {
 
   youtube_episodes?: YoutubeEpisodeFilterInput;
 
-  expert_pages?: ExpertPageFilterInput;
+  apps?: AppFilterInput;
 
   interview_sessions?: InterviewSessionFilterInput;
 
@@ -6545,7 +6772,10 @@ export type YoutubeEpisodeFilterInput = {
 };
 
 
-export const userFilterFields = ["id", "instance_id", "aud", "role", "email", "email_confirmed_at", "invited_at", "confirmation_sent_at", "recovery_sent_at", "last_sign_in_at", "raw_app_meta_data", "raw_user_meta_data", "is_super_admin", "created_at", "updated_at", "phone", "phone_confirmed_at", "phone_change_sent_at", "confirmed_at", "deleted_at", "reauthentication_sent_at", "banned_until", "identities", "profile", "origin_entity_memberships", "origin_entities"] as const;
+export const tenantFilterFields = ["id", "name", "slug", "status", "archived_at", "created_at", "updated_at"] as const;
+export type TenantFilterField = (typeof tenantFilterFields)[number];
+
+export const userFilterFields = ["id", "tenant_id", "instance_id", "aud", "role", "email", "email_confirmed_at", "invited_at", "confirmation_sent_at", "recovery_sent_at", "last_sign_in_at", "raw_app_meta_data", "raw_user_meta_data", "is_super_admin", "created_at", "updated_at", "phone", "phone_confirmed_at", "phone_change_sent_at", "confirmed_at", "deleted_at", "reauthentication_sent_at", "banned_until", "tenant", "identities", "profile", "origin_entity_memberships", "origin_entities"] as const;
 export type UserFilterField = (typeof userFilterFields)[number];
 
 export const waitlistEntryFilterFields = ["id", "email", "full_name", "company_name", "role", "interest_areas", "message", "source", "metadata", "status", "invitation_token", "expires_at", "invited_at", "approved_by", "created_at", "updated_at"] as const;
@@ -6560,17 +6790,20 @@ export type PublicMessageFilterField = (typeof publicMessageFilterFields)[number
 export const messageAttachmentFilterFields = ["id", "message_id", "file_name", "file_type", "file_size", "storage_path", "parsed_content", "pending_message_id", "created_at"] as const;
 export type MessageAttachmentFilterField = (typeof messageAttachmentFilterFields)[number];
 
-export const expertPageFilterFields = ["id", "page_type", "title", "markdoc_content", "generation_status", "generation_error", "generation_format", "generation_prompt", "is_published", "meta", "created_at", "updated_at", "origin_entity_id", "generation_history", "has_letta_agent", "origin_entity", "expert_page_libraries", "libraries"] as const;
-export type ExpertPageFilterField = (typeof expertPageFilterFields)[number];
+export const appFilterFields = ["id", "app_type", "title", "slug", "source", "markdoc_content", "generation_status", "generation_error", "generation_format", "generation_prompt", "is_published", "meta", "created_at", "updated_at", "origin_entity_id", "generation_history", "has_letta_agent", "origin_entity", "app_libraries", "libraries"] as const;
+export type AppFilterField = (typeof appFilterFields)[number];
 
-export const expertPageVersionFilterFields = ["id", "version_action_type", "version_action_name", "version_source_id", "changes", "version_inserted_at", "version_updated_at", "version_source"] as const;
-export type ExpertPageVersionFilterField = (typeof expertPageVersionFilterFields)[number];
+export const appVersionFilterFields = ["id", "version_action_type", "version_action_name", "version_source_id", "changes", "version_inserted_at", "version_updated_at", "version_source"] as const;
+export type AppVersionFilterField = (typeof appVersionFilterFields)[number];
 
-export const expertPageLibraryFilterFields = ["id", "created_at", "updated_at", "expert_page_id", "library_id", "expert_page", "library"] as const;
-export type ExpertPageLibraryFilterField = (typeof expertPageLibraryFilterFields)[number];
+export const appLibraryFilterFields = ["id", "created_at", "updated_at", "app_id", "library_id", "app", "library"] as const;
+export type AppLibraryFilterField = (typeof appLibraryFilterFields)[number];
 
 export const generationHistoryEntryFilterFields = ["id", "role", "content", "reasoning", "tool_calls", "tool_return", "tool_return_status", "created_at"] as const;
 export type GenerationHistoryEntryFilterField = (typeof generationHistoryEntryFilterFields)[number];
+
+export const appTemplateFilterFields = ["id", "name", "description", "app_type", "seed_markdoc_content", "sort_order", "created_at", "updated_at"] as const;
+export type AppTemplateFilterField = (typeof appTemplateFilterFields)[number];
 
 export const featureFlagFilterFields = ["id", "feature_name", "enabled", "created_at", "updated_at", "origin_entity_id", "origin_entity"] as const;
 export type FeatureFlagFilterField = (typeof featureFlagFilterFields)[number];
@@ -6593,7 +6826,7 @@ export type OriginsIdentityCustomLinkFilterField = (typeof originsIdentityCustom
 export const originAssetFilterFields = ["id", "asset_type", "asset_url", "asset_key", "asset_name", "asset_metadata", "source_platform", "shared_with_origin_entity_ids", "is_shared_globally", "created_at", "updated_at", "origin_entity_id", "origin_entity"] as const;
 export type OriginAssetFilterField = (typeof originAssetFilterFields)[number];
 
-export const originEntityFilterFields = ["id", "parent_origin_entity_id", "name", "description", "title", "personality_traits", "mission_statement", "core_values", "accent_colors", "tone_of_voice", "key_messaging", "target_audience", "content_themes", "categories", "picture_url", "picture_key", "banner_url", "banner_key", "social_links", "voice_settings", "voice_config", "guardrails_settings", "appearance_config", "public_profile_config", "engagement_metrics", "extracted_content", "ai_generated_summary", "is_public", "is_active", "is_featured", "slug", "website_content", "last_website_scrape", "page_sections_config", "content_tabs_config", "youtube_channel_id", "youtube_channel_data", "youtube_sync_settings", "youtube_content_settings", "podcast_content_settings", "podcast_config", "podcast_button_visible", "podcast_button_link", "podcast_button_text", "podcast_button_color", "podcast_button_text_color", "created_at", "updated_at", "setup_progress_id", "presigned_picture_url", "presigned_banner_url", "scraped_website_content_type", "setup_progress", "parent_origin_entity", "child_origin_entities", "memberships", "soul_config", "chat_config", "origin_assets", "youtube_episodes", "expert_pages", "interview_sessions", "prompt_tools", "prompt_contexts", "feature_flags", "feedbacks", "homepage_cards"] as const;
+export const originEntityFilterFields = ["id", "tenant_id", "parent_origin_entity_id", "name", "description", "title", "personality_traits", "mission_statement", "core_values", "accent_colors", "tone_of_voice", "key_messaging", "target_audience", "content_themes", "categories", "picture_url", "picture_key", "banner_url", "banner_key", "social_links", "voice_settings", "voice_config", "guardrails_settings", "appearance_config", "public_profile_config", "engagement_metrics", "extracted_content", "ai_generated_summary", "is_public", "is_active", "is_featured", "slug", "website_content", "last_website_scrape", "page_sections_config", "content_tabs_config", "youtube_channel_id", "youtube_channel_data", "youtube_sync_settings", "youtube_content_settings", "podcast_content_settings", "podcast_config", "podcast_button_visible", "podcast_button_link", "podcast_button_text", "podcast_button_color", "podcast_button_text_color", "created_at", "updated_at", "setup_progress_id", "presigned_picture_url", "presigned_banner_url", "scraped_website_content_type", "tenant", "setup_progress", "parent_origin_entity", "child_origin_entities", "memberships", "soul_config", "chat_config", "origin_assets", "youtube_episodes", "apps", "interview_sessions", "prompt_tools", "prompt_contexts", "feature_flags", "feedbacks", "homepage_cards"] as const;
 export type OriginEntityFilterField = (typeof originEntityFilterFields)[number];
 
 export const scrapedWebsiteContentFilterFields = ["url", "title", "meta_description", "meta_keywords", "open_graph", "headings", "paragraphs", "text_content", "scraped_at"] as const;
@@ -6681,7 +6914,10 @@ export const youtubeEpisodeFilterFields = ["id", "video_id", "video_url", "title
 export type YoutubeEpisodeFilterField = (typeof youtubeEpisodeFilterFields)[number];
 
 
-export const userSortFields = ["id", "instance_id", "aud", "role", "email", "email_confirmed_at", "invited_at", "confirmation_sent_at", "recovery_sent_at", "last_sign_in_at", "raw_app_meta_data", "raw_user_meta_data", "is_super_admin", "created_at", "updated_at", "phone", "phone_confirmed_at", "phone_change_sent_at", "confirmed_at", "deleted_at", "reauthentication_sent_at", "banned_until"] as const;
+export const tenantSortFields = ["id", "name", "slug", "status", "archived_at", "created_at", "updated_at"] as const;
+export type TenantSortField = (typeof tenantSortFields)[number];
+
+export const userSortFields = ["id", "tenant_id", "instance_id", "aud", "role", "email", "email_confirmed_at", "invited_at", "confirmation_sent_at", "recovery_sent_at", "last_sign_in_at", "raw_app_meta_data", "raw_user_meta_data", "is_super_admin", "created_at", "updated_at", "phone", "phone_confirmed_at", "phone_change_sent_at", "confirmed_at", "deleted_at", "reauthentication_sent_at", "banned_until"] as const;
 export type UserSortField = (typeof userSortFields)[number];
 
 export const waitlistEntrySortFields = ["id", "email", "full_name", "company_name", "role", "interest_areas", "message", "source", "metadata", "status", "invitation_token", "expires_at", "invited_at", "approved_by", "created_at", "updated_at"] as const;
@@ -6696,17 +6932,20 @@ export type PublicMessageSortField = (typeof publicMessageSortFields)[number];
 export const messageAttachmentSortFields = ["id", "message_id", "file_name", "file_type", "file_size", "storage_path", "parsed_content", "pending_message_id", "created_at"] as const;
 export type MessageAttachmentSortField = (typeof messageAttachmentSortFields)[number];
 
-export const expertPageSortFields = ["id", "page_type", "title", "markdoc_content", "generation_status", "generation_error", "generation_format", "generation_prompt", "is_published", "meta", "created_at", "updated_at", "origin_entity_id", "generation_history", "has_letta_agent"] as const;
-export type ExpertPageSortField = (typeof expertPageSortFields)[number];
+export const appSortFields = ["id", "app_type", "title", "slug", "source", "markdoc_content", "generation_status", "generation_error", "generation_format", "generation_prompt", "is_published", "meta", "created_at", "updated_at", "origin_entity_id", "generation_history", "has_letta_agent"] as const;
+export type AppSortField = (typeof appSortFields)[number];
 
-export const expertPageVersionSortFields = ["id", "version_action_type", "version_action_name", "version_source_id", "changes", "version_inserted_at", "version_updated_at"] as const;
-export type ExpertPageVersionSortField = (typeof expertPageVersionSortFields)[number];
+export const appVersionSortFields = ["id", "version_action_type", "version_action_name", "version_source_id", "changes", "version_inserted_at", "version_updated_at"] as const;
+export type AppVersionSortField = (typeof appVersionSortFields)[number];
 
-export const expertPageLibrarySortFields = ["id", "created_at", "updated_at", "expert_page_id", "library_id"] as const;
-export type ExpertPageLibrarySortField = (typeof expertPageLibrarySortFields)[number];
+export const appLibrarySortFields = ["id", "created_at", "updated_at", "app_id", "library_id"] as const;
+export type AppLibrarySortField = (typeof appLibrarySortFields)[number];
 
 export const generationHistoryEntrySortFields = ["id", "role", "content", "reasoning", "tool_calls", "tool_return", "tool_return_status", "created_at"] as const;
 export type GenerationHistoryEntrySortField = (typeof generationHistoryEntrySortFields)[number];
+
+export const appTemplateSortFields = ["id", "name", "description", "app_type", "seed_markdoc_content", "sort_order", "created_at", "updated_at"] as const;
+export type AppTemplateSortField = (typeof appTemplateSortFields)[number];
 
 export const featureFlagSortFields = ["id", "feature_name", "enabled", "created_at", "updated_at", "origin_entity_id"] as const;
 export type FeatureFlagSortField = (typeof featureFlagSortFields)[number];
@@ -6729,7 +6968,7 @@ export type OriginsIdentityCustomLinkSortField = (typeof originsIdentityCustomLi
 export const originAssetSortFields = ["id", "asset_type", "asset_url", "asset_key", "asset_name", "asset_metadata", "source_platform", "shared_with_origin_entity_ids", "is_shared_globally", "created_at", "updated_at", "origin_entity_id"] as const;
 export type OriginAssetSortField = (typeof originAssetSortFields)[number];
 
-export const originEntitySortFields = ["id", "parent_origin_entity_id", "name", "description", "title", "personality_traits", "mission_statement", "core_values", "accent_colors", "tone_of_voice", "key_messaging", "target_audience", "content_themes", "categories", "picture_url", "picture_key", "banner_url", "banner_key", "social_links", "voice_settings", "voice_config", "guardrails_settings", "appearance_config", "public_profile_config", "engagement_metrics", "extracted_content", "ai_generated_summary", "is_public", "is_active", "is_featured", "slug", "website_content", "last_website_scrape", "page_sections_config", "content_tabs_config", "youtube_channel_id", "youtube_channel_data", "youtube_sync_settings", "youtube_content_settings", "podcast_content_settings", "podcast_config", "podcast_button_visible", "podcast_button_link", "podcast_button_text", "podcast_button_color", "podcast_button_text_color", "created_at", "updated_at", "setup_progress_id", "presigned_picture_url", "presigned_banner_url", "scraped_website_content_type"] as const;
+export const originEntitySortFields = ["id", "tenant_id", "parent_origin_entity_id", "name", "description", "title", "personality_traits", "mission_statement", "core_values", "accent_colors", "tone_of_voice", "key_messaging", "target_audience", "content_themes", "categories", "picture_url", "picture_key", "banner_url", "banner_key", "social_links", "voice_settings", "voice_config", "guardrails_settings", "appearance_config", "public_profile_config", "engagement_metrics", "extracted_content", "ai_generated_summary", "is_public", "is_active", "is_featured", "slug", "website_content", "last_website_scrape", "page_sections_config", "content_tabs_config", "youtube_channel_id", "youtube_channel_data", "youtube_sync_settings", "youtube_content_settings", "podcast_content_settings", "podcast_config", "podcast_button_visible", "podcast_button_link", "podcast_button_text", "podcast_button_color", "podcast_button_text_color", "created_at", "updated_at", "setup_progress_id", "presigned_picture_url", "presigned_banner_url", "scraped_website_content_type"] as const;
 export type OriginEntitySortField = (typeof originEntitySortFields)[number];
 
 export const scrapedWebsiteContentSortFields = ["url", "title", "meta_description", "meta_keywords", "open_graph", "headings", "paragraphs", "text_content", "scraped_at"] as const;

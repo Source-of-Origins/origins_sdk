@@ -1,10 +1,10 @@
-defmodule OriginsSdk.ExpertPages.GetExpertPage do
+defmodule OriginsSdk.Accounts.GetTenant do
   @moduledoc """
-  Input + metadata types for `get_expert_page`. Generated — do not edit by hand.
+  Input + metadata types for `get_tenant`. Generated — do not edit by hand.
   """
 
   defmodule Input do
-    @moduledoc "Required arguments for `get_expert_page`."
+    @moduledoc "Required arguments for `get_tenant`."
 
     @type t :: %__MODULE__{
           id: String.t()

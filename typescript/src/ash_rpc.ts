@@ -3,7 +3,7 @@
 
 import { Channel } from "phoenix";
 
-import type { AshRpcError, ChatBindingFilterInput, ChatBindingResourceSchema, ChatBindingSortField, ChatConfigFilterInput, ChatConfigResourceSchema, ChatConfigSortField, ConditionalPaginatedResult, ConditionalPaginatedResultMixed, Decimal, DriveConnectionFilterInput, DriveConnectionResourceSchema, DriveConnectionSortField, ExpertPageFilterInput, ExpertPageLibraryFilterInput, ExpertPageLibraryResourceSchema, ExpertPageLibrarySortField, ExpertPageResourceSchema, ExpertPageSortField, ExpertPageVersionFilterInput, ExpertPageVersionResourceSchema, ExpertPageVersionSortField, FeatureFlagFilterInput, FeatureFlagResourceSchema, FeatureFlagSortField, FeedbackFilterInput, FeedbackResourceSchema, FeedbackSortField, GithubConnectionFilterInput, GithubConnectionResourceSchema, GithubConnectionSortField, HomepageCardFilterInput, HomepageCardResourceSchema, HomepageCardSortField, InferResult, InterviewGeneratedContentFilterInput, InterviewGeneratedContentResourceSchema, InterviewGeneratedContentSortField, InterviewSessionFilterInput, InterviewSessionResourceSchema, InterviewSessionSortField, InterviewTurnResourceSchema, LibraryAccessGrantFilterInput, LibraryAccessGrantResourceSchema, LibraryAccessGrantSortField, LibraryFileFilterInput, LibraryFileResourceSchema, LibraryFileSortField, LibraryFilterInput, LibraryResourceSchema, LibrarySortField, OriginAssetFilterInput, OriginAssetResourceSchema, OriginAssetSortField, OriginEntityFilterInput, OriginEntityMembershipFilterInput, OriginEntityMembershipResourceSchema, OriginEntityMembershipSortField, OriginEntityResourceSchema, OriginEntitySortField, OriginsIdentityAppearanceConfigInputSchema, OriginsIdentityPromptContextGuardrailConfigInputSchema, OriginsIdentityPublicProfileConfigInputSchema, OriginsIdentitySocialLinkInputSchema, OriginsIdentitySoulConfigCommunicationStyleInputSchema, OriginsIdentitySoulConfigExperienceSettingsInputSchema, OriginsIdentitySoulConfigResponseFormatPreferencesInputSchema, PodcastConfigFilterInput, PodcastConfigResourceSchema, PodcastConfigSortField, PodcastEpisodeSettingsFilterInput, PodcastEpisodeSettingsResourceSchema, PodcastEpisodeSettingsSortField, PromptContextFilterInput, PromptContextResourceSchema, PromptContextSortField, PromptToolFilterInput, PromptToolResourceSchema, PromptToolSortField, PublicConversationFilterInput, PublicConversationResourceSchema, PublicConversationSortField, ScrapedWebsiteContentResourceSchema, SetupProgressFilterInput, SetupProgressResourceSchema, SetupProgressSortField, SortString, SoulConfigFilterInput, SoulConfigResourceSchema, SoulConfigSortField, UUID, UnifiedFieldSelection, UserFilterInput, UserProfileFilterInput, UserProfileResourceSchema, UserProfileSortField, UserResourceSchema, UserSortField, UtcDateTimeUsec, ValidationResult, WaitlistEntryFilterInput, WaitlistEntryResourceSchema, WaitlistEntrySortField, YoutubeEpisodeFilterInput, YoutubeEpisodeResourceSchema, YoutubeEpisodeSortField } from "./ash_types";
+import type { AppFilterInput, AppLibraryFilterInput, AppLibraryResourceSchema, AppLibrarySortField, AppResourceSchema, AppSortField, AppTemplateFilterInput, AppTemplateResourceSchema, AppTemplateSortField, AppVersionFilterInput, AppVersionResourceSchema, AppVersionSortField, AshRpcError, ChatBindingFilterInput, ChatBindingResourceSchema, ChatBindingSortField, ChatConfigFilterInput, ChatConfigResourceSchema, ChatConfigSortField, ConditionalPaginatedResult, ConditionalPaginatedResultMixed, Decimal, DriveConnectionFilterInput, DriveConnectionResourceSchema, DriveConnectionSortField, FeatureFlagFilterInput, FeatureFlagResourceSchema, FeatureFlagSortField, FeedbackFilterInput, FeedbackResourceSchema, FeedbackSortField, GithubConnectionFilterInput, GithubConnectionResourceSchema, GithubConnectionSortField, HomepageCardFilterInput, HomepageCardResourceSchema, HomepageCardSortField, InferResult, InterviewGeneratedContentFilterInput, InterviewGeneratedContentResourceSchema, InterviewGeneratedContentSortField, InterviewSessionFilterInput, InterviewSessionResourceSchema, InterviewSessionSortField, InterviewTurnResourceSchema, LibraryAccessGrantFilterInput, LibraryAccessGrantResourceSchema, LibraryAccessGrantSortField, LibraryFileFilterInput, LibraryFileResourceSchema, LibraryFileSortField, LibraryFilterInput, LibraryResourceSchema, LibrarySortField, OriginAssetFilterInput, OriginAssetResourceSchema, OriginAssetSortField, OriginEntityFilterInput, OriginEntityMembershipFilterInput, OriginEntityMembershipResourceSchema, OriginEntityMembershipSortField, OriginEntityResourceSchema, OriginEntitySortField, OriginsIdentityAppearanceConfigInputSchema, OriginsIdentityPromptContextGuardrailConfigInputSchema, OriginsIdentityPublicProfileConfigInputSchema, OriginsIdentitySocialLinkInputSchema, OriginsIdentitySoulConfigCommunicationStyleInputSchema, OriginsIdentitySoulConfigExperienceSettingsInputSchema, OriginsIdentitySoulConfigResponseFormatPreferencesInputSchema, PodcastConfigFilterInput, PodcastConfigResourceSchema, PodcastConfigSortField, PodcastEpisodeSettingsFilterInput, PodcastEpisodeSettingsResourceSchema, PodcastEpisodeSettingsSortField, PromptContextFilterInput, PromptContextResourceSchema, PromptContextSortField, PromptToolFilterInput, PromptToolResourceSchema, PromptToolSortField, PublicConversationFilterInput, PublicConversationResourceSchema, PublicConversationSortField, ScrapedWebsiteContentResourceSchema, SetupProgressFilterInput, SetupProgressResourceSchema, SetupProgressSortField, SortString, SoulConfigFilterInput, SoulConfigResourceSchema, SoulConfigSortField, TenantResourceSchema, UUID, UnifiedFieldSelection, UserFilterInput, UserProfileFilterInput, UserProfileResourceSchema, UserProfileSortField, UserResourceSchema, UserSortField, UtcDateTimeUsec, ValidationResult, WaitlistEntryFilterInput, WaitlistEntryResourceSchema, WaitlistEntrySortField, YoutubeEpisodeFilterInput, YoutubeEpisodeResourceSchema, YoutubeEpisodeSortField } from "./ash_types";
 export type * from "./ash_types";
 
 // Helper Functions
@@ -343,6 +343,134 @@ export async function executeValidationChannelPush<T>(
     });
 }
 
+
+
+export type GetTenantInput = {
+  id: UUID;
+};
+
+export type GetTenantFields = UnifiedFieldSelection<TenantResourceSchema>[];
+export type InferGetTenantResult<
+  Fields extends GetTenantFields,
+> = InferResult<TenantResourceSchema, Fields>;
+
+export type GetTenantResult<Fields extends GetTenantFields> = | { success: true; data: InferGetTenantResult<Fields>; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Read Tenant records
+ *
+ * @ashActionType :read
+ */
+export async function get_tenant<Fields extends GetTenantFields>(
+  config: {
+  tenant?: string;
+  input: GetTenantInput;
+  fields: Fields;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<GetTenantResult<Fields>> {
+  const payload = {
+    action: "get_tenant",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input,
+    ...(config.fields !== undefined && { fields: config.fields })
+  };
+
+  return executeActionRpcRequest<GetTenantResult<Fields>>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Read Tenant records
+ *
+ * @ashActionType :read
+ * @validation true
+ */
+export async function validate_get_tenant(
+  config: {
+  tenant?: string;
+  input: GetTenantInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "get_tenant",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Read Tenant records
+ *
+ * @ashActionType :read
+ * @validation true
+ */
+export async function validate_get_tenant_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  input: GetTenantInput;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "get_tenant",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Read Tenant records
+ *
+ * @ashActionType :read
+ */
+export async function get_tenant_channel<Fields extends GetTenantFields>(config: {
+  channel: Channel;
+  tenant?: string;
+  input: GetTenantInput;
+  fields: Fields;
+  result_handler: (result: GetTenantResult<Fields>) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<GetTenantResult<Fields>>(
+    config.channel,
+    {
+    action: "get_tenant",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input,
+    ...(config.fields !== undefined && { fields: config.fields })
+  },
+    config.timeout,
+    config
+  );
+}
 
 
 export type GetCurrentUserFields = UnifiedFieldSelection<UserResourceSchema>[];
@@ -3392,9 +3520,11 @@ export async function upload_chat_attachment_channel(config: {
 }
 
 
-export type CreateExpertPageInput = {
-  page_type: string;
+export type CreateAppInput = {
+  app_type: string;
   title?: string | null;
+  slug: string;
+  source?: string;
   markdoc_content?: string;
   generation_status?: string;
   generation_error?: string | null;
@@ -3405,40 +3535,40 @@ export type CreateExpertPageInput = {
   origin_entity_id: UUID;
 };
 
-export type CreateExpertPageFields = UnifiedFieldSelection<ExpertPageResourceSchema>[];
+export type CreateAppFields = UnifiedFieldSelection<AppResourceSchema>[];
 
-export type InferCreateExpertPageResult<
-  Fields extends CreateExpertPageFields | undefined,
-> = InferResult<ExpertPageResourceSchema, Fields>;
+export type InferCreateAppResult<
+  Fields extends CreateAppFields | undefined,
+> = InferResult<AppResourceSchema, Fields>;
 
-export type CreateExpertPageResult<Fields extends CreateExpertPageFields | undefined = undefined> = | { success: true; data: InferCreateExpertPageResult<Fields>; }
+export type CreateAppResult<Fields extends CreateAppFields | undefined = undefined> = | { success: true; data: InferCreateAppResult<Fields>; }
 | { success: false; errors: AshRpcError[]; }
 
 ;
 
 /**
- * Create a new ExpertPage
+ * Create a new App
  *
  * @ashActionType :create
  */
-export async function create_expert_page<Fields extends CreateExpertPageFields | undefined = undefined>(
+export async function create_app<Fields extends CreateAppFields | undefined = undefined>(
   config: {
   tenant?: string;
-  input: CreateExpertPageInput;
+  input: CreateAppInput;
   fields?: Fields;
   headers?: Record<string, string>;
   fetchOptions?: RequestInit;
   customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }
-): Promise<CreateExpertPageResult<Fields extends undefined ? [] : Fields>> {
+): Promise<CreateAppResult<Fields extends undefined ? [] : Fields>> {
   const payload = {
-    action: "create_expert_page",
+    action: "create_app",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input,
     ...(config.fields !== undefined && { fields: config.fields })
   };
 
-  return executeActionRpcRequest<CreateExpertPageResult<Fields extends undefined ? [] : Fields>>(
+  return executeActionRpcRequest<CreateAppResult<Fields extends undefined ? [] : Fields>>(
     payload,
     config
   );
@@ -3446,22 +3576,22 @@ export async function create_expert_page<Fields extends CreateExpertPageFields |
 
 
 /**
- * Validate: Create a new ExpertPage
+ * Validate: Create a new App
  *
  * @ashActionType :create
  * @validation true
  */
-export async function validate_create_expert_page(
+export async function validate_create_app(
   config: {
   tenant?: string;
-  input: CreateExpertPageInput;
+  input: CreateAppInput;
   headers?: Record<string, string>;
   fetchOptions?: RequestInit;
   customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }
 ): Promise<ValidationResult> {
   const payload = {
-    action: "create_expert_page",
+    action: "create_app",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input
   };
@@ -3474,15 +3604,15 @@ export async function validate_create_expert_page(
 
 
 /**
- * Validate: Create a new ExpertPage
+ * Validate: Create a new App
  *
  * @ashActionType :create
  * @validation true
  */
-export async function validate_create_expert_page_channel(config: {
+export async function validate_create_app_channel(config: {
   channel: Channel;
   tenant?: string;
-  input: CreateExpertPageInput;
+  input: CreateAppInput;
   result_handler: (result: ValidationResult) => void;
   error_handler?: (error: any) => void;
   timeout_handler?: () => void;
@@ -3491,7 +3621,7 @@ export async function validate_create_expert_page_channel(config: {
   executeValidationChannelPush<ValidationResult>(
     config.channel,
     {
-    action: "create_expert_page",
+    action: "create_app",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input
   },
@@ -3502,24 +3632,24 @@ export async function validate_create_expert_page_channel(config: {
 
 
 /**
- * Create a new ExpertPage
+ * Create a new App
  *
  * @ashActionType :create
  */
-export async function create_expert_page_channel<Fields extends CreateExpertPageFields | undefined = undefined>(config: {
+export async function create_app_channel<Fields extends CreateAppFields | undefined = undefined>(config: {
   channel: Channel;
   tenant?: string;
-  input: CreateExpertPageInput;
+  input: CreateAppInput;
   fields?: Fields;
-  result_handler: (result: CreateExpertPageResult<Fields>) => void;
+  result_handler: (result: CreateAppResult<Fields>) => void;
   error_handler?: (error: any) => void;
   timeout_handler?: () => void;
   timeout?: number;
 }) {
-  executeActionChannelPush<CreateExpertPageResult<Fields>>(
+  executeActionChannelPush<CreateAppResult<Fields>>(
     config.channel,
     {
-    action: "create_expert_page",
+    action: "create_app",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input,
     ...(config.fields !== undefined && { fields: config.fields })
@@ -3530,43 +3660,417 @@ export async function create_expert_page_channel<Fields extends CreateExpertPage
 }
 
 
-export type GetExpertPageInput = {
+export type CreateAppFromTemplateInput = {
+  origin_entity_id: UUID;
+  template_id: UUID;
+};
+
+export type CreateAppFromTemplateFields = UnifiedFieldSelection<AppResourceSchema>[];
+
+export type InferCreateAppFromTemplateResult<
+  Fields extends CreateAppFromTemplateFields | undefined,
+> = InferResult<AppResourceSchema, Fields>;
+
+export type CreateAppFromTemplateResult<Fields extends CreateAppFromTemplateFields | undefined = undefined> = | { success: true; data: InferCreateAppFromTemplateResult<Fields>; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Create a new App
+ *
+ * @ashActionType :create
+ */
+export async function create_app_from_template<Fields extends CreateAppFromTemplateFields | undefined = undefined>(
+  config: {
+  tenant?: string;
+  input: CreateAppFromTemplateInput;
+  fields?: Fields;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<CreateAppFromTemplateResult<Fields extends undefined ? [] : Fields>> {
+  const payload = {
+    action: "create_app_from_template",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input,
+    ...(config.fields !== undefined && { fields: config.fields })
+  };
+
+  return executeActionRpcRequest<CreateAppFromTemplateResult<Fields extends undefined ? [] : Fields>>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Create a new App
+ *
+ * @ashActionType :create
+ * @validation true
+ */
+export async function validate_create_app_from_template(
+  config: {
+  tenant?: string;
+  input: CreateAppFromTemplateInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "create_app_from_template",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Create a new App
+ *
+ * @ashActionType :create
+ * @validation true
+ */
+export async function validate_create_app_from_template_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  input: CreateAppFromTemplateInput;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "create_app_from_template",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Create a new App
+ *
+ * @ashActionType :create
+ */
+export async function create_app_from_template_channel<Fields extends CreateAppFromTemplateFields | undefined = undefined>(config: {
+  channel: Channel;
+  tenant?: string;
+  input: CreateAppFromTemplateInput;
+  fields?: Fields;
+  result_handler: (result: CreateAppFromTemplateResult<Fields>) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<CreateAppFromTemplateResult<Fields>>(
+    config.channel,
+    {
+    action: "create_app_from_template",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input,
+    ...(config.fields !== undefined && { fields: config.fields })
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+export type DestroyAppResult = | { success: true; data: {}; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Delete a App
+ *
+ * @ashActionType :destroy
+ */
+export async function destroy_app(
+  config: {
+  tenant?: string;
+  identity: UUID;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<DestroyAppResult> {
+  const payload = {
+    action: "destroy_app",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    identity: config.identity
+  };
+
+  return executeActionRpcRequest<DestroyAppResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Delete a App
+ *
+ * @ashActionType :destroy
+ * @validation true
+ */
+export async function validate_destroy_app(
+  config: {
+  tenant?: string;
+  identity: UUID | string;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "destroy_app",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    identity: config.identity
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Delete a App
+ *
+ * @ashActionType :destroy
+ * @validation true
+ */
+export async function validate_destroy_app_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  identity: UUID | string;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "destroy_app",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    identity: config.identity
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Delete a App
+ *
+ * @ashActionType :destroy
+ */
+export async function destroy_app_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  identity: UUID;
+  result_handler: (result: DestroyAppResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<DestroyAppResult>(
+    config.channel,
+    {
+    action: "destroy_app",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    identity: config.identity
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+export type DuplicateAppInput = {
+  source_id: UUID;
+};
+
+export type DuplicateAppFields = UnifiedFieldSelection<AppResourceSchema>[];
+
+export type InferDuplicateAppResult<
+  Fields extends DuplicateAppFields | undefined,
+> = InferResult<AppResourceSchema, Fields>;
+
+export type DuplicateAppResult<Fields extends DuplicateAppFields | undefined = undefined> = | { success: true; data: InferDuplicateAppResult<Fields>; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Create a new App
+ *
+ * @ashActionType :create
+ */
+export async function duplicate_app<Fields extends DuplicateAppFields | undefined = undefined>(
+  config: {
+  tenant?: string;
+  input: DuplicateAppInput;
+  fields?: Fields;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<DuplicateAppResult<Fields extends undefined ? [] : Fields>> {
+  const payload = {
+    action: "duplicate_app",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input,
+    ...(config.fields !== undefined && { fields: config.fields })
+  };
+
+  return executeActionRpcRequest<DuplicateAppResult<Fields extends undefined ? [] : Fields>>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Create a new App
+ *
+ * @ashActionType :create
+ * @validation true
+ */
+export async function validate_duplicate_app(
+  config: {
+  tenant?: string;
+  input: DuplicateAppInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "duplicate_app",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Create a new App
+ *
+ * @ashActionType :create
+ * @validation true
+ */
+export async function validate_duplicate_app_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  input: DuplicateAppInput;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "duplicate_app",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Create a new App
+ *
+ * @ashActionType :create
+ */
+export async function duplicate_app_channel<Fields extends DuplicateAppFields | undefined = undefined>(config: {
+  channel: Channel;
+  tenant?: string;
+  input: DuplicateAppInput;
+  fields?: Fields;
+  result_handler: (result: DuplicateAppResult<Fields>) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<DuplicateAppResult<Fields>>(
+    config.channel,
+    {
+    action: "duplicate_app",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input,
+    ...(config.fields !== undefined && { fields: config.fields })
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+export type GetAppInput = {
   id: UUID;
 };
 
-export type GetExpertPageFields = UnifiedFieldSelection<ExpertPageResourceSchema>[];
-export type InferGetExpertPageResult<
-  Fields extends GetExpertPageFields,
-> = InferResult<ExpertPageResourceSchema, Fields>;
+export type GetAppFields = UnifiedFieldSelection<AppResourceSchema>[];
+export type InferGetAppResult<
+  Fields extends GetAppFields,
+> = InferResult<AppResourceSchema, Fields>;
 
-export type GetExpertPageResult<Fields extends GetExpertPageFields> = | { success: true; data: InferGetExpertPageResult<Fields>; }
+export type GetAppResult<Fields extends GetAppFields> = | { success: true; data: InferGetAppResult<Fields>; }
 | { success: false; errors: AshRpcError[]; }
 
 ;
 
 /**
- * Read ExpertPage records
+ * Read App records
  *
  * @ashActionType :read
  */
-export async function get_expert_page<Fields extends GetExpertPageFields>(
+export async function get_app<Fields extends GetAppFields>(
   config: {
   tenant?: string;
-  input: GetExpertPageInput;
+  input: GetAppInput;
   fields: Fields;
   headers?: Record<string, string>;
   fetchOptions?: RequestInit;
   customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }
-): Promise<GetExpertPageResult<Fields>> {
+): Promise<GetAppResult<Fields>> {
   const payload = {
-    action: "get_expert_page",
+    action: "get_app",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input,
     ...(config.fields !== undefined && { fields: config.fields })
   };
 
-  return executeActionRpcRequest<GetExpertPageResult<Fields>>(
+  return executeActionRpcRequest<GetAppResult<Fields>>(
     payload,
     config
   );
@@ -3574,22 +4078,22 @@ export async function get_expert_page<Fields extends GetExpertPageFields>(
 
 
 /**
- * Validate: Read ExpertPage records
+ * Validate: Read App records
  *
  * @ashActionType :read
  * @validation true
  */
-export async function validate_get_expert_page(
+export async function validate_get_app(
   config: {
   tenant?: string;
-  input: GetExpertPageInput;
+  input: GetAppInput;
   headers?: Record<string, string>;
   fetchOptions?: RequestInit;
   customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }
 ): Promise<ValidationResult> {
   const payload = {
-    action: "get_expert_page",
+    action: "get_app",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input
   };
@@ -3602,15 +4106,15 @@ export async function validate_get_expert_page(
 
 
 /**
- * Validate: Read ExpertPage records
+ * Validate: Read App records
  *
  * @ashActionType :read
  * @validation true
  */
-export async function validate_get_expert_page_channel(config: {
+export async function validate_get_app_channel(config: {
   channel: Channel;
   tenant?: string;
-  input: GetExpertPageInput;
+  input: GetAppInput;
   result_handler: (result: ValidationResult) => void;
   error_handler?: (error: any) => void;
   timeout_handler?: () => void;
@@ -3619,7 +4123,7 @@ export async function validate_get_expert_page_channel(config: {
   executeValidationChannelPush<ValidationResult>(
     config.channel,
     {
-    action: "get_expert_page",
+    action: "get_app",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input
   },
@@ -3630,24 +4134,24 @@ export async function validate_get_expert_page_channel(config: {
 
 
 /**
- * Read ExpertPage records
+ * Read App records
  *
  * @ashActionType :read
  */
-export async function get_expert_page_channel<Fields extends GetExpertPageFields>(config: {
+export async function get_app_channel<Fields extends GetAppFields>(config: {
   channel: Channel;
   tenant?: string;
-  input: GetExpertPageInput;
+  input: GetAppInput;
   fields: Fields;
-  result_handler: (result: GetExpertPageResult<Fields>) => void;
+  result_handler: (result: GetAppResult<Fields>) => void;
   error_handler?: (error: any) => void;
   timeout_handler?: () => void;
   timeout?: number;
 }) {
-  executeActionChannelPush<GetExpertPageResult<Fields>>(
+  executeActionChannelPush<GetAppResult<Fields>>(
     config.channel,
     {
-    action: "get_expert_page",
+    action: "get_app",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input,
     ...(config.fields !== undefined && { fields: config.fields })
@@ -3658,39 +4162,169 @@ export async function get_expert_page_channel<Fields extends GetExpertPageFields
 }
 
 
-export type ListExpertPagesForOriginInput = {
+export type GetAppForOriginTypeAndSlugInput = {
+  origin_entity_id: UUID;
+  app_type: string;
+  slug: string;
+};
+
+export type GetAppForOriginTypeAndSlugFields = UnifiedFieldSelection<AppResourceSchema>[];
+export type InferGetAppForOriginTypeAndSlugResult<
+  Fields extends GetAppForOriginTypeAndSlugFields,
+> = InferResult<AppResourceSchema, Fields>;
+
+export type GetAppForOriginTypeAndSlugResult<Fields extends GetAppForOriginTypeAndSlugFields> = | { success: true; data: InferGetAppForOriginTypeAndSlugResult<Fields>; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Read App records
+ *
+ * @ashActionType :read
+ */
+export async function get_app_for_origin_type_and_slug<Fields extends GetAppForOriginTypeAndSlugFields>(
+  config: {
+  tenant?: string;
+  input: GetAppForOriginTypeAndSlugInput;
+  fields: Fields;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<GetAppForOriginTypeAndSlugResult<Fields>> {
+  const payload = {
+    action: "get_app_for_origin_type_and_slug",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input,
+    ...(config.fields !== undefined && { fields: config.fields })
+  };
+
+  return executeActionRpcRequest<GetAppForOriginTypeAndSlugResult<Fields>>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Read App records
+ *
+ * @ashActionType :read
+ * @validation true
+ */
+export async function validate_get_app_for_origin_type_and_slug(
+  config: {
+  tenant?: string;
+  input: GetAppForOriginTypeAndSlugInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "get_app_for_origin_type_and_slug",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Read App records
+ *
+ * @ashActionType :read
+ * @validation true
+ */
+export async function validate_get_app_for_origin_type_and_slug_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  input: GetAppForOriginTypeAndSlugInput;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "get_app_for_origin_type_and_slug",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Read App records
+ *
+ * @ashActionType :read
+ */
+export async function get_app_for_origin_type_and_slug_channel<Fields extends GetAppForOriginTypeAndSlugFields>(config: {
+  channel: Channel;
+  tenant?: string;
+  input: GetAppForOriginTypeAndSlugInput;
+  fields: Fields;
+  result_handler: (result: GetAppForOriginTypeAndSlugResult<Fields>) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<GetAppForOriginTypeAndSlugResult<Fields>>(
+    config.channel,
+    {
+    action: "get_app_for_origin_type_and_slug",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input,
+    ...(config.fields !== undefined && { fields: config.fields })
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+export type ListAppsForOriginInput = {
   origin_entity_id: UUID;
 };
 
-export type ListExpertPagesForOriginFields = UnifiedFieldSelection<ExpertPageResourceSchema>[];
-export type InferListExpertPagesForOriginResult<
-  Fields extends ListExpertPagesForOriginFields,
-> = Array<InferResult<ExpertPageResourceSchema, Fields>>;
+export type ListAppsForOriginFields = UnifiedFieldSelection<AppResourceSchema>[];
+export type InferListAppsForOriginResult<
+  Fields extends ListAppsForOriginFields,
+> = Array<InferResult<AppResourceSchema, Fields>>;
 
-export type ListExpertPagesForOriginResult<Fields extends ListExpertPagesForOriginFields> = | { success: true; data: InferListExpertPagesForOriginResult<Fields>; }
+export type ListAppsForOriginResult<Fields extends ListAppsForOriginFields> = | { success: true; data: InferListAppsForOriginResult<Fields>; }
 | { success: false; errors: AshRpcError[]; }
 
 ;
 
 /**
- * Read ExpertPage records
+ * Read App records
  *
  * @ashActionType :read
  */
-export async function list_expert_pages_for_origin<Fields extends ListExpertPagesForOriginFields>(
+export async function list_apps_for_origin<Fields extends ListAppsForOriginFields>(
   config: {
   tenant?: string;
-  input: ListExpertPagesForOriginInput;
+  input: ListAppsForOriginInput;
   fields: Fields;
-  filter?: ExpertPageFilterInput;
-  sort?: SortString<ExpertPageSortField> | SortString<ExpertPageSortField>[];
+  filter?: AppFilterInput;
+  sort?: SortString<AppSortField> | SortString<AppSortField>[];
   headers?: Record<string, string>;
   fetchOptions?: RequestInit;
   customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }
-): Promise<ListExpertPagesForOriginResult<Fields>> {
+): Promise<ListAppsForOriginResult<Fields>> {
   const payload = {
-    action: "list_expert_pages_for_origin",
+    action: "list_apps_for_origin",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input,
     ...(config.fields !== undefined && { fields: config.fields }),
@@ -3698,7 +4332,7 @@ export async function list_expert_pages_for_origin<Fields extends ListExpertPage
     ...(config.sort && { sort: Array.isArray(config.sort) ? config.sort.join(",") : config.sort })
   };
 
-  return executeActionRpcRequest<ListExpertPagesForOriginResult<Fields>>(
+  return executeActionRpcRequest<ListAppsForOriginResult<Fields>>(
     payload,
     config
   );
@@ -3706,22 +4340,22 @@ export async function list_expert_pages_for_origin<Fields extends ListExpertPage
 
 
 /**
- * Validate: Read ExpertPage records
+ * Validate: Read App records
  *
  * @ashActionType :read
  * @validation true
  */
-export async function validate_list_expert_pages_for_origin(
+export async function validate_list_apps_for_origin(
   config: {
   tenant?: string;
-  input: ListExpertPagesForOriginInput;
+  input: ListAppsForOriginInput;
   headers?: Record<string, string>;
   fetchOptions?: RequestInit;
   customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }
 ): Promise<ValidationResult> {
   const payload = {
-    action: "list_expert_pages_for_origin",
+    action: "list_apps_for_origin",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input
   };
@@ -3734,15 +4368,15 @@ export async function validate_list_expert_pages_for_origin(
 
 
 /**
- * Validate: Read ExpertPage records
+ * Validate: Read App records
  *
  * @ashActionType :read
  * @validation true
  */
-export async function validate_list_expert_pages_for_origin_channel(config: {
+export async function validate_list_apps_for_origin_channel(config: {
   channel: Channel;
   tenant?: string;
-  input: ListExpertPagesForOriginInput;
+  input: ListAppsForOriginInput;
   result_handler: (result: ValidationResult) => void;
   error_handler?: (error: any) => void;
   timeout_handler?: () => void;
@@ -3751,7 +4385,7 @@ export async function validate_list_expert_pages_for_origin_channel(config: {
   executeValidationChannelPush<ValidationResult>(
     config.channel,
     {
-    action: "list_expert_pages_for_origin",
+    action: "list_apps_for_origin",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input
   },
@@ -3762,26 +4396,26 @@ export async function validate_list_expert_pages_for_origin_channel(config: {
 
 
 /**
- * Read ExpertPage records
+ * Read App records
  *
  * @ashActionType :read
  */
-export async function list_expert_pages_for_origin_channel<Fields extends ListExpertPagesForOriginFields>(config: {
+export async function list_apps_for_origin_channel<Fields extends ListAppsForOriginFields>(config: {
   channel: Channel;
   tenant?: string;
-  input: ListExpertPagesForOriginInput;
+  input: ListAppsForOriginInput;
   fields: Fields;
-  filter?: ExpertPageFilterInput;
-  sort?: SortString<ExpertPageSortField> | SortString<ExpertPageSortField>[];
-  result_handler: (result: ListExpertPagesForOriginResult<Fields>) => void;
+  filter?: AppFilterInput;
+  sort?: SortString<AppSortField> | SortString<AppSortField>[];
+  result_handler: (result: ListAppsForOriginResult<Fields>) => void;
   error_handler?: (error: any) => void;
   timeout_handler?: () => void;
   timeout?: number;
 }) {
-  executeActionChannelPush<ListExpertPagesForOriginResult<Fields>>(
+  executeActionChannelPush<ListAppsForOriginResult<Fields>>(
     config.channel,
     {
-    action: "list_expert_pages_for_origin",
+    action: "list_apps_for_origin",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input,
     ...(config.fields !== undefined && { fields: config.fields }),
@@ -3794,38 +4428,48 @@ export async function list_expert_pages_for_origin_channel<Fields extends ListEx
 }
 
 
-export type ParseAppBlocksInput = {
-  content: string;
+export type ListAppsForOriginAndTypeInput = {
+  origin_entity_id: UUID;
+  app_type: string;
 };
 
-export type InferParseAppBlocksResult = Record<string, any>;
+export type ListAppsForOriginAndTypeFields = UnifiedFieldSelection<AppResourceSchema>[];
+export type InferListAppsForOriginAndTypeResult<
+  Fields extends ListAppsForOriginAndTypeFields,
+> = Array<InferResult<AppResourceSchema, Fields>>;
 
-export type ParseAppBlocksResult = | { success: true; data: InferParseAppBlocksResult; }
+export type ListAppsForOriginAndTypeResult<Fields extends ListAppsForOriginAndTypeFields> = | { success: true; data: InferListAppsForOriginAndTypeResult<Fields>; }
 | { success: false; errors: AshRpcError[]; }
 
 ;
 
 /**
- * Execute generic action on ExpertPage
+ * Read App records
  *
- * @ashActionType :action
+ * @ashActionType :read
  */
-export async function parse_app_blocks(
+export async function list_apps_for_origin_and_type<Fields extends ListAppsForOriginAndTypeFields>(
   config: {
   tenant?: string;
-  input: ParseAppBlocksInput;
+  input: ListAppsForOriginAndTypeInput;
+  fields: Fields;
+  filter?: AppFilterInput;
+  sort?: SortString<AppSortField> | SortString<AppSortField>[];
   headers?: Record<string, string>;
   fetchOptions?: RequestInit;
   customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }
-): Promise<ParseAppBlocksResult> {
+): Promise<ListAppsForOriginAndTypeResult<Fields>> {
   const payload = {
-    action: "parse_app_blocks",
+    action: "list_apps_for_origin_and_type",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
-    input: config.input
+    input: config.input,
+    ...(config.fields !== undefined && { fields: config.fields }),
+    ...(config.filter && { filter: config.filter }),
+    ...(config.sort && { sort: Array.isArray(config.sort) ? config.sort.join(",") : config.sort })
   };
 
-  return executeActionRpcRequest<ParseAppBlocksResult>(
+  return executeActionRpcRequest<ListAppsForOriginAndTypeResult<Fields>>(
     payload,
     config
   );
@@ -3833,22 +4477,22 @@ export async function parse_app_blocks(
 
 
 /**
- * Validate: Execute generic action on ExpertPage
+ * Validate: Read App records
  *
- * @ashActionType :action
+ * @ashActionType :read
  * @validation true
  */
-export async function validate_parse_app_blocks(
+export async function validate_list_apps_for_origin_and_type(
   config: {
   tenant?: string;
-  input: ParseAppBlocksInput;
+  input: ListAppsForOriginAndTypeInput;
   headers?: Record<string, string>;
   fetchOptions?: RequestInit;
   customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }
 ): Promise<ValidationResult> {
   const payload = {
-    action: "parse_app_blocks",
+    action: "list_apps_for_origin_and_type",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input
   };
@@ -3861,15 +4505,15 @@ export async function validate_parse_app_blocks(
 
 
 /**
- * Validate: Execute generic action on ExpertPage
+ * Validate: Read App records
  *
- * @ashActionType :action
+ * @ashActionType :read
  * @validation true
  */
-export async function validate_parse_app_blocks_channel(config: {
+export async function validate_list_apps_for_origin_and_type_channel(config: {
   channel: Channel;
   tenant?: string;
-  input: ParseAppBlocksInput;
+  input: ListAppsForOriginAndTypeInput;
   result_handler: (result: ValidationResult) => void;
   error_handler?: (error: any) => void;
   timeout_handler?: () => void;
@@ -3878,7 +4522,7 @@ export async function validate_parse_app_blocks_channel(config: {
   executeValidationChannelPush<ValidationResult>(
     config.channel,
     {
-    action: "parse_app_blocks",
+    action: "list_apps_for_origin_and_type",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input
   },
@@ -3889,25 +4533,31 @@ export async function validate_parse_app_blocks_channel(config: {
 
 
 /**
- * Execute generic action on ExpertPage
+ * Read App records
  *
- * @ashActionType :action
+ * @ashActionType :read
  */
-export async function parse_app_blocks_channel(config: {
+export async function list_apps_for_origin_and_type_channel<Fields extends ListAppsForOriginAndTypeFields>(config: {
   channel: Channel;
   tenant?: string;
-  input: ParseAppBlocksInput;
-  result_handler: (result: ParseAppBlocksResult) => void;
+  input: ListAppsForOriginAndTypeInput;
+  fields: Fields;
+  filter?: AppFilterInput;
+  sort?: SortString<AppSortField> | SortString<AppSortField>[];
+  result_handler: (result: ListAppsForOriginAndTypeResult<Fields>) => void;
   error_handler?: (error: any) => void;
   timeout_handler?: () => void;
   timeout?: number;
 }) {
-  executeActionChannelPush<ParseAppBlocksResult>(
+  executeActionChannelPush<ListAppsForOriginAndTypeResult<Fields>>(
     config.channel,
     {
-    action: "parse_app_blocks",
+    action: "list_apps_for_origin_and_type",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
-    input: config.input
+    input: config.input,
+    ...(config.fields !== undefined && { fields: config.fields }),
+    ...(config.filter && { filter: config.filter }),
+    ...(config.sort && { sort: Array.isArray(config.sort) ? config.sort.join(",") : config.sort })
   },
     config.timeout,
     config
@@ -3927,7 +4577,7 @@ export type ParseAssessmentBlocksResult = | { success: true; data: InferParseAss
 ;
 
 /**
- * Execute generic action on ExpertPage
+ * Execute generic action on App
  *
  * @ashActionType :action
  */
@@ -3954,7 +4604,7 @@ export async function parse_assessment_blocks(
 
 
 /**
- * Validate: Execute generic action on ExpertPage
+ * Validate: Execute generic action on App
  *
  * @ashActionType :action
  * @validation true
@@ -3982,7 +4632,7 @@ export async function validate_parse_assessment_blocks(
 
 
 /**
- * Validate: Execute generic action on ExpertPage
+ * Validate: Execute generic action on App
  *
  * @ashActionType :action
  * @validation true
@@ -4010,7 +4660,7 @@ export async function validate_parse_assessment_blocks_channel(config: {
 
 
 /**
- * Execute generic action on ExpertPage
+ * Execute generic action on App
  *
  * @ashActionType :action
  */
@@ -4036,38 +4686,38 @@ export async function parse_assessment_blocks_channel(config: {
 }
 
 
-export type ParseExpertBlocksInput = {
+export type ParseCourseBlocksInput = {
   content: string;
 };
 
-export type InferParseExpertBlocksResult = Record<string, any>;
+export type InferParseCourseBlocksResult = Record<string, any>;
 
-export type ParseExpertBlocksResult = | { success: true; data: InferParseExpertBlocksResult; }
+export type ParseCourseBlocksResult = | { success: true; data: InferParseCourseBlocksResult; }
 | { success: false; errors: AshRpcError[]; }
 
 ;
 
 /**
- * Execute generic action on ExpertPage
+ * Execute generic action on App
  *
  * @ashActionType :action
  */
-export async function parse_expert_blocks(
+export async function parse_course_blocks(
   config: {
   tenant?: string;
-  input: ParseExpertBlocksInput;
+  input: ParseCourseBlocksInput;
   headers?: Record<string, string>;
   fetchOptions?: RequestInit;
   customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }
-): Promise<ParseExpertBlocksResult> {
+): Promise<ParseCourseBlocksResult> {
   const payload = {
-    action: "parse_expert_blocks",
+    action: "parse_course_blocks",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input
   };
 
-  return executeActionRpcRequest<ParseExpertBlocksResult>(
+  return executeActionRpcRequest<ParseCourseBlocksResult>(
     payload,
     config
   );
@@ -4075,22 +4725,22 @@ export async function parse_expert_blocks(
 
 
 /**
- * Validate: Execute generic action on ExpertPage
+ * Validate: Execute generic action on App
  *
  * @ashActionType :action
  * @validation true
  */
-export async function validate_parse_expert_blocks(
+export async function validate_parse_course_blocks(
   config: {
   tenant?: string;
-  input: ParseExpertBlocksInput;
+  input: ParseCourseBlocksInput;
   headers?: Record<string, string>;
   fetchOptions?: RequestInit;
   customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }
 ): Promise<ValidationResult> {
   const payload = {
-    action: "parse_expert_blocks",
+    action: "parse_course_blocks",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input
   };
@@ -4103,15 +4753,15 @@ export async function validate_parse_expert_blocks(
 
 
 /**
- * Validate: Execute generic action on ExpertPage
+ * Validate: Execute generic action on App
  *
  * @ashActionType :action
  * @validation true
  */
-export async function validate_parse_expert_blocks_channel(config: {
+export async function validate_parse_course_blocks_channel(config: {
   channel: Channel;
   tenant?: string;
-  input: ParseExpertBlocksInput;
+  input: ParseCourseBlocksInput;
   result_handler: (result: ValidationResult) => void;
   error_handler?: (error: any) => void;
   timeout_handler?: () => void;
@@ -4120,7 +4770,7 @@ export async function validate_parse_expert_blocks_channel(config: {
   executeValidationChannelPush<ValidationResult>(
     config.channel,
     {
-    action: "parse_expert_blocks",
+    action: "parse_course_blocks",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input
   },
@@ -4131,23 +4781,23 @@ export async function validate_parse_expert_blocks_channel(config: {
 
 
 /**
- * Execute generic action on ExpertPage
+ * Execute generic action on App
  *
  * @ashActionType :action
  */
-export async function parse_expert_blocks_channel(config: {
+export async function parse_course_blocks_channel(config: {
   channel: Channel;
   tenant?: string;
-  input: ParseExpertBlocksInput;
-  result_handler: (result: ParseExpertBlocksResult) => void;
+  input: ParseCourseBlocksInput;
+  result_handler: (result: ParseCourseBlocksResult) => void;
   error_handler?: (error: any) => void;
   timeout_handler?: () => void;
   timeout?: number;
 }) {
-  executeActionChannelPush<ParseExpertBlocksResult>(
+  executeActionChannelPush<ParseCourseBlocksResult>(
     config.channel,
     {
-    action: "parse_expert_blocks",
+    action: "parse_course_blocks",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input
   },
@@ -4157,46 +4807,167 @@ export async function parse_expert_blocks_channel(config: {
 }
 
 
-export type RestoreExpertPageVersionInput = {
+export type ParseLandingBlocksInput = {
+  content: string;
+};
+
+export type InferParseLandingBlocksResult = Record<string, any>;
+
+export type ParseLandingBlocksResult = | { success: true; data: InferParseLandingBlocksResult; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Execute generic action on App
+ *
+ * @ashActionType :action
+ */
+export async function parse_landing_blocks(
+  config: {
+  tenant?: string;
+  input: ParseLandingBlocksInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ParseLandingBlocksResult> {
+  const payload = {
+    action: "parse_landing_blocks",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  };
+
+  return executeActionRpcRequest<ParseLandingBlocksResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Execute generic action on App
+ *
+ * @ashActionType :action
+ * @validation true
+ */
+export async function validate_parse_landing_blocks(
+  config: {
+  tenant?: string;
+  input: ParseLandingBlocksInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "parse_landing_blocks",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Execute generic action on App
+ *
+ * @ashActionType :action
+ * @validation true
+ */
+export async function validate_parse_landing_blocks_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  input: ParseLandingBlocksInput;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "parse_landing_blocks",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Execute generic action on App
+ *
+ * @ashActionType :action
+ */
+export async function parse_landing_blocks_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  input: ParseLandingBlocksInput;
+  result_handler: (result: ParseLandingBlocksResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<ParseLandingBlocksResult>(
+    config.channel,
+    {
+    action: "parse_landing_blocks",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+export type RestoreAppVersionInput = {
   version_id: UUID;
 };
 
-export type RestoreExpertPageVersionFields = UnifiedFieldSelection<ExpertPageResourceSchema>[];
+export type RestoreAppVersionFields = UnifiedFieldSelection<AppResourceSchema>[];
 
-export type InferRestoreExpertPageVersionResult<
-  Fields extends RestoreExpertPageVersionFields | undefined,
-> = InferResult<ExpertPageResourceSchema, Fields>;
+export type InferRestoreAppVersionResult<
+  Fields extends RestoreAppVersionFields | undefined,
+> = InferResult<AppResourceSchema, Fields>;
 
-export type RestoreExpertPageVersionResult<Fields extends RestoreExpertPageVersionFields | undefined = undefined> = | { success: true; data: InferRestoreExpertPageVersionResult<Fields>; }
+export type RestoreAppVersionResult<Fields extends RestoreAppVersionFields | undefined = undefined> = | { success: true; data: InferRestoreAppVersionResult<Fields>; }
 | { success: false; errors: AshRpcError[]; }
 
 ;
 
 /**
- * Update an existing ExpertPage
+ * Update an existing App
  *
  * @ashActionType :update
  */
-export async function restore_expert_page_version<Fields extends RestoreExpertPageVersionFields | undefined = undefined>(
+export async function restore_app_version<Fields extends RestoreAppVersionFields | undefined = undefined>(
   config: {
   tenant?: string;
   identity: UUID;
-  input: RestoreExpertPageVersionInput;
+  input: RestoreAppVersionInput;
   fields?: Fields;
   headers?: Record<string, string>;
   fetchOptions?: RequestInit;
   customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }
-): Promise<RestoreExpertPageVersionResult<Fields extends undefined ? [] : Fields>> {
+): Promise<RestoreAppVersionResult<Fields extends undefined ? [] : Fields>> {
   const payload = {
-    action: "restore_expert_page_version",
+    action: "restore_app_version",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     identity: config.identity,
     input: config.input,
     ...(config.fields !== undefined && { fields: config.fields })
   };
 
-  return executeActionRpcRequest<RestoreExpertPageVersionResult<Fields extends undefined ? [] : Fields>>(
+  return executeActionRpcRequest<RestoreAppVersionResult<Fields extends undefined ? [] : Fields>>(
     payload,
     config
   );
@@ -4204,23 +4975,23 @@ export async function restore_expert_page_version<Fields extends RestoreExpertPa
 
 
 /**
- * Validate: Update an existing ExpertPage
+ * Validate: Update an existing App
  *
  * @ashActionType :update
  * @validation true
  */
-export async function validate_restore_expert_page_version(
+export async function validate_restore_app_version(
   config: {
   tenant?: string;
   identity: UUID | string;
-  input: RestoreExpertPageVersionInput;
+  input: RestoreAppVersionInput;
   headers?: Record<string, string>;
   fetchOptions?: RequestInit;
   customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }
 ): Promise<ValidationResult> {
   const payload = {
-    action: "restore_expert_page_version",
+    action: "restore_app_version",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     identity: config.identity,
     input: config.input
@@ -4234,16 +5005,16 @@ export async function validate_restore_expert_page_version(
 
 
 /**
- * Validate: Update an existing ExpertPage
+ * Validate: Update an existing App
  *
  * @ashActionType :update
  * @validation true
  */
-export async function validate_restore_expert_page_version_channel(config: {
+export async function validate_restore_app_version_channel(config: {
   channel: Channel;
   tenant?: string;
   identity: UUID | string;
-  input: RestoreExpertPageVersionInput;
+  input: RestoreAppVersionInput;
   result_handler: (result: ValidationResult) => void;
   error_handler?: (error: any) => void;
   timeout_handler?: () => void;
@@ -4252,7 +5023,7 @@ export async function validate_restore_expert_page_version_channel(config: {
   executeValidationChannelPush<ValidationResult>(
     config.channel,
     {
-    action: "restore_expert_page_version",
+    action: "restore_app_version",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     identity: config.identity,
     input: config.input
@@ -4264,25 +5035,25 @@ export async function validate_restore_expert_page_version_channel(config: {
 
 
 /**
- * Update an existing ExpertPage
+ * Update an existing App
  *
  * @ashActionType :update
  */
-export async function restore_expert_page_version_channel<Fields extends RestoreExpertPageVersionFields | undefined = undefined>(config: {
+export async function restore_app_version_channel<Fields extends RestoreAppVersionFields | undefined = undefined>(config: {
   channel: Channel;
   tenant?: string;
   identity: UUID;
-  input: RestoreExpertPageVersionInput;
+  input: RestoreAppVersionInput;
   fields?: Fields;
-  result_handler: (result: RestoreExpertPageVersionResult<Fields>) => void;
+  result_handler: (result: RestoreAppVersionResult<Fields>) => void;
   error_handler?: (error: any) => void;
   timeout_handler?: () => void;
   timeout?: number;
 }) {
-  executeActionChannelPush<RestoreExpertPageVersionResult<Fields>>(
+  executeActionChannelPush<RestoreAppVersionResult<Fields>>(
     config.channel,
     {
-    action: "restore_expert_page_version",
+    action: "restore_app_version",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     identity: config.identity,
     input: config.input,
@@ -4294,39 +5065,39 @@ export async function restore_expert_page_version_channel<Fields extends Restore
 }
 
 
-export type SendExpertChatMessageInput = {
-  expert_page_id: UUID;
+export type SendAppChatMessageInput = {
+  app_id: UUID;
   message: string;
 };
 
-export type InferSendExpertChatMessageResult = Record<string, any>;
+export type InferSendAppChatMessageResult = Record<string, any>;
 
-export type SendExpertChatMessageResult = | { success: true; data: InferSendExpertChatMessageResult; }
+export type SendAppChatMessageResult = | { success: true; data: InferSendAppChatMessageResult; }
 | { success: false; errors: AshRpcError[]; }
 
 ;
 
 /**
- * Execute generic action on ExpertPage
+ * Execute generic action on App
  *
  * @ashActionType :action
  */
-export async function send_expert_chat_message(
+export async function send_app_chat_message(
   config: {
   tenant?: string;
-  input: SendExpertChatMessageInput;
+  input: SendAppChatMessageInput;
   headers?: Record<string, string>;
   fetchOptions?: RequestInit;
   customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }
-): Promise<SendExpertChatMessageResult> {
+): Promise<SendAppChatMessageResult> {
   const payload = {
-    action: "send_expert_chat_message",
+    action: "send_app_chat_message",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input
   };
 
-  return executeActionRpcRequest<SendExpertChatMessageResult>(
+  return executeActionRpcRequest<SendAppChatMessageResult>(
     payload,
     config
   );
@@ -4334,22 +5105,22 @@ export async function send_expert_chat_message(
 
 
 /**
- * Validate: Execute generic action on ExpertPage
+ * Validate: Execute generic action on App
  *
  * @ashActionType :action
  * @validation true
  */
-export async function validate_send_expert_chat_message(
+export async function validate_send_app_chat_message(
   config: {
   tenant?: string;
-  input: SendExpertChatMessageInput;
+  input: SendAppChatMessageInput;
   headers?: Record<string, string>;
   fetchOptions?: RequestInit;
   customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }
 ): Promise<ValidationResult> {
   const payload = {
-    action: "send_expert_chat_message",
+    action: "send_app_chat_message",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input
   };
@@ -4362,15 +5133,15 @@ export async function validate_send_expert_chat_message(
 
 
 /**
- * Validate: Execute generic action on ExpertPage
+ * Validate: Execute generic action on App
  *
  * @ashActionType :action
  * @validation true
  */
-export async function validate_send_expert_chat_message_channel(config: {
+export async function validate_send_app_chat_message_channel(config: {
   channel: Channel;
   tenant?: string;
-  input: SendExpertChatMessageInput;
+  input: SendAppChatMessageInput;
   result_handler: (result: ValidationResult) => void;
   error_handler?: (error: any) => void;
   timeout_handler?: () => void;
@@ -4379,7 +5150,7 @@ export async function validate_send_expert_chat_message_channel(config: {
   executeValidationChannelPush<ValidationResult>(
     config.channel,
     {
-    action: "send_expert_chat_message",
+    action: "send_app_chat_message",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input
   },
@@ -4390,23 +5161,23 @@ export async function validate_send_expert_chat_message_channel(config: {
 
 
 /**
- * Execute generic action on ExpertPage
+ * Execute generic action on App
  *
  * @ashActionType :action
  */
-export async function send_expert_chat_message_channel(config: {
+export async function send_app_chat_message_channel(config: {
   channel: Channel;
   tenant?: string;
-  input: SendExpertChatMessageInput;
-  result_handler: (result: SendExpertChatMessageResult) => void;
+  input: SendAppChatMessageInput;
+  result_handler: (result: SendAppChatMessageResult) => void;
   error_handler?: (error: any) => void;
   timeout_handler?: () => void;
   timeout?: number;
 }) {
-  executeActionChannelPush<SendExpertChatMessageResult>(
+  executeActionChannelPush<SendAppChatMessageResult>(
     config.channel,
     {
-    action: "send_expert_chat_message",
+    action: "send_app_chat_message",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input
   },
@@ -4416,9 +5187,11 @@ export async function send_expert_chat_message_channel(config: {
 }
 
 
-export type UpdateExpertPageInput = {
-  page_type?: string;
+export type UpdateAppInput = {
+  app_type?: string;
   title?: string | null;
+  slug?: string;
+  source?: string;
   markdoc_content?: string;
   generation_status?: string;
   generation_error?: string | null;
@@ -4429,42 +5202,42 @@ export type UpdateExpertPageInput = {
   origin_entity_id?: UUID;
 };
 
-export type UpdateExpertPageFields = UnifiedFieldSelection<ExpertPageResourceSchema>[];
+export type UpdateAppFields = UnifiedFieldSelection<AppResourceSchema>[];
 
-export type InferUpdateExpertPageResult<
-  Fields extends UpdateExpertPageFields | undefined,
-> = InferResult<ExpertPageResourceSchema, Fields>;
+export type InferUpdateAppResult<
+  Fields extends UpdateAppFields | undefined,
+> = InferResult<AppResourceSchema, Fields>;
 
-export type UpdateExpertPageResult<Fields extends UpdateExpertPageFields | undefined = undefined> = | { success: true; data: InferUpdateExpertPageResult<Fields>; }
+export type UpdateAppResult<Fields extends UpdateAppFields | undefined = undefined> = | { success: true; data: InferUpdateAppResult<Fields>; }
 | { success: false; errors: AshRpcError[]; }
 
 ;
 
 /**
- * Update an existing ExpertPage
+ * Update an existing App
  *
  * @ashActionType :update
  */
-export async function update_expert_page<Fields extends UpdateExpertPageFields | undefined = undefined>(
+export async function update_app<Fields extends UpdateAppFields | undefined = undefined>(
   config: {
   tenant?: string;
   identity: UUID;
-  input: UpdateExpertPageInput;
+  input: UpdateAppInput;
   fields?: Fields;
   headers?: Record<string, string>;
   fetchOptions?: RequestInit;
   customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }
-): Promise<UpdateExpertPageResult<Fields extends undefined ? [] : Fields>> {
+): Promise<UpdateAppResult<Fields extends undefined ? [] : Fields>> {
   const payload = {
-    action: "update_expert_page",
+    action: "update_app",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     identity: config.identity,
     input: config.input,
     ...(config.fields !== undefined && { fields: config.fields })
   };
 
-  return executeActionRpcRequest<UpdateExpertPageResult<Fields extends undefined ? [] : Fields>>(
+  return executeActionRpcRequest<UpdateAppResult<Fields extends undefined ? [] : Fields>>(
     payload,
     config
   );
@@ -4472,23 +5245,23 @@ export async function update_expert_page<Fields extends UpdateExpertPageFields |
 
 
 /**
- * Validate: Update an existing ExpertPage
+ * Validate: Update an existing App
  *
  * @ashActionType :update
  * @validation true
  */
-export async function validate_update_expert_page(
+export async function validate_update_app(
   config: {
   tenant?: string;
   identity: UUID | string;
-  input: UpdateExpertPageInput;
+  input: UpdateAppInput;
   headers?: Record<string, string>;
   fetchOptions?: RequestInit;
   customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }
 ): Promise<ValidationResult> {
   const payload = {
-    action: "update_expert_page",
+    action: "update_app",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     identity: config.identity,
     input: config.input
@@ -4502,16 +5275,16 @@ export async function validate_update_expert_page(
 
 
 /**
- * Validate: Update an existing ExpertPage
+ * Validate: Update an existing App
  *
  * @ashActionType :update
  * @validation true
  */
-export async function validate_update_expert_page_channel(config: {
+export async function validate_update_app_channel(config: {
   channel: Channel;
   tenant?: string;
   identity: UUID | string;
-  input: UpdateExpertPageInput;
+  input: UpdateAppInput;
   result_handler: (result: ValidationResult) => void;
   error_handler?: (error: any) => void;
   timeout_handler?: () => void;
@@ -4520,7 +5293,7 @@ export async function validate_update_expert_page_channel(config: {
   executeValidationChannelPush<ValidationResult>(
     config.channel,
     {
-    action: "update_expert_page",
+    action: "update_app",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     identity: config.identity,
     input: config.input
@@ -4532,25 +5305,25 @@ export async function validate_update_expert_page_channel(config: {
 
 
 /**
- * Update an existing ExpertPage
+ * Update an existing App
  *
  * @ashActionType :update
  */
-export async function update_expert_page_channel<Fields extends UpdateExpertPageFields | undefined = undefined>(config: {
+export async function update_app_channel<Fields extends UpdateAppFields | undefined = undefined>(config: {
   channel: Channel;
   tenant?: string;
   identity: UUID;
-  input: UpdateExpertPageInput;
+  input: UpdateAppInput;
   fields?: Fields;
-  result_handler: (result: UpdateExpertPageResult<Fields>) => void;
+  result_handler: (result: UpdateAppResult<Fields>) => void;
   error_handler?: (error: any) => void;
   timeout_handler?: () => void;
   timeout?: number;
 }) {
-  executeActionChannelPush<UpdateExpertPageResult<Fields>>(
+  executeActionChannelPush<UpdateAppResult<Fields>>(
     config.channel,
     {
-    action: "update_expert_page",
+    action: "update_app",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     identity: config.identity,
     input: config.input,
@@ -4562,21 +5335,21 @@ export async function update_expert_page_channel<Fields extends UpdateExpertPage
 }
 
 
-export type ListExpertPageVersionsFields = UnifiedFieldSelection<ExpertPageVersionResourceSchema>[];
+export type ListAppVersionsFields = UnifiedFieldSelection<AppVersionResourceSchema>[];
 
 
-export type InferListExpertPageVersionsResult<
-  Fields extends ListExpertPageVersionsFields | undefined,
-  Page extends ListExpertPageVersionsConfig["page"] = undefined
-> = ConditionalPaginatedResultMixed<Page, Array<InferResult<ExpertPageVersionResourceSchema, Fields>>, {
-  results: Array<InferResult<ExpertPageVersionResourceSchema, Fields>>;
+export type InferListAppVersionsResult<
+  Fields extends ListAppVersionsFields | undefined,
+  Page extends ListAppVersionsConfig["page"] = undefined
+> = ConditionalPaginatedResultMixed<Page, Array<InferResult<AppVersionResourceSchema, Fields>>, {
+  results: Array<InferResult<AppVersionResourceSchema, Fields>>;
   has_more: boolean;
   limit: number;
   offset: number;
   count?: number | null;
   type: "offset";
 }, {
-  results: Array<InferResult<ExpertPageVersionResourceSchema, Fields>>;
+  results: Array<InferResult<AppVersionResourceSchema, Fields>>;
   has_more: boolean;
   limit: number;
   after: string | null;
@@ -4587,11 +5360,11 @@ export type InferListExpertPageVersionsResult<
   type: "keyset";
 }>;
 
-export type ListExpertPageVersionsConfig = {
+export type ListAppVersionsConfig = {
   tenant?: string;
-  fields: ListExpertPageVersionsFields;
-  filter?: ExpertPageVersionFilterInput;
-  sort?: SortString<ExpertPageVersionSortField> | SortString<ExpertPageVersionSortField>[];
+  fields: ListAppVersionsFields;
+  filter?: AppVersionFilterInput;
+  sort?: SortString<AppVersionSortField> | SortString<AppVersionSortField>[];
   page?: (
     {
       limit?: number;
@@ -4608,7 +5381,7 @@ export type ListExpertPageVersionsConfig = {
   customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 };
 
-export type ListExpertPageVersionsResult<Fields extends ListExpertPageVersionsFields, Page extends ListExpertPageVersionsConfig["page"] = undefined> = | { success: true; data: InferListExpertPageVersionsResult<Fields, Page>; }
+export type ListAppVersionsResult<Fields extends ListAppVersionsFields, Page extends ListAppVersionsConfig["page"] = undefined> = | { success: true; data: InferListAppVersionsResult<Fields, Page>; }
 | { success: false; errors: AshRpcError[]; }
 
 ;
@@ -4618,11 +5391,11 @@ export type ListExpertPageVersionsResult<Fields extends ListExpertPageVersionsFi
  *
  * @ashActionType :read
  */
-export async function list_expert_page_versions<Fields extends ListExpertPageVersionsFields, Config extends ListExpertPageVersionsConfig = ListExpertPageVersionsConfig>(
+export async function list_app_versions<Fields extends ListAppVersionsFields, Config extends ListAppVersionsConfig = ListAppVersionsConfig>(
   config: Config & { fields: Fields }
-): Promise<ListExpertPageVersionsResult<Fields, Config["page"]>> {
+): Promise<ListAppVersionsResult<Fields, Config["page"]>> {
   const payload = {
-    action: "list_expert_page_versions",
+    action: "list_app_versions",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     ...(config.fields !== undefined && { fields: config.fields }),
     ...(config.filter && { filter: config.filter }),
@@ -4630,7 +5403,7 @@ export async function list_expert_page_versions<Fields extends ListExpertPageVer
     ...(config.page && { page: config.page })
   };
 
-  return executeActionRpcRequest<ListExpertPageVersionsResult<Fields, Config["page"]>>(
+  return executeActionRpcRequest<ListAppVersionsResult<Fields, Config["page"]>>(
     payload,
     config
   );
@@ -4643,7 +5416,7 @@ export async function list_expert_page_versions<Fields extends ListExpertPageVer
  * @ashActionType :read
  * @validation true
  */
-export async function validate_list_expert_page_versions(
+export async function validate_list_app_versions(
   config: {
   tenant?: string;
   headers?: Record<string, string>;
@@ -4652,7 +5425,7 @@ export async function validate_list_expert_page_versions(
 }
 ): Promise<ValidationResult> {
   const payload = {
-    action: "list_expert_page_versions",
+    action: "list_app_versions",
     ...(config.tenant !== undefined && { tenant: config.tenant })
   };
 
@@ -4669,7 +5442,7 @@ export async function validate_list_expert_page_versions(
  * @ashActionType :read
  * @validation true
  */
-export async function validate_list_expert_page_versions_channel(config: {
+export async function validate_list_app_versions_channel(config: {
   channel: Channel;
   tenant?: string;
   result_handler: (result: ValidationResult) => void;
@@ -4680,7 +5453,7 @@ export async function validate_list_expert_page_versions_channel(config: {
   executeValidationChannelPush<ValidationResult>(
     config.channel,
     {
-    action: "list_expert_page_versions",
+    action: "list_app_versions",
     ...(config.tenant !== undefined && { tenant: config.tenant })
   },
     config.timeout,
@@ -4694,12 +5467,12 @@ export async function validate_list_expert_page_versions_channel(config: {
  *
  * @ashActionType :read
  */
-export async function list_expert_page_versions_channel<Fields extends ListExpertPageVersionsFields>(config: {
+export async function list_app_versions_channel<Fields extends ListAppVersionsFields>(config: {
   channel: Channel;
   tenant?: string;
   fields: Fields;
-  filter?: ExpertPageVersionFilterInput;
-  sort?: SortString<ExpertPageVersionSortField> | SortString<ExpertPageVersionSortField>[];
+  filter?: AppVersionFilterInput;
+  sort?: SortString<AppVersionSortField> | SortString<AppVersionSortField>[];
   page?: (
     {
       limit?: number;
@@ -4711,15 +5484,15 @@ export async function list_expert_page_versions_channel<Fields extends ListExper
       before?: string;
     }
   );
-  result_handler: (result: ListExpertPageVersionsResult<Fields>) => void;
+  result_handler: (result: ListAppVersionsResult<Fields>) => void;
   error_handler?: (error: any) => void;
   timeout_handler?: () => void;
   timeout?: number;
 }) {
-  executeActionChannelPush<ListExpertPageVersionsResult<Fields>>(
+  executeActionChannelPush<ListAppVersionsResult<Fields>>(
     config.channel,
     {
-    action: "list_expert_page_versions",
+    action: "list_app_versions",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     ...(config.fields !== undefined && { fields: config.fields }),
     ...(config.filter && { filter: config.filter }),
@@ -4732,45 +5505,45 @@ export async function list_expert_page_versions_channel<Fields extends ListExper
 }
 
 
-export type AttachLibraryToExpertPageInput = {
-  expert_page_id: UUID;
+export type AttachLibraryToAppInput = {
+  app_id: UUID;
   library_id: UUID;
 };
 
-export type AttachLibraryToExpertPageFields = UnifiedFieldSelection<ExpertPageLibraryResourceSchema>[];
+export type AttachLibraryToAppFields = UnifiedFieldSelection<AppLibraryResourceSchema>[];
 
-export type InferAttachLibraryToExpertPageResult<
-  Fields extends AttachLibraryToExpertPageFields | undefined,
-> = InferResult<ExpertPageLibraryResourceSchema, Fields>;
+export type InferAttachLibraryToAppResult<
+  Fields extends AttachLibraryToAppFields | undefined,
+> = InferResult<AppLibraryResourceSchema, Fields>;
 
-export type AttachLibraryToExpertPageResult<Fields extends AttachLibraryToExpertPageFields | undefined = undefined> = | { success: true; data: InferAttachLibraryToExpertPageResult<Fields>; }
+export type AttachLibraryToAppResult<Fields extends AttachLibraryToAppFields | undefined = undefined> = | { success: true; data: InferAttachLibraryToAppResult<Fields>; }
 | { success: false; errors: AshRpcError[]; }
 
 ;
 
 /**
- * Create a new ExpertPageLibrary
+ * Create a new AppLibrary
  *
  * @ashActionType :create
  */
-export async function attach_library_to_expert_page<Fields extends AttachLibraryToExpertPageFields | undefined = undefined>(
+export async function attach_library_to_app<Fields extends AttachLibraryToAppFields | undefined = undefined>(
   config: {
   tenant?: string;
-  input: AttachLibraryToExpertPageInput;
+  input: AttachLibraryToAppInput;
   fields?: Fields;
   headers?: Record<string, string>;
   fetchOptions?: RequestInit;
   customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }
-): Promise<AttachLibraryToExpertPageResult<Fields extends undefined ? [] : Fields>> {
+): Promise<AttachLibraryToAppResult<Fields extends undefined ? [] : Fields>> {
   const payload = {
-    action: "attach_library_to_expert_page",
+    action: "attach_library_to_app",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input,
     ...(config.fields !== undefined && { fields: config.fields })
   };
 
-  return executeActionRpcRequest<AttachLibraryToExpertPageResult<Fields extends undefined ? [] : Fields>>(
+  return executeActionRpcRequest<AttachLibraryToAppResult<Fields extends undefined ? [] : Fields>>(
     payload,
     config
   );
@@ -4778,22 +5551,22 @@ export async function attach_library_to_expert_page<Fields extends AttachLibrary
 
 
 /**
- * Validate: Create a new ExpertPageLibrary
+ * Validate: Create a new AppLibrary
  *
  * @ashActionType :create
  * @validation true
  */
-export async function validate_attach_library_to_expert_page(
+export async function validate_attach_library_to_app(
   config: {
   tenant?: string;
-  input: AttachLibraryToExpertPageInput;
+  input: AttachLibraryToAppInput;
   headers?: Record<string, string>;
   fetchOptions?: RequestInit;
   customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }
 ): Promise<ValidationResult> {
   const payload = {
-    action: "attach_library_to_expert_page",
+    action: "attach_library_to_app",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input
   };
@@ -4806,15 +5579,15 @@ export async function validate_attach_library_to_expert_page(
 
 
 /**
- * Validate: Create a new ExpertPageLibrary
+ * Validate: Create a new AppLibrary
  *
  * @ashActionType :create
  * @validation true
  */
-export async function validate_attach_library_to_expert_page_channel(config: {
+export async function validate_attach_library_to_app_channel(config: {
   channel: Channel;
   tenant?: string;
-  input: AttachLibraryToExpertPageInput;
+  input: AttachLibraryToAppInput;
   result_handler: (result: ValidationResult) => void;
   error_handler?: (error: any) => void;
   timeout_handler?: () => void;
@@ -4823,7 +5596,7 @@ export async function validate_attach_library_to_expert_page_channel(config: {
   executeValidationChannelPush<ValidationResult>(
     config.channel,
     {
-    action: "attach_library_to_expert_page",
+    action: "attach_library_to_app",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input
   },
@@ -4834,24 +5607,24 @@ export async function validate_attach_library_to_expert_page_channel(config: {
 
 
 /**
- * Create a new ExpertPageLibrary
+ * Create a new AppLibrary
  *
  * @ashActionType :create
  */
-export async function attach_library_to_expert_page_channel<Fields extends AttachLibraryToExpertPageFields | undefined = undefined>(config: {
+export async function attach_library_to_app_channel<Fields extends AttachLibraryToAppFields | undefined = undefined>(config: {
   channel: Channel;
   tenant?: string;
-  input: AttachLibraryToExpertPageInput;
+  input: AttachLibraryToAppInput;
   fields?: Fields;
-  result_handler: (result: AttachLibraryToExpertPageResult<Fields>) => void;
+  result_handler: (result: AttachLibraryToAppResult<Fields>) => void;
   error_handler?: (error: any) => void;
   timeout_handler?: () => void;
   timeout?: number;
 }) {
-  executeActionChannelPush<AttachLibraryToExpertPageResult<Fields>>(
+  executeActionChannelPush<AttachLibraryToAppResult<Fields>>(
     config.channel,
     {
-    action: "attach_library_to_expert_page",
+    action: "attach_library_to_app",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input,
     ...(config.fields !== undefined && { fields: config.fields })
@@ -4862,17 +5635,17 @@ export async function attach_library_to_expert_page_channel<Fields extends Attac
 }
 
 
-export type DetachLibraryFromExpertPageResult = | { success: true; data: {}; }
+export type DetachLibraryFromAppResult = | { success: true; data: {}; }
 | { success: false; errors: AshRpcError[]; }
 
 ;
 
 /**
- * Delete a ExpertPageLibrary
+ * Delete a AppLibrary
  *
  * @ashActionType :destroy
  */
-export async function detach_library_from_expert_page(
+export async function detach_library_from_app(
   config: {
   tenant?: string;
   identity: UUID;
@@ -4880,14 +5653,14 @@ export async function detach_library_from_expert_page(
   fetchOptions?: RequestInit;
   customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }
-): Promise<DetachLibraryFromExpertPageResult> {
+): Promise<DetachLibraryFromAppResult> {
   const payload = {
-    action: "detach_library_from_expert_page",
+    action: "detach_library_from_app",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     identity: config.identity
   };
 
-  return executeActionRpcRequest<DetachLibraryFromExpertPageResult>(
+  return executeActionRpcRequest<DetachLibraryFromAppResult>(
     payload,
     config
   );
@@ -4895,12 +5668,12 @@ export async function detach_library_from_expert_page(
 
 
 /**
- * Validate: Delete a ExpertPageLibrary
+ * Validate: Delete a AppLibrary
  *
  * @ashActionType :destroy
  * @validation true
  */
-export async function validate_detach_library_from_expert_page(
+export async function validate_detach_library_from_app(
   config: {
   tenant?: string;
   identity: UUID | string;
@@ -4910,7 +5683,7 @@ export async function validate_detach_library_from_expert_page(
 }
 ): Promise<ValidationResult> {
   const payload = {
-    action: "detach_library_from_expert_page",
+    action: "detach_library_from_app",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     identity: config.identity
   };
@@ -4923,12 +5696,12 @@ export async function validate_detach_library_from_expert_page(
 
 
 /**
- * Validate: Delete a ExpertPageLibrary
+ * Validate: Delete a AppLibrary
  *
  * @ashActionType :destroy
  * @validation true
  */
-export async function validate_detach_library_from_expert_page_channel(config: {
+export async function validate_detach_library_from_app_channel(config: {
   channel: Channel;
   tenant?: string;
   identity: UUID | string;
@@ -4940,7 +5713,7 @@ export async function validate_detach_library_from_expert_page_channel(config: {
   executeValidationChannelPush<ValidationResult>(
     config.channel,
     {
-    action: "detach_library_from_expert_page",
+    action: "detach_library_from_app",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     identity: config.identity
   },
@@ -4951,23 +5724,23 @@ export async function validate_detach_library_from_expert_page_channel(config: {
 
 
 /**
- * Delete a ExpertPageLibrary
+ * Delete a AppLibrary
  *
  * @ashActionType :destroy
  */
-export async function detach_library_from_expert_page_channel(config: {
+export async function detach_library_from_app_channel(config: {
   channel: Channel;
   tenant?: string;
   identity: UUID;
-  result_handler: (result: DetachLibraryFromExpertPageResult) => void;
+  result_handler: (result: DetachLibraryFromAppResult) => void;
   error_handler?: (error: any) => void;
   timeout_handler?: () => void;
   timeout?: number;
 }) {
-  executeActionChannelPush<DetachLibraryFromExpertPageResult>(
+  executeActionChannelPush<DetachLibraryFromAppResult>(
     config.channel,
     {
-    action: "detach_library_from_expert_page",
+    action: "detach_library_from_app",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     identity: config.identity
   },
@@ -4977,21 +5750,21 @@ export async function detach_library_from_expert_page_channel(config: {
 }
 
 
-export type ListExpertPageLibrariesFields = UnifiedFieldSelection<ExpertPageLibraryResourceSchema>[];
+export type ListAppLibrariesFields = UnifiedFieldSelection<AppLibraryResourceSchema>[];
 
 
-export type InferListExpertPageLibrariesResult<
-  Fields extends ListExpertPageLibrariesFields | undefined,
-  Page extends ListExpertPageLibrariesConfig["page"] = undefined
-> = ConditionalPaginatedResultMixed<Page, Array<InferResult<ExpertPageLibraryResourceSchema, Fields>>, {
-  results: Array<InferResult<ExpertPageLibraryResourceSchema, Fields>>;
+export type InferListAppLibrariesResult<
+  Fields extends ListAppLibrariesFields | undefined,
+  Page extends ListAppLibrariesConfig["page"] = undefined
+> = ConditionalPaginatedResultMixed<Page, Array<InferResult<AppLibraryResourceSchema, Fields>>, {
+  results: Array<InferResult<AppLibraryResourceSchema, Fields>>;
   has_more: boolean;
   limit: number;
   offset: number;
   count?: number | null;
   type: "offset";
 }, {
-  results: Array<InferResult<ExpertPageLibraryResourceSchema, Fields>>;
+  results: Array<InferResult<AppLibraryResourceSchema, Fields>>;
   has_more: boolean;
   limit: number;
   after: string | null;
@@ -5002,11 +5775,11 @@ export type InferListExpertPageLibrariesResult<
   type: "keyset";
 }>;
 
-export type ListExpertPageLibrariesConfig = {
+export type ListAppLibrariesConfig = {
   tenant?: string;
-  fields: ListExpertPageLibrariesFields;
-  filter?: ExpertPageLibraryFilterInput;
-  sort?: SortString<ExpertPageLibrarySortField> | SortString<ExpertPageLibrarySortField>[];
+  fields: ListAppLibrariesFields;
+  filter?: AppLibraryFilterInput;
+  sort?: SortString<AppLibrarySortField> | SortString<AppLibrarySortField>[];
   page?: (
     {
       limit?: number;
@@ -5023,21 +5796,21 @@ export type ListExpertPageLibrariesConfig = {
   customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 };
 
-export type ListExpertPageLibrariesResult<Fields extends ListExpertPageLibrariesFields, Page extends ListExpertPageLibrariesConfig["page"] = undefined> = | { success: true; data: InferListExpertPageLibrariesResult<Fields, Page>; }
+export type ListAppLibrariesResult<Fields extends ListAppLibrariesFields, Page extends ListAppLibrariesConfig["page"] = undefined> = | { success: true; data: InferListAppLibrariesResult<Fields, Page>; }
 | { success: false; errors: AshRpcError[]; }
 
 ;
 
 /**
- * Read ExpertPageLibrary records
+ * Read AppLibrary records
  *
  * @ashActionType :read
  */
-export async function list_expert_page_libraries<Fields extends ListExpertPageLibrariesFields, Config extends ListExpertPageLibrariesConfig = ListExpertPageLibrariesConfig>(
+export async function list_app_libraries<Fields extends ListAppLibrariesFields, Config extends ListAppLibrariesConfig = ListAppLibrariesConfig>(
   config: Config & { fields: Fields }
-): Promise<ListExpertPageLibrariesResult<Fields, Config["page"]>> {
+): Promise<ListAppLibrariesResult<Fields, Config["page"]>> {
   const payload = {
-    action: "list_expert_page_libraries",
+    action: "list_app_libraries",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     ...(config.fields !== undefined && { fields: config.fields }),
     ...(config.filter && { filter: config.filter }),
@@ -5045,7 +5818,7 @@ export async function list_expert_page_libraries<Fields extends ListExpertPageLi
     ...(config.page && { page: config.page })
   };
 
-  return executeActionRpcRequest<ListExpertPageLibrariesResult<Fields, Config["page"]>>(
+  return executeActionRpcRequest<ListAppLibrariesResult<Fields, Config["page"]>>(
     payload,
     config
   );
@@ -5053,12 +5826,12 @@ export async function list_expert_page_libraries<Fields extends ListExpertPageLi
 
 
 /**
- * Validate: Read ExpertPageLibrary records
+ * Validate: Read AppLibrary records
  *
  * @ashActionType :read
  * @validation true
  */
-export async function validate_list_expert_page_libraries(
+export async function validate_list_app_libraries(
   config: {
   tenant?: string;
   headers?: Record<string, string>;
@@ -5067,7 +5840,7 @@ export async function validate_list_expert_page_libraries(
 }
 ): Promise<ValidationResult> {
   const payload = {
-    action: "list_expert_page_libraries",
+    action: "list_app_libraries",
     ...(config.tenant !== undefined && { tenant: config.tenant })
   };
 
@@ -5079,12 +5852,12 @@ export async function validate_list_expert_page_libraries(
 
 
 /**
- * Validate: Read ExpertPageLibrary records
+ * Validate: Read AppLibrary records
  *
  * @ashActionType :read
  * @validation true
  */
-export async function validate_list_expert_page_libraries_channel(config: {
+export async function validate_list_app_libraries_channel(config: {
   channel: Channel;
   tenant?: string;
   result_handler: (result: ValidationResult) => void;
@@ -5095,7 +5868,7 @@ export async function validate_list_expert_page_libraries_channel(config: {
   executeValidationChannelPush<ValidationResult>(
     config.channel,
     {
-    action: "list_expert_page_libraries",
+    action: "list_app_libraries",
     ...(config.tenant !== undefined && { tenant: config.tenant })
   },
     config.timeout,
@@ -5105,16 +5878,16 @@ export async function validate_list_expert_page_libraries_channel(config: {
 
 
 /**
- * Read ExpertPageLibrary records
+ * Read AppLibrary records
  *
  * @ashActionType :read
  */
-export async function list_expert_page_libraries_channel<Fields extends ListExpertPageLibrariesFields>(config: {
+export async function list_app_libraries_channel<Fields extends ListAppLibrariesFields>(config: {
   channel: Channel;
   tenant?: string;
   fields: Fields;
-  filter?: ExpertPageLibraryFilterInput;
-  sort?: SortString<ExpertPageLibrarySortField> | SortString<ExpertPageLibrarySortField>[];
+  filter?: AppLibraryFilterInput;
+  sort?: SortString<AppLibrarySortField> | SortString<AppLibrarySortField>[];
   page?: (
     {
       limit?: number;
@@ -5126,15 +5899,15 @@ export async function list_expert_page_libraries_channel<Fields extends ListExpe
       before?: string;
     }
   );
-  result_handler: (result: ListExpertPageLibrariesResult<Fields>) => void;
+  result_handler: (result: ListAppLibrariesResult<Fields>) => void;
   error_handler?: (error: any) => void;
   timeout_handler?: () => void;
   timeout?: number;
 }) {
-  executeActionChannelPush<ListExpertPageLibrariesResult<Fields>>(
+  executeActionChannelPush<ListAppLibrariesResult<Fields>>(
     config.channel,
     {
-    action: "list_expert_page_libraries",
+    action: "list_app_libraries",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     ...(config.fields !== undefined && { fields: config.fields }),
     ...(config.filter && { filter: config.filter }),
@@ -5147,39 +5920,39 @@ export async function list_expert_page_libraries_channel<Fields extends ListExpe
 }
 
 
-export type ListLibrariesForExpertPageInput = {
-  expert_page_id: UUID;
+export type ListLibrariesForAppInput = {
+  app_id: UUID;
 };
 
-export type ListLibrariesForExpertPageFields = UnifiedFieldSelection<ExpertPageLibraryResourceSchema>[];
-export type InferListLibrariesForExpertPageResult<
-  Fields extends ListLibrariesForExpertPageFields,
-> = Array<InferResult<ExpertPageLibraryResourceSchema, Fields>>;
+export type ListLibrariesForAppFields = UnifiedFieldSelection<AppLibraryResourceSchema>[];
+export type InferListLibrariesForAppResult<
+  Fields extends ListLibrariesForAppFields,
+> = Array<InferResult<AppLibraryResourceSchema, Fields>>;
 
-export type ListLibrariesForExpertPageResult<Fields extends ListLibrariesForExpertPageFields> = | { success: true; data: InferListLibrariesForExpertPageResult<Fields>; }
+export type ListLibrariesForAppResult<Fields extends ListLibrariesForAppFields> = | { success: true; data: InferListLibrariesForAppResult<Fields>; }
 | { success: false; errors: AshRpcError[]; }
 
 ;
 
 /**
- * Read ExpertPageLibrary records
+ * Read AppLibrary records
  *
  * @ashActionType :read
  */
-export async function list_libraries_for_expert_page<Fields extends ListLibrariesForExpertPageFields>(
+export async function list_libraries_for_app<Fields extends ListLibrariesForAppFields>(
   config: {
   tenant?: string;
-  input: ListLibrariesForExpertPageInput;
+  input: ListLibrariesForAppInput;
   fields: Fields;
-  filter?: ExpertPageLibraryFilterInput;
-  sort?: SortString<ExpertPageLibrarySortField> | SortString<ExpertPageLibrarySortField>[];
+  filter?: AppLibraryFilterInput;
+  sort?: SortString<AppLibrarySortField> | SortString<AppLibrarySortField>[];
   headers?: Record<string, string>;
   fetchOptions?: RequestInit;
   customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }
-): Promise<ListLibrariesForExpertPageResult<Fields>> {
+): Promise<ListLibrariesForAppResult<Fields>> {
   const payload = {
-    action: "list_libraries_for_expert_page",
+    action: "list_libraries_for_app",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input,
     ...(config.fields !== undefined && { fields: config.fields }),
@@ -5187,7 +5960,7 @@ export async function list_libraries_for_expert_page<Fields extends ListLibrarie
     ...(config.sort && { sort: Array.isArray(config.sort) ? config.sort.join(",") : config.sort })
   };
 
-  return executeActionRpcRequest<ListLibrariesForExpertPageResult<Fields>>(
+  return executeActionRpcRequest<ListLibrariesForAppResult<Fields>>(
     payload,
     config
   );
@@ -5195,22 +5968,22 @@ export async function list_libraries_for_expert_page<Fields extends ListLibrarie
 
 
 /**
- * Validate: Read ExpertPageLibrary records
+ * Validate: Read AppLibrary records
  *
  * @ashActionType :read
  * @validation true
  */
-export async function validate_list_libraries_for_expert_page(
+export async function validate_list_libraries_for_app(
   config: {
   tenant?: string;
-  input: ListLibrariesForExpertPageInput;
+  input: ListLibrariesForAppInput;
   headers?: Record<string, string>;
   fetchOptions?: RequestInit;
   customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }
 ): Promise<ValidationResult> {
   const payload = {
-    action: "list_libraries_for_expert_page",
+    action: "list_libraries_for_app",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input
   };
@@ -5223,15 +5996,15 @@ export async function validate_list_libraries_for_expert_page(
 
 
 /**
- * Validate: Read ExpertPageLibrary records
+ * Validate: Read AppLibrary records
  *
  * @ashActionType :read
  * @validation true
  */
-export async function validate_list_libraries_for_expert_page_channel(config: {
+export async function validate_list_libraries_for_app_channel(config: {
   channel: Channel;
   tenant?: string;
-  input: ListLibrariesForExpertPageInput;
+  input: ListLibrariesForAppInput;
   result_handler: (result: ValidationResult) => void;
   error_handler?: (error: any) => void;
   timeout_handler?: () => void;
@@ -5240,7 +6013,7 @@ export async function validate_list_libraries_for_expert_page_channel(config: {
   executeValidationChannelPush<ValidationResult>(
     config.channel,
     {
-    action: "list_libraries_for_expert_page",
+    action: "list_libraries_for_app",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input
   },
@@ -5251,26 +6024,286 @@ export async function validate_list_libraries_for_expert_page_channel(config: {
 
 
 /**
- * Read ExpertPageLibrary records
+ * Read AppLibrary records
  *
  * @ashActionType :read
  */
-export async function list_libraries_for_expert_page_channel<Fields extends ListLibrariesForExpertPageFields>(config: {
+export async function list_libraries_for_app_channel<Fields extends ListLibrariesForAppFields>(config: {
   channel: Channel;
   tenant?: string;
-  input: ListLibrariesForExpertPageInput;
+  input: ListLibrariesForAppInput;
   fields: Fields;
-  filter?: ExpertPageLibraryFilterInput;
-  sort?: SortString<ExpertPageLibrarySortField> | SortString<ExpertPageLibrarySortField>[];
-  result_handler: (result: ListLibrariesForExpertPageResult<Fields>) => void;
+  filter?: AppLibraryFilterInput;
+  sort?: SortString<AppLibrarySortField> | SortString<AppLibrarySortField>[];
+  result_handler: (result: ListLibrariesForAppResult<Fields>) => void;
   error_handler?: (error: any) => void;
   timeout_handler?: () => void;
   timeout?: number;
 }) {
-  executeActionChannelPush<ListLibrariesForExpertPageResult<Fields>>(
+  executeActionChannelPush<ListLibrariesForAppResult<Fields>>(
     config.channel,
     {
-    action: "list_libraries_for_expert_page",
+    action: "list_libraries_for_app",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input,
+    ...(config.fields !== undefined && { fields: config.fields }),
+    ...(config.filter && { filter: config.filter }),
+    ...(config.sort && { sort: Array.isArray(config.sort) ? config.sort.join(",") : config.sort })
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+export type ListAppTemplatesFields = UnifiedFieldSelection<AppTemplateResourceSchema>[];
+export type InferListAppTemplatesResult<
+  Fields extends ListAppTemplatesFields,
+> = Array<InferResult<AppTemplateResourceSchema, Fields>>;
+
+export type ListAppTemplatesResult<Fields extends ListAppTemplatesFields> = | { success: true; data: InferListAppTemplatesResult<Fields>; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Read Template records
+ *
+ * @ashActionType :read
+ */
+export async function list_app_templates<Fields extends ListAppTemplatesFields>(
+  config: {
+  tenant?: string;
+  fields: Fields;
+  filter?: AppTemplateFilterInput;
+  sort?: SortString<AppTemplateSortField> | SortString<AppTemplateSortField>[];
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ListAppTemplatesResult<Fields>> {
+  const payload = {
+    action: "list_app_templates",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    ...(config.fields !== undefined && { fields: config.fields }),
+    ...(config.filter && { filter: config.filter }),
+    ...(config.sort && { sort: Array.isArray(config.sort) ? config.sort.join(",") : config.sort })
+  };
+
+  return executeActionRpcRequest<ListAppTemplatesResult<Fields>>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Read Template records
+ *
+ * @ashActionType :read
+ * @validation true
+ */
+export async function validate_list_app_templates(
+  config: {
+  tenant?: string;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "list_app_templates",
+    ...(config.tenant !== undefined && { tenant: config.tenant })
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Read Template records
+ *
+ * @ashActionType :read
+ * @validation true
+ */
+export async function validate_list_app_templates_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "list_app_templates",
+    ...(config.tenant !== undefined && { tenant: config.tenant })
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Read Template records
+ *
+ * @ashActionType :read
+ */
+export async function list_app_templates_channel<Fields extends ListAppTemplatesFields>(config: {
+  channel: Channel;
+  tenant?: string;
+  fields: Fields;
+  filter?: AppTemplateFilterInput;
+  sort?: SortString<AppTemplateSortField> | SortString<AppTemplateSortField>[];
+  result_handler: (result: ListAppTemplatesResult<Fields>) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<ListAppTemplatesResult<Fields>>(
+    config.channel,
+    {
+    action: "list_app_templates",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    ...(config.fields !== undefined && { fields: config.fields }),
+    ...(config.filter && { filter: config.filter }),
+    ...(config.sort && { sort: Array.isArray(config.sort) ? config.sort.join(",") : config.sort })
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+export type ListAppTemplatesForTypeInput = {
+  app_type: string;
+};
+
+export type ListAppTemplatesForTypeFields = UnifiedFieldSelection<AppTemplateResourceSchema>[];
+export type InferListAppTemplatesForTypeResult<
+  Fields extends ListAppTemplatesForTypeFields,
+> = Array<InferResult<AppTemplateResourceSchema, Fields>>;
+
+export type ListAppTemplatesForTypeResult<Fields extends ListAppTemplatesForTypeFields> = | { success: true; data: InferListAppTemplatesForTypeResult<Fields>; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Read Template records
+ *
+ * @ashActionType :read
+ */
+export async function list_app_templates_for_type<Fields extends ListAppTemplatesForTypeFields>(
+  config: {
+  tenant?: string;
+  input: ListAppTemplatesForTypeInput;
+  fields: Fields;
+  filter?: AppTemplateFilterInput;
+  sort?: SortString<AppTemplateSortField> | SortString<AppTemplateSortField>[];
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ListAppTemplatesForTypeResult<Fields>> {
+  const payload = {
+    action: "list_app_templates_for_type",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input,
+    ...(config.fields !== undefined && { fields: config.fields }),
+    ...(config.filter && { filter: config.filter }),
+    ...(config.sort && { sort: Array.isArray(config.sort) ? config.sort.join(",") : config.sort })
+  };
+
+  return executeActionRpcRequest<ListAppTemplatesForTypeResult<Fields>>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Read Template records
+ *
+ * @ashActionType :read
+ * @validation true
+ */
+export async function validate_list_app_templates_for_type(
+  config: {
+  tenant?: string;
+  input: ListAppTemplatesForTypeInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "list_app_templates_for_type",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Read Template records
+ *
+ * @ashActionType :read
+ * @validation true
+ */
+export async function validate_list_app_templates_for_type_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  input: ListAppTemplatesForTypeInput;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "list_app_templates_for_type",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Read Template records
+ *
+ * @ashActionType :read
+ */
+export async function list_app_templates_for_type_channel<Fields extends ListAppTemplatesForTypeFields>(config: {
+  channel: Channel;
+  tenant?: string;
+  input: ListAppTemplatesForTypeInput;
+  fields: Fields;
+  filter?: AppTemplateFilterInput;
+  sort?: SortString<AppTemplateSortField> | SortString<AppTemplateSortField>[];
+  result_handler: (result: ListAppTemplatesForTypeResult<Fields>) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<ListAppTemplatesForTypeResult<Fields>>(
+    config.channel,
+    {
+    action: "list_app_templates_for_type",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input,
     ...(config.fields !== undefined && { fields: config.fields }),

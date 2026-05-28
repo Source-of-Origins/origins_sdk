@@ -7,6 +7,7 @@ defmodule OriginsSdk.Accounts do
   alias OriginsSdk.Accounts.ApproveWaitlistEntry
   alias OriginsSdk.Accounts.DeleteWaitlistEntry
   alias OriginsSdk.Accounts.GetCurrentUser
+  alias OriginsSdk.Accounts.GetTenant
   alias OriginsSdk.Accounts.GetWaitlistEntryByToken
   alias OriginsSdk.Accounts.ListAllUsers
   alias OriginsSdk.Accounts.ListWaitlistEntries
@@ -15,6 +16,7 @@ defmodule OriginsSdk.Accounts do
   alias OriginsSdk.Accounts.RejectWaitlistEntry
   alias OriginsSdk.Accounts.SignInWithPassword
   alias OriginsSdk.Accounts.SubmitWaitlistEntry
+  alias OriginsSdk.Accounts.Tenant
   alias OriginsSdk.Accounts.User
   alias OriginsSdk.Accounts.WaitlistEntry
 
@@ -92,6 +94,32 @@ defmodule OriginsSdk.Accounts do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &User.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `get_tenant` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def get_tenant(%GetTenant.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, Tenant)
+
+    payload =
+      %{
+        "action" => "get_tenant",
+        "input" => GetTenant.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &Tenant.from_json/1, nil)
     end
   end
 

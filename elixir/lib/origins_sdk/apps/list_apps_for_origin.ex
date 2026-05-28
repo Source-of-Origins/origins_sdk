@@ -1,10 +1,10 @@
-defmodule OriginsSdk.ExpertPages.ListExpertPagesForOrigin do
+defmodule OriginsSdk.Apps.ListAppsForOrigin do
   @moduledoc """
-  Input + metadata types for `list_expert_pages_for_origin`. Generated — do not edit by hand.
+  Input + metadata types for `list_apps_for_origin`. Generated — do not edit by hand.
   """
 
   defmodule Input do
-    @moduledoc "Required arguments for `list_expert_pages_for_origin`."
+    @moduledoc "Required arguments for `list_apps_for_origin`."
 
     @type t :: %__MODULE__{
           origin_entity_id: String.t()

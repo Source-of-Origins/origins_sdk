@@ -1,26 +1,26 @@
-defmodule OriginsSdk.ExpertPages.ExpertPageLibrary do
+defmodule OriginsSdk.Apps.AppLibrary do
   @moduledoc """
-  Mirror of `Origins.ExpertPages.ExpertPageLibrary` over the wire.
+  Mirror of `Origins.Apps.AppLibrary` over the wire.
   Generated — do not edit by hand.
   """
 
   @type t :: %__MODULE__{
+    app_id: String.t(),
     created_at: DateTime.t(),
-    expert_page_id: String.t(),
     id: String.t(),
     library_id: String.t(),
     updated_at: DateTime.t()
     }
 
   defstruct [
+    :app_id,
     :created_at,
-    :expert_page_id,
     :id,
     :library_id,
     :updated_at
   ]
 
-  @primitive_fields ~w(created_at expert_page_id id library_id updated_at)a
+  @primitive_fields ~w(app_id created_at id library_id updated_at)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -31,8 +31,8 @@ defmodule OriginsSdk.ExpertPages.ExpertPageLibrary do
 
   def from_json(map) when is_map(map) do
     %__MODULE__{
+      app_id: map["app_id"],
       created_at: OriginsSdk.Internal.decode_datetime(map["created_at"]),
-      expert_page_id: map["expert_page_id"],
       id: map["id"],
       library_id: map["library_id"],
       updated_at: OriginsSdk.Internal.decode_datetime(map["updated_at"])

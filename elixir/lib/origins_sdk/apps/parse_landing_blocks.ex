@@ -1,10 +1,10 @@
-defmodule OriginsSdk.ExpertPages.ParseAppBlocks do
+defmodule OriginsSdk.Apps.ParseLandingBlocks do
   @moduledoc """
-  Input + metadata types for `parse_app_blocks`. Generated — do not edit by hand.
+  Input + metadata types for `parse_landing_blocks`. Generated — do not edit by hand.
   """
 
   defmodule Input do
-    @moduledoc "Required arguments for `parse_app_blocks`."
+    @moduledoc "Required arguments for `parse_landing_blocks`."
 
     @type t :: %__MODULE__{
           content: String.t()

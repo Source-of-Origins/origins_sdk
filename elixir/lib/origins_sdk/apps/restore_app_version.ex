@@ -1,10 +1,10 @@
-defmodule OriginsSdk.ExpertPages.RestoreExpertPageVersion do
+defmodule OriginsSdk.Apps.RestoreAppVersion do
   @moduledoc """
-  Input + metadata types for `restore_expert_page_version`. Generated — do not edit by hand.
+  Input + metadata types for `restore_app_version`. Generated — do not edit by hand.
   """
 
   defmodule Input do
-    @moduledoc "Required arguments for `restore_expert_page_version`."
+    @moduledoc "Required arguments for `restore_app_version`."
 
     @type t :: %__MODULE__{
           version_id: String.t()

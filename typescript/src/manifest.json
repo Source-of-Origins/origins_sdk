@@ -4,6 +4,43 @@
     {
       "actionType": "read",
       "deprecated": false,
+      "description": "Read Tenant records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_tenant",
+      "get": true,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": true,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Tenant",
+      "see": [],
+      "types": {
+        "fields": "GetTenantFields",
+        "filterInput": "TenantFilterInput",
+        "inferResult": "InferGetTenantResult",
+        "input": "GetTenantInput",
+        "result": "GetTenantResult"
+      },
+      "variantNames": {
+        "channel": "get_tenant_channel",
+        "validation": "validate_get_tenant"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
       "description": "Get the current authenticated user",
       "enableFilter": true,
       "enableSort": true,
@@ -819,10 +856,10 @@
     {
       "actionType": "create",
       "deprecated": false,
-      "description": "Create a new ExpertPage",
+      "description": "Create a new App",
       "enableFilter": true,
       "enableSort": true,
-      "functionName": "create_expert_page",
+      "functionName": "create_app",
       "get": false,
       "input": "required",
       "namespace": null,
@@ -833,17 +870,122 @@
         "required": false,
         "supported": false
       },
-      "resource": "ExpertPage",
+      "resource": "App",
       "see": [],
       "types": {
-        "fields": "CreateExpertPageFields",
-        "inferResult": "InferCreateExpertPageResult",
-        "input": "CreateExpertPageInput",
-        "result": "CreateExpertPageResult"
+        "fields": "CreateAppFields",
+        "inferResult": "InferCreateAppResult",
+        "input": "CreateAppInput",
+        "result": "CreateAppResult"
       },
       "variantNames": {
-        "channel": "create_expert_page_channel",
-        "validation": "validate_create_expert_page"
+        "channel": "create_app_channel",
+        "validation": "validate_create_app"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new instance seeded from an `Apps.Template`. Title defaults to the template name (numeric suffix on collision); slug is derived from title.",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "create_app_from_template",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "App",
+      "see": [],
+      "types": {
+        "fields": "CreateAppFromTemplateFields",
+        "inferResult": "InferCreateAppFromTemplateResult",
+        "input": "CreateAppFromTemplateInput",
+        "result": "CreateAppFromTemplateResult"
+      },
+      "variantNames": {
+        "channel": "create_app_from_template_channel",
+        "validation": "validate_create_app_from_template"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "destroy",
+      "deprecated": false,
+      "description": "Delete a App",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "destroy_app",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "App",
+      "see": [],
+      "types": {
+        "result": "DestroyAppResult"
+      },
+      "variantNames": {
+        "channel": "destroy_app_channel",
+        "validation": "validate_destroy_app"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Clone an existing instance. Title becomes `Copy of <original>` (numeric suffix on collision); full content carried over; not published.",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "duplicate_app",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "App",
+      "see": [],
+      "types": {
+        "fields": "DuplicateAppFields",
+        "inferResult": "InferDuplicateAppResult",
+        "input": "DuplicateAppInput",
+        "result": "DuplicateAppResult"
+      },
+      "variantNames": {
+        "channel": "duplicate_app_channel",
+        "validation": "validate_duplicate_app"
       },
       "variants": {
         "channel": true,
@@ -855,10 +997,10 @@
     {
       "actionType": "read",
       "deprecated": false,
-      "description": "Read ExpertPage records",
+      "description": "Read App records",
       "enableFilter": true,
       "enableSort": true,
-      "functionName": "get_expert_page",
+      "functionName": "get_app",
       "get": true,
       "input": "required",
       "namespace": null,
@@ -869,18 +1011,18 @@
         "required": false,
         "supported": false
       },
-      "resource": "ExpertPage",
+      "resource": "App",
       "see": [],
       "types": {
-        "fields": "GetExpertPageFields",
-        "filterInput": "ExpertPageFilterInput",
-        "inferResult": "InferGetExpertPageResult",
-        "input": "GetExpertPageInput",
-        "result": "GetExpertPageResult"
+        "fields": "GetAppFields",
+        "filterInput": "AppFilterInput",
+        "inferResult": "InferGetAppResult",
+        "input": "GetAppInput",
+        "result": "GetAppResult"
       },
       "variantNames": {
-        "channel": "get_expert_page_channel",
-        "validation": "validate_get_expert_page"
+        "channel": "get_app_channel",
+        "validation": "validate_get_app"
       },
       "variants": {
         "channel": true,
@@ -892,10 +1034,47 @@
     {
       "actionType": "read",
       "deprecated": false,
-      "description": "Read ExpertPage records",
+      "description": "Read App records",
       "enableFilter": true,
       "enableSort": true,
-      "functionName": "list_expert_pages_for_origin",
+      "functionName": "get_app_for_origin_type_and_slug",
+      "get": true,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": true,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "App",
+      "see": [],
+      "types": {
+        "fields": "GetAppForOriginTypeAndSlugFields",
+        "filterInput": "AppFilterInput",
+        "inferResult": "InferGetAppForOriginTypeAndSlugResult",
+        "input": "GetAppForOriginTypeAndSlugInput",
+        "result": "GetAppForOriginTypeAndSlugResult"
+      },
+      "variantNames": {
+        "channel": "get_app_for_origin_type_and_slug_channel",
+        "validation": "validate_get_app_for_origin_type_and_slug"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read App records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_apps_for_origin",
       "get": false,
       "input": "required",
       "namespace": null,
@@ -906,18 +1085,55 @@
         "required": false,
         "supported": false
       },
-      "resource": "ExpertPage",
+      "resource": "App",
       "see": [],
       "types": {
-        "fields": "ListExpertPagesForOriginFields",
-        "filterInput": "ExpertPageFilterInput",
-        "inferResult": "InferListExpertPagesForOriginResult",
-        "input": "ListExpertPagesForOriginInput",
-        "result": "ListExpertPagesForOriginResult"
+        "fields": "ListAppsForOriginFields",
+        "filterInput": "AppFilterInput",
+        "inferResult": "InferListAppsForOriginResult",
+        "input": "ListAppsForOriginInput",
+        "result": "ListAppsForOriginResult"
       },
       "variantNames": {
-        "channel": "list_expert_pages_for_origin_channel",
-        "validation": "validate_list_expert_pages_for_origin"
+        "channel": "list_apps_for_origin_channel",
+        "validation": "validate_list_apps_for_origin"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read App records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_apps_for_origin_and_type",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "App",
+      "see": [],
+      "types": {
+        "fields": "ListAppsForOriginAndTypeFields",
+        "filterInput": "AppFilterInput",
+        "inferResult": "InferListAppsForOriginAndTypeResult",
+        "input": "ListAppsForOriginAndTypeInput",
+        "result": "ListAppsForOriginAndTypeResult"
+      },
+      "variantNames": {
+        "channel": "list_apps_for_origin_and_type_channel",
+        "validation": "validate_list_apps_for_origin_and_type"
       },
       "variants": {
         "channel": true,
@@ -929,41 +1145,7 @@
     {
       "actionType": "action",
       "deprecated": false,
-      "description": "Execute generic action on ExpertPage",
-      "enableFilter": true,
-      "enableSort": true,
-      "functionName": "parse_app_blocks",
-      "get": false,
-      "input": "required",
-      "namespace": null,
-      "pagination": {
-        "get": false,
-        "keyset": false,
-        "offset": false,
-        "required": false,
-        "supported": false
-      },
-      "resource": "ExpertPage",
-      "see": [],
-      "types": {
-        "input": "ParseAppBlocksInput",
-        "result": "ParseAppBlocksResult"
-      },
-      "variantNames": {
-        "channel": "parse_app_blocks_channel",
-        "validation": "validate_parse_app_blocks"
-      },
-      "variants": {
-        "channel": true,
-        "valibot": false,
-        "validation": true,
-        "zod": false
-      }
-    },
-    {
-      "actionType": "action",
-      "deprecated": false,
-      "description": "Execute generic action on ExpertPage",
+      "description": "Execute generic action on App",
       "enableFilter": true,
       "enableSort": true,
       "functionName": "parse_assessment_blocks",
@@ -977,7 +1159,7 @@
         "required": false,
         "supported": false
       },
-      "resource": "ExpertPage",
+      "resource": "App",
       "see": [],
       "types": {
         "input": "ParseAssessmentBlocksInput",
@@ -997,10 +1179,10 @@
     {
       "actionType": "action",
       "deprecated": false,
-      "description": "Execute generic action on ExpertPage",
+      "description": "Execute generic action on App",
       "enableFilter": true,
       "enableSort": true,
-      "functionName": "parse_expert_blocks",
+      "functionName": "parse_course_blocks",
       "get": false,
       "input": "required",
       "namespace": null,
@@ -1011,15 +1193,49 @@
         "required": false,
         "supported": false
       },
-      "resource": "ExpertPage",
+      "resource": "App",
       "see": [],
       "types": {
-        "input": "ParseExpertBlocksInput",
-        "result": "ParseExpertBlocksResult"
+        "input": "ParseCourseBlocksInput",
+        "result": "ParseCourseBlocksResult"
       },
       "variantNames": {
-        "channel": "parse_expert_blocks_channel",
-        "validation": "validate_parse_expert_blocks"
+        "channel": "parse_course_blocks_channel",
+        "validation": "validate_parse_course_blocks"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Execute generic action on App",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "parse_landing_blocks",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "App",
+      "see": [],
+      "types": {
+        "input": "ParseLandingBlocksInput",
+        "result": "ParseLandingBlocksResult"
+      },
+      "variantNames": {
+        "channel": "parse_landing_blocks_channel",
+        "validation": "validate_parse_landing_blocks"
       },
       "variants": {
         "channel": true,
@@ -1034,7 +1250,7 @@
       "description": "Restore content from a paper trail version snapshot",
       "enableFilter": true,
       "enableSort": true,
-      "functionName": "restore_expert_page_version",
+      "functionName": "restore_app_version",
       "get": false,
       "input": "required",
       "namespace": null,
@@ -1045,17 +1261,17 @@
         "required": false,
         "supported": false
       },
-      "resource": "ExpertPage",
+      "resource": "App",
       "see": [],
       "types": {
-        "fields": "RestoreExpertPageVersionFields",
-        "inferResult": "InferRestoreExpertPageVersionResult",
-        "input": "RestoreExpertPageVersionInput",
-        "result": "RestoreExpertPageVersionResult"
+        "fields": "RestoreAppVersionFields",
+        "inferResult": "InferRestoreAppVersionResult",
+        "input": "RestoreAppVersionInput",
+        "result": "RestoreAppVersionResult"
       },
       "variantNames": {
-        "channel": "restore_expert_page_version_channel",
-        "validation": "validate_restore_expert_page_version"
+        "channel": "restore_app_version_channel",
+        "validation": "validate_restore_app_version"
       },
       "variants": {
         "channel": true,
@@ -1070,7 +1286,7 @@
       "description": "Send a chat message to the expert page's persistent Letta agent",
       "enableFilter": true,
       "enableSort": true,
-      "functionName": "send_expert_chat_message",
+      "functionName": "send_app_chat_message",
       "get": false,
       "input": "required",
       "namespace": null,
@@ -1081,15 +1297,15 @@
         "required": false,
         "supported": false
       },
-      "resource": "ExpertPage",
+      "resource": "App",
       "see": [],
       "types": {
-        "input": "SendExpertChatMessageInput",
-        "result": "SendExpertChatMessageResult"
+        "input": "SendAppChatMessageInput",
+        "result": "SendAppChatMessageResult"
       },
       "variantNames": {
-        "channel": "send_expert_chat_message_channel",
-        "validation": "validate_send_expert_chat_message"
+        "channel": "send_app_chat_message_channel",
+        "validation": "validate_send_app_chat_message"
       },
       "variants": {
         "channel": true,
@@ -1101,10 +1317,10 @@
     {
       "actionType": "update",
       "deprecated": false,
-      "description": "Update an existing ExpertPage",
+      "description": "Update an existing App",
       "enableFilter": true,
       "enableSort": true,
-      "functionName": "update_expert_page",
+      "functionName": "update_app",
       "get": false,
       "input": "required",
       "namespace": null,
@@ -1115,17 +1331,17 @@
         "required": false,
         "supported": false
       },
-      "resource": "ExpertPage",
+      "resource": "App",
       "see": [],
       "types": {
-        "fields": "UpdateExpertPageFields",
-        "inferResult": "InferUpdateExpertPageResult",
-        "input": "UpdateExpertPageInput",
-        "result": "UpdateExpertPageResult"
+        "fields": "UpdateAppFields",
+        "inferResult": "InferUpdateAppResult",
+        "input": "UpdateAppInput",
+        "result": "UpdateAppResult"
       },
       "variantNames": {
-        "channel": "update_expert_page_channel",
-        "validation": "validate_update_expert_page"
+        "channel": "update_app_channel",
+        "validation": "validate_update_app"
       },
       "variants": {
         "channel": true,
@@ -1140,7 +1356,7 @@
       "description": "Read Version records",
       "enableFilter": true,
       "enableSort": true,
-      "functionName": "list_expert_page_versions",
+      "functionName": "list_app_versions",
       "get": false,
       "input": "none",
       "namespace": null,
@@ -1154,15 +1370,15 @@
       "resource": "Version",
       "see": [],
       "types": {
-        "config": "ListExpertPageVersionsConfig",
-        "fields": "ListExpertPageVersionsFields",
-        "filterInput": "ExpertPageVersionFilterInput",
-        "inferResult": "InferListExpertPageVersionsResult",
-        "result": "ListExpertPageVersionsResult"
+        "config": "ListAppVersionsConfig",
+        "fields": "ListAppVersionsFields",
+        "filterInput": "AppVersionFilterInput",
+        "inferResult": "InferListAppVersionsResult",
+        "result": "ListAppVersionsResult"
       },
       "variantNames": {
-        "channel": "list_expert_page_versions_channel",
-        "validation": "validate_list_expert_page_versions"
+        "channel": "list_app_versions_channel",
+        "validation": "validate_list_app_versions"
       },
       "variants": {
         "channel": true,
@@ -1174,10 +1390,10 @@
     {
       "actionType": "create",
       "deprecated": false,
-      "description": "Create a new ExpertPageLibrary",
+      "description": "Create a new AppLibrary",
       "enableFilter": true,
       "enableSort": true,
-      "functionName": "attach_library_to_expert_page",
+      "functionName": "attach_library_to_app",
       "get": false,
       "input": "required",
       "namespace": null,
@@ -1188,17 +1404,17 @@
         "required": false,
         "supported": false
       },
-      "resource": "ExpertPageLibrary",
+      "resource": "AppLibrary",
       "see": [],
       "types": {
-        "fields": "AttachLibraryToExpertPageFields",
-        "inferResult": "InferAttachLibraryToExpertPageResult",
-        "input": "AttachLibraryToExpertPageInput",
-        "result": "AttachLibraryToExpertPageResult"
+        "fields": "AttachLibraryToAppFields",
+        "inferResult": "InferAttachLibraryToAppResult",
+        "input": "AttachLibraryToAppInput",
+        "result": "AttachLibraryToAppResult"
       },
       "variantNames": {
-        "channel": "attach_library_to_expert_page_channel",
-        "validation": "validate_attach_library_to_expert_page"
+        "channel": "attach_library_to_app_channel",
+        "validation": "validate_attach_library_to_app"
       },
       "variants": {
         "channel": true,
@@ -1210,10 +1426,10 @@
     {
       "actionType": "destroy",
       "deprecated": false,
-      "description": "Delete a ExpertPageLibrary",
+      "description": "Delete a AppLibrary",
       "enableFilter": true,
       "enableSort": true,
-      "functionName": "detach_library_from_expert_page",
+      "functionName": "detach_library_from_app",
       "get": false,
       "input": "none",
       "namespace": null,
@@ -1224,14 +1440,14 @@
         "required": false,
         "supported": false
       },
-      "resource": "ExpertPageLibrary",
+      "resource": "AppLibrary",
       "see": [],
       "types": {
-        "result": "DetachLibraryFromExpertPageResult"
+        "result": "DetachLibraryFromAppResult"
       },
       "variantNames": {
-        "channel": "detach_library_from_expert_page_channel",
-        "validation": "validate_detach_library_from_expert_page"
+        "channel": "detach_library_from_app_channel",
+        "validation": "validate_detach_library_from_app"
       },
       "variants": {
         "channel": true,
@@ -1243,10 +1459,10 @@
     {
       "actionType": "read",
       "deprecated": false,
-      "description": "Read ExpertPageLibrary records",
+      "description": "Read AppLibrary records",
       "enableFilter": true,
       "enableSort": true,
-      "functionName": "list_expert_page_libraries",
+      "functionName": "list_app_libraries",
       "get": false,
       "input": "none",
       "namespace": null,
@@ -1257,18 +1473,18 @@
         "required": false,
         "supported": true
       },
-      "resource": "ExpertPageLibrary",
+      "resource": "AppLibrary",
       "see": [],
       "types": {
-        "config": "ListExpertPageLibrariesConfig",
-        "fields": "ListExpertPageLibrariesFields",
-        "filterInput": "ExpertPageLibraryFilterInput",
-        "inferResult": "InferListExpertPageLibrariesResult",
-        "result": "ListExpertPageLibrariesResult"
+        "config": "ListAppLibrariesConfig",
+        "fields": "ListAppLibrariesFields",
+        "filterInput": "AppLibraryFilterInput",
+        "inferResult": "InferListAppLibrariesResult",
+        "result": "ListAppLibrariesResult"
       },
       "variantNames": {
-        "channel": "list_expert_page_libraries_channel",
-        "validation": "validate_list_expert_page_libraries"
+        "channel": "list_app_libraries_channel",
+        "validation": "validate_list_app_libraries"
       },
       "variants": {
         "channel": true,
@@ -1283,7 +1499,7 @@
       "description": "All libraries attached to a given expert page.",
       "enableFilter": true,
       "enableSort": true,
-      "functionName": "list_libraries_for_expert_page",
+      "functionName": "list_libraries_for_app",
       "get": false,
       "input": "required",
       "namespace": null,
@@ -1294,18 +1510,91 @@
         "required": false,
         "supported": false
       },
-      "resource": "ExpertPageLibrary",
+      "resource": "AppLibrary",
       "see": [],
       "types": {
-        "fields": "ListLibrariesForExpertPageFields",
-        "filterInput": "ExpertPageLibraryFilterInput",
-        "inferResult": "InferListLibrariesForExpertPageResult",
-        "input": "ListLibrariesForExpertPageInput",
-        "result": "ListLibrariesForExpertPageResult"
+        "fields": "ListLibrariesForAppFields",
+        "filterInput": "AppLibraryFilterInput",
+        "inferResult": "InferListLibrariesForAppResult",
+        "input": "ListLibrariesForAppInput",
+        "result": "ListLibrariesForAppResult"
       },
       "variantNames": {
-        "channel": "list_libraries_for_expert_page_channel",
-        "validation": "validate_list_libraries_for_expert_page"
+        "channel": "list_libraries_for_app_channel",
+        "validation": "validate_list_libraries_for_app"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read Template records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_app_templates",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Template",
+      "see": [],
+      "types": {
+        "fields": "ListAppTemplatesFields",
+        "filterInput": "AppTemplateFilterInput",
+        "inferResult": "InferListAppTemplatesResult",
+        "result": "ListAppTemplatesResult"
+      },
+      "variantNames": {
+        "channel": "list_app_templates_channel",
+        "validation": "validate_list_app_templates"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read Template records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_app_templates_for_type",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Template",
+      "see": [],
+      "types": {
+        "fields": "ListAppTemplatesForTypeFields",
+        "filterInput": "AppTemplateFilterInput",
+        "inferResult": "InferListAppTemplatesForTypeResult",
+        "input": "ListAppTemplatesForTypeInput",
+        "result": "ListAppTemplatesForTypeResult"
+      },
+      "variantNames": {
+        "channel": "list_app_templates_for_type_channel",
+        "validation": "validate_list_app_templates_for_type"
       },
       "variants": {
         "channel": true,
@@ -5848,7 +6137,7 @@
       "importPath": "./ash_types"
     }
   },
-  "generatedAt": "2026-05-26",
+  "generatedAt": "2026-05-28",
   "typedControllerRoutes": [],
   "version": "1.0"
 }

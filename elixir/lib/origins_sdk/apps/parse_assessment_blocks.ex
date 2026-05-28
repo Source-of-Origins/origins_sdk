@@ -1,10 +1,10 @@
-defmodule OriginsSdk.ExpertPages.ParseExpertBlocks do
+defmodule OriginsSdk.Apps.ParseAssessmentBlocks do
   @moduledoc """
-  Input + metadata types for `parse_expert_blocks`. Generated — do not edit by hand.
+  Input + metadata types for `parse_assessment_blocks`. Generated — do not edit by hand.
   """
 
   defmodule Input do
-    @moduledoc "Required arguments for `parse_expert_blocks`."
+    @moduledoc "Required arguments for `parse_assessment_blocks`."
 
     @type t :: %__MODULE__{
           content: String.t()

@@ -1,6 +1,6 @@
-defmodule OriginsSdk.ExpertPages.Version do
+defmodule OriginsSdk.Apps.Version do
   @moduledoc """
-  Mirror of `Origins.ExpertPages.ExpertPage.Version` over the wire.
+  Mirror of `Origins.Apps.App.Version` over the wire.
   Generated — do not edit by hand.
   """
 

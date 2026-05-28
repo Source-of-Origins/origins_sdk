@@ -26,6 +26,7 @@ defmodule OriginsSdk.Accounts.User do
     reauthentication_sent_at: DateTime.t() | nil,
     recovery_sent_at: DateTime.t() | nil,
     role: String.t() | nil,
+    tenant_id: String.t(),
     updated_at: DateTime.t()
     }
 
@@ -51,10 +52,11 @@ defmodule OriginsSdk.Accounts.User do
     :reauthentication_sent_at,
     :recovery_sent_at,
     :role,
+    :tenant_id,
     :updated_at
   ]
 
-  @primitive_fields ~w(aud banned_until confirmation_sent_at confirmed_at created_at deleted_at email email_confirmed_at id instance_id invited_at is_super_admin last_sign_in_at phone phone_change_sent_at phone_confirmed_at raw_app_meta_data raw_user_meta_data reauthentication_sent_at recovery_sent_at role updated_at)a
+  @primitive_fields ~w(aud banned_until confirmation_sent_at confirmed_at created_at deleted_at email email_confirmed_at id instance_id invited_at is_super_admin last_sign_in_at phone phone_change_sent_at phone_confirmed_at raw_app_meta_data raw_user_meta_data reauthentication_sent_at recovery_sent_at role tenant_id updated_at)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -86,6 +88,7 @@ defmodule OriginsSdk.Accounts.User do
       reauthentication_sent_at: OriginsSdk.Internal.decode_datetime(map["reauthentication_sent_at"]),
       recovery_sent_at: OriginsSdk.Internal.decode_datetime(map["recovery_sent_at"]),
       role: map["role"],
+      tenant_id: map["tenant_id"],
       updated_at: OriginsSdk.Internal.decode_datetime(map["updated_at"])
     }
   end
