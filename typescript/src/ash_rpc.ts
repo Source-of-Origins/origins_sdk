@@ -3,7 +3,7 @@
 
 import { Channel } from "phoenix";
 
-import type { AppFilterInput, AppLibraryFilterInput, AppLibraryResourceSchema, AppLibrarySortField, AppResourceSchema, AppSortField, AppTemplateFilterInput, AppTemplateResourceSchema, AppTemplateSortField, AppVersionFilterInput, AppVersionResourceSchema, AppVersionSortField, AshRpcError, ChatBindingFilterInput, ChatBindingResourceSchema, ChatBindingSortField, ChatConfigFilterInput, ChatConfigResourceSchema, ChatConfigSortField, ConditionalPaginatedResult, ConditionalPaginatedResultMixed, Decimal, DriveConnectionFilterInput, DriveConnectionResourceSchema, DriveConnectionSortField, FeatureFlagFilterInput, FeatureFlagResourceSchema, FeatureFlagSortField, FeedbackFilterInput, FeedbackResourceSchema, FeedbackSortField, GithubConnectionFilterInput, GithubConnectionResourceSchema, GithubConnectionSortField, HomepageCardFilterInput, HomepageCardResourceSchema, HomepageCardSortField, InferResult, InterviewGeneratedContentFilterInput, InterviewGeneratedContentResourceSchema, InterviewGeneratedContentSortField, InterviewSessionFilterInput, InterviewSessionResourceSchema, InterviewSessionSortField, InterviewTurnResourceSchema, LibraryAccessGrantFilterInput, LibraryAccessGrantResourceSchema, LibraryAccessGrantSortField, LibraryFileFilterInput, LibraryFileResourceSchema, LibraryFileSortField, LibraryFilterInput, LibraryResourceSchema, LibrarySortField, OriginAssetFilterInput, OriginAssetResourceSchema, OriginAssetSortField, OriginEntityFilterInput, OriginEntityMembershipFilterInput, OriginEntityMembershipResourceSchema, OriginEntityMembershipSortField, OriginEntityResourceSchema, OriginEntitySortField, OriginsIdentityAppearanceConfigInputSchema, OriginsIdentityPromptContextGuardrailConfigInputSchema, OriginsIdentityPublicProfileConfigInputSchema, OriginsIdentitySocialLinkInputSchema, OriginsIdentitySoulConfigCommunicationStyleInputSchema, OriginsIdentitySoulConfigExperienceSettingsInputSchema, OriginsIdentitySoulConfigResponseFormatPreferencesInputSchema, PodcastConfigFilterInput, PodcastConfigResourceSchema, PodcastConfigSortField, PodcastEpisodeSettingsFilterInput, PodcastEpisodeSettingsResourceSchema, PodcastEpisodeSettingsSortField, PromptContextFilterInput, PromptContextResourceSchema, PromptContextSortField, PromptToolFilterInput, PromptToolResourceSchema, PromptToolSortField, PublicConversationFilterInput, PublicConversationResourceSchema, PublicConversationSortField, ScrapedWebsiteContentResourceSchema, SetupProgressFilterInput, SetupProgressResourceSchema, SetupProgressSortField, SortString, SoulConfigFilterInput, SoulConfigResourceSchema, SoulConfigSortField, TenantResourceSchema, UUID, UnifiedFieldSelection, UserFilterInput, UserProfileFilterInput, UserProfileResourceSchema, UserProfileSortField, UserResourceSchema, UserSortField, UtcDateTimeUsec, ValidationResult, WaitlistEntryFilterInput, WaitlistEntryResourceSchema, WaitlistEntrySortField, YoutubeEpisodeFilterInput, YoutubeEpisodeResourceSchema, YoutubeEpisodeSortField } from "./ash_types";
+import type { AppFilterInput, AppLibraryFilterInput, AppLibraryResourceSchema, AppLibrarySortField, AppResourceSchema, AppSortField, AppTemplateFilterInput, AppTemplateResourceSchema, AppTemplateSortField, AppVersionFilterInput, AppVersionResourceSchema, AppVersionSortField, AshRpcError, ChatBindingFilterInput, ChatBindingResourceSchema, ChatBindingSortField, ChatConfigFilterInput, ChatConfigResourceSchema, ChatConfigSortField, ConditionalPaginatedResult, ConditionalPaginatedResultMixed, Decimal, DriveConnectionFilterInput, DriveConnectionResourceSchema, DriveConnectionSortField, FeatureFlagFilterInput, FeatureFlagResourceSchema, FeatureFlagSortField, FeedbackFilterInput, FeedbackResourceSchema, FeedbackSortField, GithubConnectionFilterInput, GithubConnectionResourceSchema, GithubConnectionSortField, HomepageCardFilterInput, HomepageCardResourceSchema, HomepageCardSortField, InferResult, InterviewGeneratedContentFilterInput, InterviewGeneratedContentResourceSchema, InterviewGeneratedContentSortField, InterviewSessionFilterInput, InterviewSessionResourceSchema, InterviewSessionSortField, InterviewTurnResourceSchema, LibraryAccessGrantFilterInput, LibraryAccessGrantResourceSchema, LibraryAccessGrantSortField, LibraryFileFilterInput, LibraryFileResourceSchema, LibraryFileSortField, LibraryFilterInput, LibraryResourceSchema, LibrarySortField, OriginAssetFilterInput, OriginAssetResourceSchema, OriginAssetSortField, OriginEntityFilterInput, OriginEntityMembershipFilterInput, OriginEntityMembershipResourceSchema, OriginEntityMembershipSortField, OriginEntityResourceSchema, OriginEntitySortField, OriginsIdentityAppearanceConfigInputSchema, OriginsIdentityPromptContextGuardrailConfigInputSchema, OriginsIdentityPublicProfileConfigInputSchema, OriginsIdentitySocialLinkInputSchema, OriginsIdentitySoulConfigCommunicationStyleInputSchema, OriginsIdentitySoulConfigExperienceSettingsInputSchema, OriginsIdentitySoulConfigResponseFormatPreferencesInputSchema, PodcastConfigFilterInput, PodcastConfigResourceSchema, PodcastConfigSortField, PodcastEpisodeSettingsFilterInput, PodcastEpisodeSettingsResourceSchema, PodcastEpisodeSettingsSortField, PromptContextFilterInput, PromptContextResourceSchema, PromptContextSortField, PromptToolFilterInput, PromptToolResourceSchema, PromptToolSortField, PublicConversationFilterInput, PublicConversationResourceSchema, PublicConversationSortField, ScrapedWebsiteContentResourceSchema, SetupProgressFilterInput, SetupProgressResourceSchema, SetupProgressSortField, SortString, SoulConfigFilterInput, SoulConfigResourceSchema, SoulConfigSortField, StaffTenantGrantFilterInput, StaffTenantGrantResourceSchema, StaffTenantGrantSortField, TenantFilterInput, TenantResourceSchema, TenantSortField, UUID, UnifiedFieldSelection, UserFilterInput, UserProfileFilterInput, UserProfileResourceSchema, UserProfileSortField, UserResourceSchema, UserSortField, UtcDateTimeUsec, ValidationResult, WaitlistEntryFilterInput, WaitlistEntryResourceSchema, WaitlistEntrySortField, YoutubeEpisodeFilterInput, YoutubeEpisodeResourceSchema, YoutubeEpisodeSortField } from "./ash_types";
 export type * from "./ash_types";
 
 // Helper Functions
@@ -345,6 +345,254 @@ export async function executeValidationChannelPush<T>(
 
 
 
+export type ListMyTenantGrantsFields = UnifiedFieldSelection<StaffTenantGrantResourceSchema>[];
+export type InferListMyTenantGrantsResult<
+  Fields extends ListMyTenantGrantsFields,
+> = Array<InferResult<StaffTenantGrantResourceSchema, Fields>>;
+
+export type ListMyTenantGrantsResult<Fields extends ListMyTenantGrantsFields> = | { success: true; data: InferListMyTenantGrantsResult<Fields>; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Read StaffTenantGrant records
+ *
+ * @ashActionType :read
+ */
+export async function list_my_tenant_grants<Fields extends ListMyTenantGrantsFields>(
+  config: {
+  tenant?: string;
+  fields: Fields;
+  filter?: StaffTenantGrantFilterInput;
+  sort?: SortString<StaffTenantGrantSortField> | SortString<StaffTenantGrantSortField>[];
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ListMyTenantGrantsResult<Fields>> {
+  const payload = {
+    action: "list_my_tenant_grants",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    ...(config.fields !== undefined && { fields: config.fields }),
+    ...(config.filter && { filter: config.filter }),
+    ...(config.sort && { sort: Array.isArray(config.sort) ? config.sort.join(",") : config.sort })
+  };
+
+  return executeActionRpcRequest<ListMyTenantGrantsResult<Fields>>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Read StaffTenantGrant records
+ *
+ * @ashActionType :read
+ * @validation true
+ */
+export async function validate_list_my_tenant_grants(
+  config: {
+  tenant?: string;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "list_my_tenant_grants",
+    ...(config.tenant !== undefined && { tenant: config.tenant })
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Read StaffTenantGrant records
+ *
+ * @ashActionType :read
+ * @validation true
+ */
+export async function validate_list_my_tenant_grants_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "list_my_tenant_grants",
+    ...(config.tenant !== undefined && { tenant: config.tenant })
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Read StaffTenantGrant records
+ *
+ * @ashActionType :read
+ */
+export async function list_my_tenant_grants_channel<Fields extends ListMyTenantGrantsFields>(config: {
+  channel: Channel;
+  tenant?: string;
+  fields: Fields;
+  filter?: StaffTenantGrantFilterInput;
+  sort?: SortString<StaffTenantGrantSortField> | SortString<StaffTenantGrantSortField>[];
+  result_handler: (result: ListMyTenantGrantsResult<Fields>) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<ListMyTenantGrantsResult<Fields>>(
+    config.channel,
+    {
+    action: "list_my_tenant_grants",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    ...(config.fields !== undefined && { fields: config.fields }),
+    ...(config.filter && { filter: config.filter }),
+    ...(config.sort && { sort: Array.isArray(config.sort) ? config.sort.join(",") : config.sort })
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+export type CreateTenantForUserInput = {
+  slug: string;
+  display_name: string;
+  picture_url?: string | null;
+  profile?: Record<string, any> | null;
+};
+
+export type InferCreateTenantForUserResult = Record<string, any>;
+
+export type CreateTenantForUserResult = | { success: true; data: InferCreateTenantForUserResult; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Execute generic action on Tenant
+ *
+ * @ashActionType :action
+ */
+export async function create_tenant_for_user(
+  config: {
+  tenant?: string;
+  input: CreateTenantForUserInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<CreateTenantForUserResult> {
+  const payload = {
+    action: "create_tenant_for_user",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  };
+
+  return executeActionRpcRequest<CreateTenantForUserResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Execute generic action on Tenant
+ *
+ * @ashActionType :action
+ * @validation true
+ */
+export async function validate_create_tenant_for_user(
+  config: {
+  tenant?: string;
+  input: CreateTenantForUserInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "create_tenant_for_user",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Execute generic action on Tenant
+ *
+ * @ashActionType :action
+ * @validation true
+ */
+export async function validate_create_tenant_for_user_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  input: CreateTenantForUserInput;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "create_tenant_for_user",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Execute generic action on Tenant
+ *
+ * @ashActionType :action
+ */
+export async function create_tenant_for_user_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  input: CreateTenantForUserInput;
+  result_handler: (result: CreateTenantForUserResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<CreateTenantForUserResult>(
+    config.channel,
+    {
+    action: "create_tenant_for_user",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  },
+    config.timeout,
+    config
+  );
+}
+
+
 export type GetTenantInput = {
   id: UUID;
 };
@@ -466,6 +714,254 @@ export async function get_tenant_channel<Fields extends GetTenantFields>(config:
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     input: config.input,
     ...(config.fields !== undefined && { fields: config.fields })
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+export type ListAllTenantsFields = UnifiedFieldSelection<TenantResourceSchema>[];
+export type InferListAllTenantsResult<
+  Fields extends ListAllTenantsFields,
+> = Array<InferResult<TenantResourceSchema, Fields>>;
+
+export type ListAllTenantsResult<Fields extends ListAllTenantsFields> = | { success: true; data: InferListAllTenantsResult<Fields>; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Read Tenant records
+ *
+ * @ashActionType :read
+ */
+export async function list_all_tenants<Fields extends ListAllTenantsFields>(
+  config: {
+  tenant?: string;
+  fields: Fields;
+  filter?: TenantFilterInput;
+  sort?: SortString<TenantSortField> | SortString<TenantSortField>[];
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ListAllTenantsResult<Fields>> {
+  const payload = {
+    action: "list_all_tenants",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    ...(config.fields !== undefined && { fields: config.fields }),
+    ...(config.filter && { filter: config.filter }),
+    ...(config.sort && { sort: Array.isArray(config.sort) ? config.sort.join(",") : config.sort })
+  };
+
+  return executeActionRpcRequest<ListAllTenantsResult<Fields>>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Read Tenant records
+ *
+ * @ashActionType :read
+ * @validation true
+ */
+export async function validate_list_all_tenants(
+  config: {
+  tenant?: string;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "list_all_tenants",
+    ...(config.tenant !== undefined && { tenant: config.tenant })
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Read Tenant records
+ *
+ * @ashActionType :read
+ * @validation true
+ */
+export async function validate_list_all_tenants_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "list_all_tenants",
+    ...(config.tenant !== undefined && { tenant: config.tenant })
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Read Tenant records
+ *
+ * @ashActionType :read
+ */
+export async function list_all_tenants_channel<Fields extends ListAllTenantsFields>(config: {
+  channel: Channel;
+  tenant?: string;
+  fields: Fields;
+  filter?: TenantFilterInput;
+  sort?: SortString<TenantSortField> | SortString<TenantSortField>[];
+  result_handler: (result: ListAllTenantsResult<Fields>) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<ListAllTenantsResult<Fields>>(
+    config.channel,
+    {
+    action: "list_all_tenants",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    ...(config.fields !== undefined && { fields: config.fields }),
+    ...(config.filter && { filter: config.filter }),
+    ...(config.sort && { sort: Array.isArray(config.sort) ? config.sort.join(",") : config.sort })
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+export type ListMyTenantsFields = UnifiedFieldSelection<TenantResourceSchema>[];
+export type InferListMyTenantsResult<
+  Fields extends ListMyTenantsFields,
+> = Array<InferResult<TenantResourceSchema, Fields>>;
+
+export type ListMyTenantsResult<Fields extends ListMyTenantsFields> = | { success: true; data: InferListMyTenantsResult<Fields>; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Read Tenant records
+ *
+ * @ashActionType :read
+ */
+export async function list_my_tenants<Fields extends ListMyTenantsFields>(
+  config: {
+  tenant?: string;
+  fields: Fields;
+  filter?: TenantFilterInput;
+  sort?: SortString<TenantSortField> | SortString<TenantSortField>[];
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ListMyTenantsResult<Fields>> {
+  const payload = {
+    action: "list_my_tenants",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    ...(config.fields !== undefined && { fields: config.fields }),
+    ...(config.filter && { filter: config.filter }),
+    ...(config.sort && { sort: Array.isArray(config.sort) ? config.sort.join(",") : config.sort })
+  };
+
+  return executeActionRpcRequest<ListMyTenantsResult<Fields>>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Read Tenant records
+ *
+ * @ashActionType :read
+ * @validation true
+ */
+export async function validate_list_my_tenants(
+  config: {
+  tenant?: string;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "list_my_tenants",
+    ...(config.tenant !== undefined && { tenant: config.tenant })
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Read Tenant records
+ *
+ * @ashActionType :read
+ * @validation true
+ */
+export async function validate_list_my_tenants_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "list_my_tenants",
+    ...(config.tenant !== undefined && { tenant: config.tenant })
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Read Tenant records
+ *
+ * @ashActionType :read
+ */
+export async function list_my_tenants_channel<Fields extends ListMyTenantsFields>(config: {
+  channel: Channel;
+  tenant?: string;
+  fields: Fields;
+  filter?: TenantFilterInput;
+  sort?: SortString<TenantSortField> | SortString<TenantSortField>[];
+  result_handler: (result: ListMyTenantsResult<Fields>) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<ListMyTenantsResult<Fields>>(
+    config.channel,
+    {
+    action: "list_my_tenants",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    ...(config.fields !== undefined && { fields: config.fields }),
+    ...(config.filter && { filter: config.filter }),
+    ...(config.sort && { sort: Array.isArray(config.sort) ? config.sort.join(",") : config.sort })
   },
     config.timeout,
     config
@@ -1125,6 +1621,127 @@ export async function sign_in_with_password_channel<Fields extends SignInWithPas
     input: config.input,
     ...(config.fields !== undefined && { fields: config.fields }),
     ...(config.metadata_fields && { metadata_fields: config.metadata_fields })
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+export type StartTenantSessionInput = {
+  tenant_id: UUID;
+};
+
+export type InferStartTenantSessionResult = Record<string, any>;
+
+export type StartTenantSessionResult = | { success: true; data: InferStartTenantSessionResult; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Execute generic action on User
+ *
+ * @ashActionType :action
+ */
+export async function start_tenant_session(
+  config: {
+  tenant?: string;
+  input: StartTenantSessionInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<StartTenantSessionResult> {
+  const payload = {
+    action: "start_tenant_session",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  };
+
+  return executeActionRpcRequest<StartTenantSessionResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Execute generic action on User
+ *
+ * @ashActionType :action
+ * @validation true
+ */
+export async function validate_start_tenant_session(
+  config: {
+  tenant?: string;
+  input: StartTenantSessionInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "start_tenant_session",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Execute generic action on User
+ *
+ * @ashActionType :action
+ * @validation true
+ */
+export async function validate_start_tenant_session_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  input: StartTenantSessionInput;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "start_tenant_session",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Execute generic action on User
+ *
+ * @ashActionType :action
+ */
+export async function start_tenant_session_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  input: StartTenantSessionInput;
+  result_handler: (result: StartTenantSessionResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<StartTenantSessionResult>(
+    config.channel,
+    {
+    action: "start_tenant_session",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
   },
     config.timeout,
     config
@@ -9091,7 +9708,6 @@ export type CreateOriginEntityInput = {
   podcast_button_text?: string | null;
   podcast_button_color?: string | null;
   podcast_button_text_color?: string | null;
-  podcast_config?: Record<string, any> | null;
   setup_progress_id?: UUID | null;
 };
 
@@ -10083,6 +10699,134 @@ export async function get_origin_entity_by_slug_channel<Fields extends GetOrigin
 }
 
 
+export type GetPublicOriginEntityInput = {
+  id: UUID;
+};
+
+export type GetPublicOriginEntityFields = UnifiedFieldSelection<OriginEntityResourceSchema>[];
+export type InferGetPublicOriginEntityResult<
+  Fields extends GetPublicOriginEntityFields,
+> = InferResult<OriginEntityResourceSchema, Fields>;
+
+export type GetPublicOriginEntityResult<Fields extends GetPublicOriginEntityFields> = | { success: true; data: InferGetPublicOriginEntityResult<Fields>; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Read OriginEntity records
+ *
+ * @ashActionType :read
+ */
+export async function get_public_origin_entity<Fields extends GetPublicOriginEntityFields>(
+  config: {
+  tenant?: string;
+  input: GetPublicOriginEntityInput;
+  fields: Fields;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<GetPublicOriginEntityResult<Fields>> {
+  const payload = {
+    action: "get_public_origin_entity",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input,
+    ...(config.fields !== undefined && { fields: config.fields })
+  };
+
+  return executeActionRpcRequest<GetPublicOriginEntityResult<Fields>>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Read OriginEntity records
+ *
+ * @ashActionType :read
+ * @validation true
+ */
+export async function validate_get_public_origin_entity(
+  config: {
+  tenant?: string;
+  input: GetPublicOriginEntityInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "get_public_origin_entity",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Read OriginEntity records
+ *
+ * @ashActionType :read
+ * @validation true
+ */
+export async function validate_get_public_origin_entity_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  input: GetPublicOriginEntityInput;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "get_public_origin_entity",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Read OriginEntity records
+ *
+ * @ashActionType :read
+ */
+export async function get_public_origin_entity_channel<Fields extends GetPublicOriginEntityFields>(config: {
+  channel: Channel;
+  tenant?: string;
+  input: GetPublicOriginEntityInput;
+  fields: Fields;
+  result_handler: (result: GetPublicOriginEntityResult<Fields>) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<GetPublicOriginEntityResult<Fields>>(
+    config.channel,
+    {
+    action: "get_public_origin_entity",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input,
+    ...(config.fields !== undefined && { fields: config.fields })
+  },
+    config.timeout,
+    config
+  );
+}
+
+
 export type InferListCartesiaVoicesResult = Array<Record<string, any>>;
 
 export type ListCartesiaVoicesResult = | { success: true; data: InferListCartesiaVoicesResult; }
@@ -10340,6 +11084,130 @@ export async function list_origin_entities_channel<Fields extends ListOriginEnti
     ...(config.filter && { filter: config.filter }),
     ...(config.sort && { sort: Array.isArray(config.sort) ? config.sort.join(",") : config.sort }),
     ...(config.page && { page: config.page })
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+export type ListOriginEntitiesForSwitcherFields = UnifiedFieldSelection<OriginEntityResourceSchema>[];
+export type InferListOriginEntitiesForSwitcherResult<
+  Fields extends ListOriginEntitiesForSwitcherFields,
+> = Array<InferResult<OriginEntityResourceSchema, Fields>>;
+
+export type ListOriginEntitiesForSwitcherResult<Fields extends ListOriginEntitiesForSwitcherFields> = | { success: true; data: InferListOriginEntitiesForSwitcherResult<Fields>; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Read OriginEntity records
+ *
+ * @ashActionType :read
+ */
+export async function list_origin_entities_for_switcher<Fields extends ListOriginEntitiesForSwitcherFields>(
+  config: {
+  tenant?: string;
+  fields: Fields;
+  filter?: OriginEntityFilterInput;
+  sort?: SortString<OriginEntitySortField> | SortString<OriginEntitySortField>[];
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ListOriginEntitiesForSwitcherResult<Fields>> {
+  const payload = {
+    action: "list_origin_entities_for_switcher",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    ...(config.fields !== undefined && { fields: config.fields }),
+    ...(config.filter && { filter: config.filter }),
+    ...(config.sort && { sort: Array.isArray(config.sort) ? config.sort.join(",") : config.sort })
+  };
+
+  return executeActionRpcRequest<ListOriginEntitiesForSwitcherResult<Fields>>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Read OriginEntity records
+ *
+ * @ashActionType :read
+ * @validation true
+ */
+export async function validate_list_origin_entities_for_switcher(
+  config: {
+  tenant?: string;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "list_origin_entities_for_switcher",
+    ...(config.tenant !== undefined && { tenant: config.tenant })
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Read OriginEntity records
+ *
+ * @ashActionType :read
+ * @validation true
+ */
+export async function validate_list_origin_entities_for_switcher_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "list_origin_entities_for_switcher",
+    ...(config.tenant !== undefined && { tenant: config.tenant })
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Read OriginEntity records
+ *
+ * @ashActionType :read
+ */
+export async function list_origin_entities_for_switcher_channel<Fields extends ListOriginEntitiesForSwitcherFields>(config: {
+  channel: Channel;
+  tenant?: string;
+  fields: Fields;
+  filter?: OriginEntityFilterInput;
+  sort?: SortString<OriginEntitySortField> | SortString<OriginEntitySortField>[];
+  result_handler: (result: ListOriginEntitiesForSwitcherResult<Fields>) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<ListOriginEntitiesForSwitcherResult<Fields>>(
+    config.channel,
+    {
+    action: "list_origin_entities_for_switcher",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    ...(config.fields !== undefined && { fields: config.fields }),
+    ...(config.filter && { filter: config.filter }),
+    ...(config.sort && { sort: Array.isArray(config.sort) ? config.sort.join(",") : config.sort })
   },
     config.timeout,
     config
@@ -11076,7 +11944,6 @@ export type UpdateOriginEntityInput = {
   podcast_button_text?: string | null;
   podcast_button_color?: string | null;
   podcast_button_text_color?: string | null;
-  podcast_config?: Record<string, any> | null;
   setup_progress_id?: UUID | null;
 };
 

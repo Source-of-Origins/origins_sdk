@@ -5,16 +5,22 @@ defmodule OriginsSdk.Accounts do
 
   alias OriginsSdk.{Client, Error}
   alias OriginsSdk.Accounts.ApproveWaitlistEntry
+  alias OriginsSdk.Accounts.CreateTenantForUser
   alias OriginsSdk.Accounts.DeleteWaitlistEntry
   alias OriginsSdk.Accounts.GetCurrentUser
   alias OriginsSdk.Accounts.GetTenant
   alias OriginsSdk.Accounts.GetWaitlistEntryByToken
+  alias OriginsSdk.Accounts.ListAllTenants
   alias OriginsSdk.Accounts.ListAllUsers
+  alias OriginsSdk.Accounts.ListMyTenantGrants
+  alias OriginsSdk.Accounts.ListMyTenants
   alias OriginsSdk.Accounts.ListWaitlistEntries
   alias OriginsSdk.Accounts.RegisterWithInvitation
   alias OriginsSdk.Accounts.RegisterWithPassword
   alias OriginsSdk.Accounts.RejectWaitlistEntry
   alias OriginsSdk.Accounts.SignInWithPassword
+  alias OriginsSdk.Accounts.StaffTenantGrant
+  alias OriginsSdk.Accounts.StartTenantSession
   alias OriginsSdk.Accounts.SubmitWaitlistEntry
   alias OriginsSdk.Accounts.Tenant
   alias OriginsSdk.Accounts.User
@@ -42,6 +48,35 @@ defmodule OriginsSdk.Accounts do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &WaitlistEntry.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Mint a new tenant (with its root OE and an owner membership) for the
+  currently authenticated user. Used by the in-app wizard's top-level
+  "New Origin" path — see `Origins.Accounts.Actions.CreateTenantForUser`.
+  
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def create_tenant_for_user(%CreateTenantForUser.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, Tenant)
+
+    payload =
+      %{
+        "action" => "create_tenant_for_user",
+        "input" => CreateTenantForUser.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &Tenant.from_json/1, nil)
     end
   end
 
@@ -151,6 +186,32 @@ defmodule OriginsSdk.Accounts do
 
 
   @doc """
+  List every tenant. Super-admin only — used by the Switcher.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def list_all_tenants(%ListAllTenants.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, Tenant)
+
+    payload =
+      %{
+        "action" => "list_all_tenants",
+        "input" => ListAllTenants.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &Tenant.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
   List all users (super admin only)
 
   ## Options
@@ -172,6 +233,62 @@ defmodule OriginsSdk.Accounts do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &User.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Active grants for the calling user. Used by the SPA tenant switcher.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def list_my_tenant_grants(%ListMyTenantGrants.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, StaffTenantGrant)
+
+    payload =
+      %{
+        "action" => "list_my_tenant_grants",
+        "input" => ListMyTenantGrants.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &StaffTenantGrant.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  The tenants the actor may act in (SOU-200): their home tenant plus every
+  tenant they hold an active StaffTenantGrant on — or every active tenant
+  for a super-admin. The single source of truth for the Switcher's
+  top-level list. See `Origins.Accounts.TenantEntry`.
+  
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def list_my_tenants(%ListMyTenants.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, Tenant)
+
+    payload =
+      %{
+        "action" => "list_my_tenants",
+        "input" => ListMyTenants.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &Tenant.from_json/1, nil)
     end
   end
 
@@ -308,6 +425,32 @@ defmodule OriginsSdk.Accounts do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &User.from_json/1, &SignInWithPassword.Metadata.from_json/1)
+    end
+  end
+
+
+  @doc """
+  Mint an acting-as-tenant JWT for a tenant the caller has a grant for.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def start_tenant_session(%StartTenantSession.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, User)
+
+    payload =
+      %{
+        "action" => "start_tenant_session",
+        "input" => StartTenantSession.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &User.from_json/1, nil)
     end
   end
 

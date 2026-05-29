@@ -4,6 +4,76 @@
     {
       "actionType": "read",
       "deprecated": false,
+      "description": "Active grants for the calling user. Used by the SPA tenant switcher.",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_my_tenant_grants",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "StaffTenantGrant",
+      "see": [],
+      "types": {
+        "fields": "ListMyTenantGrantsFields",
+        "filterInput": "StaffTenantGrantFilterInput",
+        "inferResult": "InferListMyTenantGrantsResult",
+        "result": "ListMyTenantGrantsResult"
+      },
+      "variantNames": {
+        "channel": "list_my_tenant_grants_channel",
+        "validation": "validate_list_my_tenant_grants"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Mint a new tenant (with its root OE and an owner membership) for the\ncurrently authenticated user. Used by the in-app wizard's top-level\n\"New Origin\" path — see `Origins.Accounts.Actions.CreateTenantForUser`.\n",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "create_tenant_for_user",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Tenant",
+      "see": [],
+      "types": {
+        "input": "CreateTenantForUserInput",
+        "result": "CreateTenantForUserResult"
+      },
+      "variantNames": {
+        "channel": "create_tenant_for_user_channel",
+        "validation": "validate_create_tenant_for_user"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
       "description": "Read Tenant records",
       "enableFilter": true,
       "enableSort": true,
@@ -30,6 +100,78 @@
       "variantNames": {
         "channel": "get_tenant_channel",
         "validation": "validate_get_tenant"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "List every tenant. Super-admin only — used by the Switcher.",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_all_tenants",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Tenant",
+      "see": [],
+      "types": {
+        "fields": "ListAllTenantsFields",
+        "filterInput": "TenantFilterInput",
+        "inferResult": "InferListAllTenantsResult",
+        "result": "ListAllTenantsResult"
+      },
+      "variantNames": {
+        "channel": "list_all_tenants_channel",
+        "validation": "validate_list_all_tenants"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "The tenants the actor may act in (SOU-200): their home tenant plus every\ntenant they hold an active StaffTenantGrant on — or every active tenant\nfor a super-admin. The single source of truth for the Switcher's\ntop-level list. See `Origins.Accounts.TenantEntry`.\n",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_my_tenants",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Tenant",
+      "see": [],
+      "types": {
+        "fields": "ListMyTenantsFields",
+        "filterInput": "TenantFilterInput",
+        "inferResult": "InferListMyTenantsResult",
+        "result": "ListMyTenantsResult"
+      },
+      "variantNames": {
+        "channel": "list_my_tenants_channel",
+        "validation": "validate_list_my_tenants"
       },
       "variants": {
         "channel": true,
@@ -211,6 +353,40 @@
       "variantNames": {
         "channel": "sign_in_with_password_channel",
         "validation": "validate_sign_in_with_password"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Mint an acting-as-tenant JWT for a tenant the caller has a grant for.",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "start_tenant_session",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "User",
+      "see": [],
+      "types": {
+        "input": "StartTenantSessionInput",
+        "result": "StartTenantSessionResult"
+      },
+      "variantNames": {
+        "channel": "start_tenant_session_channel",
+        "validation": "validate_start_tenant_session"
       },
       "variants": {
         "channel": true,
@@ -2283,7 +2459,7 @@
     {
       "actionType": "create",
       "deprecated": false,
-      "description": "Create a new OriginEntity",
+      "description": "Create a sub-OriginEntity under an existing parent. Top-level Origins\n(`parent_origin_entity_id IS NULL`) cannot be created through this\naction under the unified tenant model — each top-level OE is the\nroot of its own Tenant and must be minted via\n`Origins.Accounts.Tenant.create_for_user/1`, which atomically creates\nTenant + root OE + owner Membership.\n\nThe policy below forbids parentless creates for non-internal callers.\nInternal callers (`AtomicSignup`, `CreateTenantForUser`) bypass via\nSystemActor and legitimately create the root OE directly.\n",
       "enableFilter": true,
       "enableSort": true,
       "functionName": "create_origin_entity",
@@ -2560,6 +2736,43 @@
       }
     },
     {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Fetch a single public Origin by id, regardless of the request's\npinned tenant. The `is_public == true` filter is the security\nboundary — any actor (signed-in or anonymous) may resolve a public\nOE in any tenant via this action.\n",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "get_public_origin_entity",
+      "get": true,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": true,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntity",
+      "see": [],
+      "types": {
+        "fields": "GetPublicOriginEntityFields",
+        "filterInput": "OriginEntityFilterInput",
+        "inferResult": "InferGetPublicOriginEntityResult",
+        "input": "GetPublicOriginEntityInput",
+        "result": "GetPublicOriginEntityResult"
+      },
+      "variantNames": {
+        "channel": "get_public_origin_entity_channel",
+        "validation": "validate_get_public_origin_entity"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
       "actionType": "action",
       "deprecated": false,
       "description": "Execute generic action on OriginEntity",
@@ -2632,6 +2845,42 @@
     {
       "actionType": "read",
       "deprecated": false,
+      "description": "Every OriginEntity the actor can act on across tenants — used to\npopulate the unified Switcher's full tree.\n\nReturns OEs from: (a) the actor's home tenant, (b) tenants the\nactor has an active StaffTenantGrant on, (c) every tenant if the\nactor is a super-admin. `multitenancy :bypass` lets the query span\ntenants regardless of the request's pinned tenant; the filter below\nis the cross-tenant access boundary.\n",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_origin_entities_for_switcher",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "OriginEntity",
+      "see": [],
+      "types": {
+        "fields": "ListOriginEntitiesForSwitcherFields",
+        "filterInput": "OriginEntityFilterInput",
+        "inferResult": "InferListOriginEntitiesForSwitcherResult",
+        "result": "ListOriginEntitiesForSwitcherResult"
+      },
+      "variantNames": {
+        "channel": "list_origin_entities_for_switcher_channel",
+        "validation": "validate_list_origin_entities_for_switcher"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
       "description": "List Origins accessible to the current user (direct membership or ancestor membership)",
       "enableFilter": true,
       "enableSort": true,
@@ -2669,7 +2918,7 @@
     {
       "actionType": "read",
       "deprecated": false,
-      "description": "List only public Origins",
+      "description": "List only public Origins, across every tenant.\n\nPublic means public — a request pinned to tenant A (e.g. a super-admin\nwith tenant A selected in the switcher) must still resolve a public\navatar that lives in tenant B when hitting the apex chat URL.\n`multitenancy :bypass` lets the query span tenants regardless of the\nrequest's pinned tenant; the `is_public == true` filter is the access\nboundary. Mirrors `:get_public`.\n",
       "enableFilter": true,
       "enableSort": true,
       "functionName": "list_public_origin_entities",
@@ -6137,7 +6386,7 @@
       "importPath": "./ash_types"
     }
   },
-  "generatedAt": "2026-05-28",
+  "generatedAt": "2026-05-29",
   "typedControllerRoutes": [],
   "version": "1.0"
 }

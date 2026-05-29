@@ -35,11 +35,13 @@ defmodule OriginsSdk.Identity do
   alias OriginsSdk.Identity.GetOriginEntityMembership
   alias OriginsSdk.Identity.GetPendingMemberships
   alias OriginsSdk.Identity.GetPromptContextPublicTitle
+  alias OriginsSdk.Identity.GetPublicOriginEntity
   alias OriginsSdk.Identity.InviteToOrigin
   alias OriginsSdk.Identity.ListCartesiaVoices
   alias OriginsSdk.Identity.ListChatConfigs
   alias OriginsSdk.Identity.ListOriginAssets
   alias OriginsSdk.Identity.ListOriginEntities
+  alias OriginsSdk.Identity.ListOriginEntitiesForSwitcher
   alias OriginsSdk.Identity.ListOriginEntitiesForUser
   alias OriginsSdk.Identity.ListOriginEntityMemberships
   alias OriginsSdk.Identity.ListPromptContextsForOrigin
@@ -202,7 +204,17 @@ defmodule OriginsSdk.Identity do
 
 
   @doc """
-  Run the `create_origin_entity` action.
+  Create a sub-OriginEntity under an existing parent. Top-level Origins
+  (`parent_origin_entity_id IS NULL`) cannot be created through this
+  action under the unified tenant model — each top-level OE is the
+  root of its own Tenant and must be minted via
+  `Origins.Accounts.Tenant.create_for_user/1`, which atomically creates
+  Tenant + root OE + owner Membership.
+  
+  The policy below forbids parentless creates for non-internal callers.
+  Internal callers (`AtomicSignup`, `CreateTenantForUser`) bypass via
+  SystemActor and legitimately create the root OE directly.
+  
 
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
@@ -852,6 +864,36 @@ defmodule OriginsSdk.Identity do
 
 
   @doc """
+  Fetch a single public Origin by id, regardless of the request's
+  pinned tenant. The `is_public == true` filter is the security
+  boundary — any actor (signed-in or anonymous) may resolve a public
+  OE in any tenant via this action.
+  
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def get_public_origin_entity(%GetPublicOriginEntity.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, OriginEntity)
+
+    payload =
+      %{
+        "action" => "get_public_origin_entity",
+        "input" => GetPublicOriginEntity.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &OriginEntity.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
   Invite a user to an Origin by email
 
   ## Options
@@ -982,6 +1024,40 @@ defmodule OriginsSdk.Identity do
 
 
   @doc """
+  Every OriginEntity the actor can act on across tenants — used to
+  populate the unified Switcher's full tree.
+  
+  Returns OEs from: (a) the actor's home tenant, (b) tenants the
+  actor has an active StaffTenantGrant on, (c) every tenant if the
+  actor is a super-admin. `multitenancy :bypass` lets the query span
+  tenants regardless of the request's pinned tenant; the filter below
+  is the cross-tenant access boundary.
+  
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def list_origin_entities_for_switcher(%ListOriginEntitiesForSwitcher.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, OriginEntity)
+
+    payload =
+      %{
+        "action" => "list_origin_entities_for_switcher",
+        "input" => ListOriginEntitiesForSwitcher.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &OriginEntity.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
   List Origins accessible to the current user (direct membership or ancestor membership)
 
   ## Options
@@ -1086,7 +1162,15 @@ defmodule OriginsSdk.Identity do
 
 
   @doc """
-  List only public Origins
+  List only public Origins, across every tenant.
+  
+  Public means public — a request pinned to tenant A (e.g. a super-admin
+  with tenant A selected in the switcher) must still resolve a public
+  avatar that lives in tenant B when hitting the apex chat URL.
+  `multitenancy :bypass` lets the query span tenants regardless of the
+  request's pinned tenant; the `is_public == true` filter is the access
+  boundary. Mirrors `:get_public`.
+  
 
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
