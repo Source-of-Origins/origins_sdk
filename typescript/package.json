@@ -1,6 +1,6 @@
 {
   "name": "@origins/sdk",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "TypeScript client SDK for Origins. Generated — do not edit by hand.",
   "main": "src/ash_rpc.ts",
   "types": "src/ash_rpc.ts",
