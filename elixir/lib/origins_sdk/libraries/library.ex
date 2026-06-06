@@ -7,6 +7,7 @@ defmodule OriginsSdk.Libraries.Library do
   @type t :: %__MODULE__{
     adapter_config: map() | nil,
     adapter_kind: any(),
+    auto_ingest_videos: boolean(),
     auto_resync_enabled: boolean(),
     created_at: DateTime.t(),
     error_count: integer(),
@@ -17,6 +18,7 @@ defmodule OriginsSdk.Libraries.Library do
     last_synced_at: DateTime.t() | nil,
     name: String.t(),
     origin_entity_id: String.t(),
+    slug: String.t(),
     status: any(),
     updated_at: DateTime.t()
     }
@@ -24,6 +26,7 @@ defmodule OriginsSdk.Libraries.Library do
   defstruct [
     :adapter_config,
     :adapter_kind,
+    :auto_ingest_videos,
     :auto_resync_enabled,
     :created_at,
     :error_count,
@@ -34,11 +37,12 @@ defmodule OriginsSdk.Libraries.Library do
     :last_synced_at,
     :name,
     :origin_entity_id,
+    :slug,
     :status,
     :updated_at
   ]
 
-  @primitive_fields ~w(adapter_config adapter_kind auto_resync_enabled created_at error_count id inherits_to_descendants last_error last_error_at last_synced_at name origin_entity_id status updated_at)a
+  @primitive_fields ~w(adapter_config adapter_kind auto_ingest_videos auto_resync_enabled created_at error_count id inherits_to_descendants last_error last_error_at last_synced_at name origin_entity_id slug status updated_at)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -51,6 +55,7 @@ defmodule OriginsSdk.Libraries.Library do
     %__MODULE__{
       adapter_config: map["adapter_config"],
       adapter_kind: map["adapter_kind"],
+      auto_ingest_videos: map["auto_ingest_videos"],
       auto_resync_enabled: map["auto_resync_enabled"],
       created_at: OriginsSdk.Internal.decode_datetime(map["created_at"]),
       error_count: map["error_count"],
@@ -61,6 +66,7 @@ defmodule OriginsSdk.Libraries.Library do
       last_synced_at: OriginsSdk.Internal.decode_datetime(map["last_synced_at"]),
       name: map["name"],
       origin_entity_id: map["origin_entity_id"],
+      slug: map["slug"],
       status: map["status"],
       updated_at: OriginsSdk.Internal.decode_datetime(map["updated_at"])
     }

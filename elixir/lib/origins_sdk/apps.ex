@@ -9,7 +9,9 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.AttachLibraryToApp
   alias OriginsSdk.Apps.CreateApp
   alias OriginsSdk.Apps.CreateAppFromTemplate
+  alias OriginsSdk.Apps.CreateWebhookSubscription
   alias OriginsSdk.Apps.DestroyApp
+  alias OriginsSdk.Apps.DestroyWebhookSubscription
   alias OriginsSdk.Apps.DetachLibraryFromApp
   alias OriginsSdk.Apps.DuplicateApp
   alias OriginsSdk.Apps.GetApp
@@ -21,14 +23,20 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.ListAppsForOrigin
   alias OriginsSdk.Apps.ListAppsForOriginAndType
   alias OriginsSdk.Apps.ListLibrariesForApp
+  alias OriginsSdk.Apps.ListWebhookDeliveries
+  alias OriginsSdk.Apps.ListWebhookSubscriptions
   alias OriginsSdk.Apps.ParseAssessmentBlocks
   alias OriginsSdk.Apps.ParseCourseBlocks
   alias OriginsSdk.Apps.ParseLandingBlocks
   alias OriginsSdk.Apps.RestoreAppVersion
   alias OriginsSdk.Apps.SendAppChatMessage
+  alias OriginsSdk.Apps.SendTestWebhook
   alias OriginsSdk.Apps.Template
   alias OriginsSdk.Apps.UpdateApp
+  alias OriginsSdk.Apps.UpdateWebhookSubscription
   alias OriginsSdk.Apps.Version
+  alias OriginsSdk.Apps.WebhookDelivery
+  alias OriginsSdk.Apps.WebhookSubscription
 
   @doc """
   Run the `attach_library_to_app` action.
@@ -109,6 +117,32 @@ defmodule OriginsSdk.Apps do
 
 
   @doc """
+  Run the `create_webhook_subscription` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def create_webhook_subscription(%CreateWebhookSubscription.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, WebhookSubscription)
+
+    payload =
+      %{
+        "action" => "create_webhook_subscription",
+        "input" => CreateWebhookSubscription.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &WebhookSubscription.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
   Run the `destroy_app` action.
 
   ## Options
@@ -130,6 +164,32 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &App.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `destroy_webhook_subscription` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def destroy_webhook_subscription(%DestroyWebhookSubscription.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, WebhookSubscription)
+
+    payload =
+      %{
+        "action" => "destroy_webhook_subscription",
+        "input" => DestroyWebhookSubscription.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &WebhookSubscription.from_json/1, nil)
     end
   end
 
@@ -421,6 +481,58 @@ defmodule OriginsSdk.Apps do
 
 
   @doc """
+  Run the `list_webhook_deliveries` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def list_webhook_deliveries(%ListWebhookDeliveries.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, WebhookDelivery)
+
+    payload =
+      %{
+        "action" => "list_webhook_deliveries",
+        "input" => ListWebhookDeliveries.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &WebhookDelivery.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `list_webhook_subscriptions` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def list_webhook_subscriptions(%ListWebhookSubscriptions.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, WebhookSubscription)
+
+    payload =
+      %{
+        "action" => "list_webhook_subscriptions",
+        "input" => ListWebhookSubscriptions.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &WebhookSubscription.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
   Run the `parse_assessment_blocks` action.
 
   ## Options
@@ -551,6 +663,32 @@ defmodule OriginsSdk.Apps do
 
 
   @doc """
+  Synchronously POST a signed sample payload to this subscription's URL; returns the HTTP result.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def send_test_webhook(%SendTestWebhook.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, WebhookSubscription)
+
+    payload =
+      %{
+        "action" => "send_test_webhook",
+        "input" => SendTestWebhook.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &WebhookSubscription.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
   Run the `update_app` action.
 
   ## Options
@@ -572,6 +710,32 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &App.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `update_webhook_subscription` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def update_webhook_subscription(%UpdateWebhookSubscription.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, WebhookSubscription)
+
+    payload =
+      %{
+        "action" => "update_webhook_subscription",
+        "input" => UpdateWebhookSubscription.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &WebhookSubscription.from_json/1, nil)
     end
   end
 

@@ -32,9 +32,11 @@ defmodule OriginsSdk.Libraries do
   alias OriginsSdk.Libraries.ListLibraryAccessGrants
   alias OriginsSdk.Libraries.ListLibraryFiles
   alias OriginsSdk.Libraries.ListLibraryFilesForLibrary
+  alias OriginsSdk.Libraries.PreviewLibrarySyncFilter
   alias OriginsSdk.Libraries.SyncLibraryNow
   alias OriginsSdk.Libraries.UpdateLibrary
   alias OriginsSdk.Libraries.UpdateLibraryFile
+  alias OriginsSdk.Libraries.UpdateLibrarySyncFilter
   alias OriginsSdk.Libraries.UpsertWebsiteScrapeLibraryFile
 
   @doc """
@@ -642,6 +644,36 @@ defmodule OriginsSdk.Libraries do
 
 
   @doc """
+  Dry-run a proposed sync filter against this Library's currently-tracked
+  files: returns how many files (and cascaded video assets) the next sync
+  would orphan-remove, plus the removed paths. Powers the SPA confirmation
+  step before a tightened filter is saved.
+  
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def preview_library_sync_filter(%PreviewLibrarySyncFilter.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, Library)
+
+    payload =
+      %{
+        "action" => "preview_library_sync_filter",
+        "input" => PreviewLibrarySyncFilter.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &Library.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
   Run a one-shot source-adapter sync for this Library.
 
   ## Options
@@ -715,6 +747,36 @@ defmodule OriginsSdk.Libraries do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &LibraryFile.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Set this Library's sync filter (include/exclude path globs) under
+  `adapter_config["filters"]`, leaving the rest of the adapter config
+  intact. Tightening the filter orphan-removes the now-excluded files on
+  the next sync — the SPA shows `Origins.Libraries.FilterImpact` first.
+  
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def update_library_sync_filter(%UpdateLibrarySyncFilter.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, Library)
+
+    payload =
+      %{
+        "action" => "update_library_sync_filter",
+        "input" => UpdateLibrarySyncFilter.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &Library.from_json/1, nil)
     end
   end
 

@@ -18,6 +18,8 @@ defmodule OriginsSdk.Accounts do
   alias OriginsSdk.Accounts.RegisterWithInvitation
   alias OriginsSdk.Accounts.RegisterWithPassword
   alias OriginsSdk.Accounts.RejectWaitlistEntry
+  alias OriginsSdk.Accounts.SignInWithAppleToken
+  alias OriginsSdk.Accounts.SignInWithGoogleToken
   alias OriginsSdk.Accounts.SignInWithPassword
   alias OriginsSdk.Accounts.StaffTenantGrant
   alias OriginsSdk.Accounts.StartTenantSession
@@ -264,10 +266,10 @@ defmodule OriginsSdk.Accounts do
 
 
   @doc """
-  The tenants the actor may act in (SOU-200): their home tenant plus every
-  tenant they hold an active StaffTenantGrant on — or every active tenant
-  for a super-admin. The single source of truth for the Switcher's
-  top-level list. See `Origins.Accounts.TenantEntry`.
+  The tenants the actor may act in: their home tenant plus every tenant they
+  hold an active StaffTenantGrant on, or every active tenant for a
+  super-admin. Single source of truth for the Switcher's top-level list; see
+  `Origins.Accounts.TenantEntry`.
   
 
   ## Options
@@ -397,6 +399,58 @@ defmodule OriginsSdk.Accounts do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &WaitlistEntry.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Verify an Apple id_token, resolve/create the user, and return a JWT (SDK entrypoint).
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def sign_in_with_apple_token(%SignInWithAppleToken.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, User)
+
+    payload =
+      %{
+        "action" => "sign_in_with_apple_token",
+        "input" => SignInWithAppleToken.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &User.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Verify a Google id_token, resolve/create the user, and return a JWT (SDK entrypoint).
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def sign_in_with_google_token(%SignInWithGoogleToken.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, User)
+
+    payload =
+      %{
+        "action" => "sign_in_with_google_token",
+        "input" => SignInWithGoogleToken.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &User.from_json/1, nil)
     end
   end
 

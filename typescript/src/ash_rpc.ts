@@ -3,7 +3,7 @@
 
 import { Channel } from "phoenix";
 
-import type { AppFilterInput, AppLibraryFilterInput, AppLibraryResourceSchema, AppLibrarySortField, AppResourceSchema, AppSortField, AppTemplateFilterInput, AppTemplateResourceSchema, AppTemplateSortField, AppVersionFilterInput, AppVersionResourceSchema, AppVersionSortField, AshRpcError, ChatBindingFilterInput, ChatBindingResourceSchema, ChatBindingSortField, ChatConfigFilterInput, ChatConfigResourceSchema, ChatConfigSortField, ConditionalPaginatedResult, ConditionalPaginatedResultMixed, Decimal, DriveConnectionFilterInput, DriveConnectionResourceSchema, DriveConnectionSortField, FeatureFlagFilterInput, FeatureFlagResourceSchema, FeatureFlagSortField, FeedbackFilterInput, FeedbackResourceSchema, FeedbackSortField, GithubConnectionFilterInput, GithubConnectionResourceSchema, GithubConnectionSortField, HomepageCardFilterInput, HomepageCardResourceSchema, HomepageCardSortField, InferResult, InterviewGeneratedContentFilterInput, InterviewGeneratedContentResourceSchema, InterviewGeneratedContentSortField, InterviewSessionFilterInput, InterviewSessionResourceSchema, InterviewSessionSortField, InterviewTurnResourceSchema, LibraryAccessGrantFilterInput, LibraryAccessGrantResourceSchema, LibraryAccessGrantSortField, LibraryFileFilterInput, LibraryFileResourceSchema, LibraryFileSortField, LibraryFilterInput, LibraryResourceSchema, LibrarySortField, OriginAssetFilterInput, OriginAssetResourceSchema, OriginAssetSortField, OriginEntityFilterInput, OriginEntityMembershipFilterInput, OriginEntityMembershipResourceSchema, OriginEntityMembershipSortField, OriginEntityResourceSchema, OriginEntitySortField, OriginsIdentityAppearanceConfigInputSchema, OriginsIdentityPromptContextGuardrailConfigInputSchema, OriginsIdentityPublicProfileConfigInputSchema, OriginsIdentitySocialLinkInputSchema, OriginsIdentitySoulConfigCommunicationStyleInputSchema, OriginsIdentitySoulConfigExperienceSettingsInputSchema, OriginsIdentitySoulConfigResponseFormatPreferencesInputSchema, PodcastConfigFilterInput, PodcastConfigResourceSchema, PodcastConfigSortField, PodcastEpisodeSettingsFilterInput, PodcastEpisodeSettingsResourceSchema, PodcastEpisodeSettingsSortField, PromptContextFilterInput, PromptContextResourceSchema, PromptContextSortField, PromptToolFilterInput, PromptToolResourceSchema, PromptToolSortField, PublicConversationFilterInput, PublicConversationResourceSchema, PublicConversationSortField, ScrapedWebsiteContentResourceSchema, SetupProgressFilterInput, SetupProgressResourceSchema, SetupProgressSortField, SortString, SoulConfigFilterInput, SoulConfigResourceSchema, SoulConfigSortField, StaffTenantGrantFilterInput, StaffTenantGrantResourceSchema, StaffTenantGrantSortField, TenantFilterInput, TenantResourceSchema, TenantSortField, UUID, UnifiedFieldSelection, UserFilterInput, UserProfileFilterInput, UserProfileResourceSchema, UserProfileSortField, UserResourceSchema, UserSortField, UtcDateTimeUsec, ValidationResult, WaitlistEntryFilterInput, WaitlistEntryResourceSchema, WaitlistEntrySortField, YoutubeEpisodeFilterInput, YoutubeEpisodeResourceSchema, YoutubeEpisodeSortField } from "./ash_types";
+import type { AppFilterInput, AppLibraryFilterInput, AppLibraryResourceSchema, AppLibrarySortField, AppResourceSchema, AppSortField, AppTemplateFilterInput, AppTemplateResourceSchema, AppTemplateSortField, AppVersionFilterInput, AppVersionResourceSchema, AppVersionSortField, AshRpcError, ChatBindingFilterInput, ChatBindingResourceSchema, ChatBindingSortField, ChatConfigFilterInput, ChatConfigResourceSchema, ChatConfigSortField, ConditionalPaginatedResult, ConditionalPaginatedResultMixed, Decimal, DriveConnectionFilterInput, DriveConnectionResourceSchema, DriveConnectionSortField, FeatureFlagFilterInput, FeatureFlagResourceSchema, FeatureFlagSortField, FeedbackFilterInput, FeedbackResourceSchema, FeedbackSortField, GithubConnectionFilterInput, GithubConnectionResourceSchema, GithubConnectionSortField, HomepageCardFilterInput, HomepageCardResourceSchema, HomepageCardSortField, InferResult, InterviewGeneratedContentFilterInput, InterviewGeneratedContentResourceSchema, InterviewGeneratedContentSortField, InterviewSessionFilterInput, InterviewSessionResourceSchema, InterviewSessionSortField, InterviewTurnResourceSchema, LibraryAccessGrantFilterInput, LibraryAccessGrantResourceSchema, LibraryAccessGrantSortField, LibraryFileFilterInput, LibraryFileResourceSchema, LibraryFileSortField, LibraryFilterInput, LibraryResourceSchema, LibrarySortField, OriginAssetFilterInput, OriginAssetResourceSchema, OriginAssetSortField, OriginEntityFilterInput, OriginEntityMembershipFilterInput, OriginEntityMembershipResourceSchema, OriginEntityMembershipSortField, OriginEntityResourceSchema, OriginEntitySortField, OriginsIdentityAppearanceConfigInputSchema, OriginsIdentityPromptContextGuardrailConfigInputSchema, OriginsIdentityPublicProfileConfigInputSchema, OriginsIdentitySocialLinkInputSchema, OriginsIdentitySoulConfigCommunicationStyleInputSchema, OriginsIdentitySoulConfigExperienceSettingsInputSchema, OriginsIdentitySoulConfigResponseFormatPreferencesInputSchema, PodcastConfigFilterInput, PodcastConfigResourceSchema, PodcastConfigSortField, PodcastEpisodeSettingsFilterInput, PodcastEpisodeSettingsResourceSchema, PodcastEpisodeSettingsSortField, PromptContextFilterInput, PromptContextResourceSchema, PromptContextSortField, PromptToolFilterInput, PromptToolResourceSchema, PromptToolSortField, PublicConversationFilterInput, PublicConversationResourceSchema, PublicConversationSortField, ScrapedWebsiteContentResourceSchema, SetupProgressFilterInput, SetupProgressResourceSchema, SetupProgressSortField, SocialSignInResponseResourceSchema, SortString, SoulConfigFilterInput, SoulConfigResourceSchema, SoulConfigSortField, StaffTenantGrantFilterInput, StaffTenantGrantResourceSchema, StaffTenantGrantSortField, TenantFilterInput, TenantResourceSchema, TenantSortField, UUID, UnifiedFieldSelection, UserFilterInput, UserProfileFilterInput, UserProfileResourceSchema, UserProfileSortField, UserResourceSchema, UserSortField, UtcDateTimeUsec, ValidationResult, WaitlistEntryFilterInput, WaitlistEntryResourceSchema, WaitlistEntrySortField, WebhookDeliveryFilterInput, WebhookDeliveryResourceSchema, WebhookDeliverySortField, WebhookSubscriptionFilterInput, WebhookSubscriptionResourceSchema, WebhookSubscriptionSortField, YoutubeEpisodeFilterInput, YoutubeEpisodeResourceSchema, YoutubeEpisodeSortField } from "./ash_types";
 export type * from "./ash_types";
 
 // Helper Functions
@@ -1482,6 +1482,248 @@ export async function register_with_password_channel<Fields extends RegisterWith
     input: config.input,
     ...(config.fields !== undefined && { fields: config.fields }),
     ...(config.metadata_fields && { metadata_fields: config.metadata_fields })
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+export type SignInWithAppleTokenInput = {
+  id_token: string;
+};
+
+export type InferSignInWithAppleTokenResult = SocialSignInResponseResourceSchema;
+
+export type SignInWithAppleTokenResult = | { success: true; data: InferSignInWithAppleTokenResult; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Execute generic action on User
+ *
+ * @ashActionType :action
+ */
+export async function sign_in_with_apple_token(
+  config: {
+  tenant?: string;
+  input: SignInWithAppleTokenInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<SignInWithAppleTokenResult> {
+  const payload = {
+    action: "sign_in_with_apple_token",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  };
+
+  return executeActionRpcRequest<SignInWithAppleTokenResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Execute generic action on User
+ *
+ * @ashActionType :action
+ * @validation true
+ */
+export async function validate_sign_in_with_apple_token(
+  config: {
+  tenant?: string;
+  input: SignInWithAppleTokenInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "sign_in_with_apple_token",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Execute generic action on User
+ *
+ * @ashActionType :action
+ * @validation true
+ */
+export async function validate_sign_in_with_apple_token_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  input: SignInWithAppleTokenInput;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "sign_in_with_apple_token",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Execute generic action on User
+ *
+ * @ashActionType :action
+ */
+export async function sign_in_with_apple_token_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  input: SignInWithAppleTokenInput;
+  result_handler: (result: SignInWithAppleTokenResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<SignInWithAppleTokenResult>(
+    config.channel,
+    {
+    action: "sign_in_with_apple_token",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+export type SignInWithGoogleTokenInput = {
+  id_token: string;
+};
+
+export type InferSignInWithGoogleTokenResult = SocialSignInResponseResourceSchema;
+
+export type SignInWithGoogleTokenResult = | { success: true; data: InferSignInWithGoogleTokenResult; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Execute generic action on User
+ *
+ * @ashActionType :action
+ */
+export async function sign_in_with_google_token(
+  config: {
+  tenant?: string;
+  input: SignInWithGoogleTokenInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<SignInWithGoogleTokenResult> {
+  const payload = {
+    action: "sign_in_with_google_token",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  };
+
+  return executeActionRpcRequest<SignInWithGoogleTokenResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Execute generic action on User
+ *
+ * @ashActionType :action
+ * @validation true
+ */
+export async function validate_sign_in_with_google_token(
+  config: {
+  tenant?: string;
+  input: SignInWithGoogleTokenInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "sign_in_with_google_token",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Execute generic action on User
+ *
+ * @ashActionType :action
+ * @validation true
+ */
+export async function validate_sign_in_with_google_token_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  input: SignInWithGoogleTokenInput;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "sign_in_with_google_token",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Execute generic action on User
+ *
+ * @ashActionType :action
+ */
+export async function sign_in_with_google_token_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  input: SignInWithGoogleTokenInput;
+  result_handler: (result: SignInWithGoogleTokenResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<SignInWithGoogleTokenResult>(
+    config.channel,
+    {
+    action: "sign_in_with_google_token",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
   },
     config.timeout,
     config
@@ -6926,6 +7168,789 @@ export async function list_app_templates_for_type_channel<Fields extends ListApp
     ...(config.fields !== undefined && { fields: config.fields }),
     ...(config.filter && { filter: config.filter }),
     ...(config.sort && { sort: Array.isArray(config.sort) ? config.sort.join(",") : config.sort })
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+export type ListWebhookDeliveriesInput = {
+  origin_entity_id: UUID;
+};
+
+export type ListWebhookDeliveriesFields = UnifiedFieldSelection<WebhookDeliveryResourceSchema>[];
+export type InferListWebhookDeliveriesResult<
+  Fields extends ListWebhookDeliveriesFields,
+> = Array<InferResult<WebhookDeliveryResourceSchema, Fields>>;
+
+export type ListWebhookDeliveriesResult<Fields extends ListWebhookDeliveriesFields> = | { success: true; data: InferListWebhookDeliveriesResult<Fields>; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Read WebhookDelivery records
+ *
+ * @ashActionType :read
+ */
+export async function list_webhook_deliveries<Fields extends ListWebhookDeliveriesFields>(
+  config: {
+  tenant?: string;
+  input: ListWebhookDeliveriesInput;
+  fields: Fields;
+  filter?: WebhookDeliveryFilterInput;
+  sort?: SortString<WebhookDeliverySortField> | SortString<WebhookDeliverySortField>[];
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ListWebhookDeliveriesResult<Fields>> {
+  const payload = {
+    action: "list_webhook_deliveries",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input,
+    ...(config.fields !== undefined && { fields: config.fields }),
+    ...(config.filter && { filter: config.filter }),
+    ...(config.sort && { sort: Array.isArray(config.sort) ? config.sort.join(",") : config.sort })
+  };
+
+  return executeActionRpcRequest<ListWebhookDeliveriesResult<Fields>>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Read WebhookDelivery records
+ *
+ * @ashActionType :read
+ * @validation true
+ */
+export async function validate_list_webhook_deliveries(
+  config: {
+  tenant?: string;
+  input: ListWebhookDeliveriesInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "list_webhook_deliveries",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Read WebhookDelivery records
+ *
+ * @ashActionType :read
+ * @validation true
+ */
+export async function validate_list_webhook_deliveries_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  input: ListWebhookDeliveriesInput;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "list_webhook_deliveries",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Read WebhookDelivery records
+ *
+ * @ashActionType :read
+ */
+export async function list_webhook_deliveries_channel<Fields extends ListWebhookDeliveriesFields>(config: {
+  channel: Channel;
+  tenant?: string;
+  input: ListWebhookDeliveriesInput;
+  fields: Fields;
+  filter?: WebhookDeliveryFilterInput;
+  sort?: SortString<WebhookDeliverySortField> | SortString<WebhookDeliverySortField>[];
+  result_handler: (result: ListWebhookDeliveriesResult<Fields>) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<ListWebhookDeliveriesResult<Fields>>(
+    config.channel,
+    {
+    action: "list_webhook_deliveries",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input,
+    ...(config.fields !== undefined && { fields: config.fields }),
+    ...(config.filter && { filter: config.filter }),
+    ...(config.sort && { sort: Array.isArray(config.sort) ? config.sort.join(",") : config.sort })
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+export type CreateWebhookSubscriptionInput = {
+  origin_entity_id: UUID;
+  app_id?: UUID | null;
+  target_url: string;
+  event_types?: Array<string>;
+  active?: boolean;
+  description?: string | null;
+};
+
+export type CreateWebhookSubscriptionFields = UnifiedFieldSelection<WebhookSubscriptionResourceSchema>[];
+
+export type InferCreateWebhookSubscriptionResult<
+  Fields extends CreateWebhookSubscriptionFields | undefined,
+> = InferResult<WebhookSubscriptionResourceSchema, Fields>;
+
+export type CreateWebhookSubscriptionResult<Fields extends CreateWebhookSubscriptionFields | undefined = undefined> = | { success: true; data: InferCreateWebhookSubscriptionResult<Fields>; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Create a new WebhookSubscription
+ *
+ * @ashActionType :create
+ */
+export async function create_webhook_subscription<Fields extends CreateWebhookSubscriptionFields | undefined = undefined>(
+  config: {
+  tenant?: string;
+  input: CreateWebhookSubscriptionInput;
+  fields?: Fields;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<CreateWebhookSubscriptionResult<Fields extends undefined ? [] : Fields>> {
+  const payload = {
+    action: "create_webhook_subscription",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input,
+    ...(config.fields !== undefined && { fields: config.fields })
+  };
+
+  return executeActionRpcRequest<CreateWebhookSubscriptionResult<Fields extends undefined ? [] : Fields>>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Create a new WebhookSubscription
+ *
+ * @ashActionType :create
+ * @validation true
+ */
+export async function validate_create_webhook_subscription(
+  config: {
+  tenant?: string;
+  input: CreateWebhookSubscriptionInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "create_webhook_subscription",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Create a new WebhookSubscription
+ *
+ * @ashActionType :create
+ * @validation true
+ */
+export async function validate_create_webhook_subscription_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  input: CreateWebhookSubscriptionInput;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "create_webhook_subscription",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Create a new WebhookSubscription
+ *
+ * @ashActionType :create
+ */
+export async function create_webhook_subscription_channel<Fields extends CreateWebhookSubscriptionFields | undefined = undefined>(config: {
+  channel: Channel;
+  tenant?: string;
+  input: CreateWebhookSubscriptionInput;
+  fields?: Fields;
+  result_handler: (result: CreateWebhookSubscriptionResult<Fields>) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<CreateWebhookSubscriptionResult<Fields>>(
+    config.channel,
+    {
+    action: "create_webhook_subscription",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input,
+    ...(config.fields !== undefined && { fields: config.fields })
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+export type DestroyWebhookSubscriptionResult = | { success: true; data: {}; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Delete a WebhookSubscription
+ *
+ * @ashActionType :destroy
+ */
+export async function destroy_webhook_subscription(
+  config: {
+  tenant?: string;
+  identity: UUID;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<DestroyWebhookSubscriptionResult> {
+  const payload = {
+    action: "destroy_webhook_subscription",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    identity: config.identity
+  };
+
+  return executeActionRpcRequest<DestroyWebhookSubscriptionResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Delete a WebhookSubscription
+ *
+ * @ashActionType :destroy
+ * @validation true
+ */
+export async function validate_destroy_webhook_subscription(
+  config: {
+  tenant?: string;
+  identity: UUID | string;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "destroy_webhook_subscription",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    identity: config.identity
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Delete a WebhookSubscription
+ *
+ * @ashActionType :destroy
+ * @validation true
+ */
+export async function validate_destroy_webhook_subscription_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  identity: UUID | string;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "destroy_webhook_subscription",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    identity: config.identity
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Delete a WebhookSubscription
+ *
+ * @ashActionType :destroy
+ */
+export async function destroy_webhook_subscription_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  identity: UUID;
+  result_handler: (result: DestroyWebhookSubscriptionResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<DestroyWebhookSubscriptionResult>(
+    config.channel,
+    {
+    action: "destroy_webhook_subscription",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    identity: config.identity
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+export type ListWebhookSubscriptionsInput = {
+  origin_entity_id: UUID;
+};
+
+export type ListWebhookSubscriptionsFields = UnifiedFieldSelection<WebhookSubscriptionResourceSchema>[];
+export type InferListWebhookSubscriptionsResult<
+  Fields extends ListWebhookSubscriptionsFields,
+> = Array<InferResult<WebhookSubscriptionResourceSchema, Fields>>;
+
+export type ListWebhookSubscriptionsResult<Fields extends ListWebhookSubscriptionsFields> = | { success: true; data: InferListWebhookSubscriptionsResult<Fields>; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Read WebhookSubscription records
+ *
+ * @ashActionType :read
+ */
+export async function list_webhook_subscriptions<Fields extends ListWebhookSubscriptionsFields>(
+  config: {
+  tenant?: string;
+  input: ListWebhookSubscriptionsInput;
+  fields: Fields;
+  filter?: WebhookSubscriptionFilterInput;
+  sort?: SortString<WebhookSubscriptionSortField> | SortString<WebhookSubscriptionSortField>[];
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ListWebhookSubscriptionsResult<Fields>> {
+  const payload = {
+    action: "list_webhook_subscriptions",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input,
+    ...(config.fields !== undefined && { fields: config.fields }),
+    ...(config.filter && { filter: config.filter }),
+    ...(config.sort && { sort: Array.isArray(config.sort) ? config.sort.join(",") : config.sort })
+  };
+
+  return executeActionRpcRequest<ListWebhookSubscriptionsResult<Fields>>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Read WebhookSubscription records
+ *
+ * @ashActionType :read
+ * @validation true
+ */
+export async function validate_list_webhook_subscriptions(
+  config: {
+  tenant?: string;
+  input: ListWebhookSubscriptionsInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "list_webhook_subscriptions",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Read WebhookSubscription records
+ *
+ * @ashActionType :read
+ * @validation true
+ */
+export async function validate_list_webhook_subscriptions_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  input: ListWebhookSubscriptionsInput;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "list_webhook_subscriptions",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Read WebhookSubscription records
+ *
+ * @ashActionType :read
+ */
+export async function list_webhook_subscriptions_channel<Fields extends ListWebhookSubscriptionsFields>(config: {
+  channel: Channel;
+  tenant?: string;
+  input: ListWebhookSubscriptionsInput;
+  fields: Fields;
+  filter?: WebhookSubscriptionFilterInput;
+  sort?: SortString<WebhookSubscriptionSortField> | SortString<WebhookSubscriptionSortField>[];
+  result_handler: (result: ListWebhookSubscriptionsResult<Fields>) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<ListWebhookSubscriptionsResult<Fields>>(
+    config.channel,
+    {
+    action: "list_webhook_subscriptions",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input,
+    ...(config.fields !== undefined && { fields: config.fields }),
+    ...(config.filter && { filter: config.filter }),
+    ...(config.sort && { sort: Array.isArray(config.sort) ? config.sort.join(",") : config.sort })
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+export type SendTestWebhookInput = {
+  id: UUID;
+  origin_entity_id: UUID;
+};
+
+export type InferSendTestWebhookResult = Record<string, any>;
+
+export type SendTestWebhookResult = | { success: true; data: InferSendTestWebhookResult; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Execute generic action on WebhookSubscription
+ *
+ * @ashActionType :action
+ */
+export async function send_test_webhook(
+  config: {
+  tenant?: string;
+  input: SendTestWebhookInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<SendTestWebhookResult> {
+  const payload = {
+    action: "send_test_webhook",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  };
+
+  return executeActionRpcRequest<SendTestWebhookResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Execute generic action on WebhookSubscription
+ *
+ * @ashActionType :action
+ * @validation true
+ */
+export async function validate_send_test_webhook(
+  config: {
+  tenant?: string;
+  input: SendTestWebhookInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "send_test_webhook",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Execute generic action on WebhookSubscription
+ *
+ * @ashActionType :action
+ * @validation true
+ */
+export async function validate_send_test_webhook_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  input: SendTestWebhookInput;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "send_test_webhook",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Execute generic action on WebhookSubscription
+ *
+ * @ashActionType :action
+ */
+export async function send_test_webhook_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  input: SendTestWebhookInput;
+  result_handler: (result: SendTestWebhookResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<SendTestWebhookResult>(
+    config.channel,
+    {
+    action: "send_test_webhook",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+export type UpdateWebhookSubscriptionInput = {
+  target_url?: string;
+  event_types?: Array<string>;
+  active?: boolean;
+  description?: string | null;
+};
+
+export type UpdateWebhookSubscriptionFields = UnifiedFieldSelection<WebhookSubscriptionResourceSchema>[];
+
+export type InferUpdateWebhookSubscriptionResult<
+  Fields extends UpdateWebhookSubscriptionFields | undefined,
+> = InferResult<WebhookSubscriptionResourceSchema, Fields>;
+
+export type UpdateWebhookSubscriptionResult<Fields extends UpdateWebhookSubscriptionFields | undefined = undefined> = | { success: true; data: InferUpdateWebhookSubscriptionResult<Fields>; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Update an existing WebhookSubscription
+ *
+ * @ashActionType :update
+ */
+export async function update_webhook_subscription<Fields extends UpdateWebhookSubscriptionFields | undefined = undefined>(
+  config: {
+  tenant?: string;
+  identity: UUID;
+  input: UpdateWebhookSubscriptionInput;
+  fields?: Fields;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<UpdateWebhookSubscriptionResult<Fields extends undefined ? [] : Fields>> {
+  const payload = {
+    action: "update_webhook_subscription",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    identity: config.identity,
+    input: config.input,
+    ...(config.fields !== undefined && { fields: config.fields })
+  };
+
+  return executeActionRpcRequest<UpdateWebhookSubscriptionResult<Fields extends undefined ? [] : Fields>>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Update an existing WebhookSubscription
+ *
+ * @ashActionType :update
+ * @validation true
+ */
+export async function validate_update_webhook_subscription(
+  config: {
+  tenant?: string;
+  identity: UUID | string;
+  input: UpdateWebhookSubscriptionInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "update_webhook_subscription",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    identity: config.identity,
+    input: config.input
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Update an existing WebhookSubscription
+ *
+ * @ashActionType :update
+ * @validation true
+ */
+export async function validate_update_webhook_subscription_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  identity: UUID | string;
+  input: UpdateWebhookSubscriptionInput;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "update_webhook_subscription",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    identity: config.identity,
+    input: config.input
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Update an existing WebhookSubscription
+ *
+ * @ashActionType :update
+ */
+export async function update_webhook_subscription_channel<Fields extends UpdateWebhookSubscriptionFields | undefined = undefined>(config: {
+  channel: Channel;
+  tenant?: string;
+  identity: UUID;
+  input: UpdateWebhookSubscriptionInput;
+  fields?: Fields;
+  result_handler: (result: UpdateWebhookSubscriptionResult<Fields>) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<UpdateWebhookSubscriptionResult<Fields>>(
+    config.channel,
+    {
+    action: "update_webhook_subscription",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    identity: config.identity,
+    input: config.input,
+    ...(config.fields !== undefined && { fields: config.fields })
   },
     config.timeout,
     config
@@ -18803,6 +19828,7 @@ export type CreateLibraryInput = {
   adapter_config?: Record<string, any> | null;
   inherits_to_descendants?: boolean;
   auto_resync_enabled?: boolean;
+  auto_ingest_videos?: boolean;
 };
 
 export type CreateLibraryFields = UnifiedFieldSelection<LibraryResourceSchema>[];
@@ -19860,6 +20886,128 @@ export async function list_libraries_for_origin_channel<Fields extends ListLibra
 }
 
 
+export type PreviewLibrarySyncFilterInput = {
+  id: UUID;
+  filters: Record<string, any>;
+};
+
+export type InferPreviewLibrarySyncFilterResult = Record<string, any>;
+
+export type PreviewLibrarySyncFilterResult = | { success: true; data: InferPreviewLibrarySyncFilterResult; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Execute generic action on Library
+ *
+ * @ashActionType :action
+ */
+export async function preview_library_sync_filter(
+  config: {
+  tenant?: string;
+  input: PreviewLibrarySyncFilterInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<PreviewLibrarySyncFilterResult> {
+  const payload = {
+    action: "preview_library_sync_filter",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  };
+
+  return executeActionRpcRequest<PreviewLibrarySyncFilterResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Execute generic action on Library
+ *
+ * @ashActionType :action
+ * @validation true
+ */
+export async function validate_preview_library_sync_filter(
+  config: {
+  tenant?: string;
+  input: PreviewLibrarySyncFilterInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "preview_library_sync_filter",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Execute generic action on Library
+ *
+ * @ashActionType :action
+ * @validation true
+ */
+export async function validate_preview_library_sync_filter_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  input: PreviewLibrarySyncFilterInput;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "preview_library_sync_filter",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Execute generic action on Library
+ *
+ * @ashActionType :action
+ */
+export async function preview_library_sync_filter_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  input: PreviewLibrarySyncFilterInput;
+  result_handler: (result: PreviewLibrarySyncFilterResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<PreviewLibrarySyncFilterResult>(
+    config.channel,
+    {
+    action: "preview_library_sync_filter",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    input: config.input
+  },
+    config.timeout,
+    config
+  );
+}
+
+
 export type SyncLibraryNowInput = {
   id: UUID;
 };
@@ -19985,6 +21133,7 @@ export type UpdateLibraryInput = {
   name?: string;
   inherits_to_descendants?: boolean;
   auto_resync_enabled?: boolean;
+  auto_ingest_videos?: boolean;
 };
 
 export type UpdateLibraryFields = UnifiedFieldSelection<LibraryResourceSchema>[];
@@ -20109,6 +21258,143 @@ export async function update_library_channel<Fields extends UpdateLibraryFields 
     config.channel,
     {
     action: "update_library",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    identity: config.identity,
+    input: config.input,
+    ...(config.fields !== undefined && { fields: config.fields })
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+export type UpdateLibrarySyncFilterInput = {
+  filters: Record<string, any>;
+};
+
+export type UpdateLibrarySyncFilterFields = UnifiedFieldSelection<LibraryResourceSchema>[];
+
+export type InferUpdateLibrarySyncFilterResult<
+  Fields extends UpdateLibrarySyncFilterFields | undefined,
+> = InferResult<LibraryResourceSchema, Fields>;
+
+export type UpdateLibrarySyncFilterResult<Fields extends UpdateLibrarySyncFilterFields | undefined = undefined> = | { success: true; data: InferUpdateLibrarySyncFilterResult<Fields>; }
+| { success: false; errors: AshRpcError[]; }
+
+;
+
+/**
+ * Update an existing Library
+ *
+ * @ashActionType :update
+ */
+export async function update_library_sync_filter<Fields extends UpdateLibrarySyncFilterFields | undefined = undefined>(
+  config: {
+  tenant?: string;
+  identity: UUID;
+  input: UpdateLibrarySyncFilterInput;
+  fields?: Fields;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<UpdateLibrarySyncFilterResult<Fields extends undefined ? [] : Fields>> {
+  const payload = {
+    action: "update_library_sync_filter",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    identity: config.identity,
+    input: config.input,
+    ...(config.fields !== undefined && { fields: config.fields })
+  };
+
+  return executeActionRpcRequest<UpdateLibrarySyncFilterResult<Fields extends undefined ? [] : Fields>>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Update an existing Library
+ *
+ * @ashActionType :update
+ * @validation true
+ */
+export async function validate_update_library_sync_filter(
+  config: {
+  tenant?: string;
+  identity: UUID | string;
+  input: UpdateLibrarySyncFilterInput;
+  headers?: Record<string, string>;
+  fetchOptions?: RequestInit;
+  customFetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+}
+): Promise<ValidationResult> {
+  const payload = {
+    action: "update_library_sync_filter",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    identity: config.identity,
+    input: config.input
+  };
+
+  return executeValidationRpcRequest<ValidationResult>(
+    payload,
+    config
+  );
+}
+
+
+/**
+ * Validate: Update an existing Library
+ *
+ * @ashActionType :update
+ * @validation true
+ */
+export async function validate_update_library_sync_filter_channel(config: {
+  channel: Channel;
+  tenant?: string;
+  identity: UUID | string;
+  input: UpdateLibrarySyncFilterInput;
+  result_handler: (result: ValidationResult) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeValidationChannelPush<ValidationResult>(
+    config.channel,
+    {
+    action: "update_library_sync_filter",
+    ...(config.tenant !== undefined && { tenant: config.tenant }),
+    identity: config.identity,
+    input: config.input
+  },
+    config.timeout,
+    config
+  );
+}
+
+
+/**
+ * Update an existing Library
+ *
+ * @ashActionType :update
+ */
+export async function update_library_sync_filter_channel<Fields extends UpdateLibrarySyncFilterFields | undefined = undefined>(config: {
+  channel: Channel;
+  tenant?: string;
+  identity: UUID;
+  input: UpdateLibrarySyncFilterInput;
+  fields?: Fields;
+  result_handler: (result: UpdateLibrarySyncFilterResult<Fields>) => void;
+  error_handler?: (error: any) => void;
+  timeout_handler?: () => void;
+  timeout?: number;
+}) {
+  executeActionChannelPush<UpdateLibrarySyncFilterResult<Fields>>(
+    config.channel,
+    {
+    action: "update_library_sync_filter",
     ...(config.tenant !== undefined && { tenant: config.tenant }),
     identity: config.identity,
     input: config.input,

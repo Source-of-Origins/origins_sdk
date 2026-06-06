@@ -147,7 +147,7 @@
     {
       "actionType": "read",
       "deprecated": false,
-      "description": "The tenants the actor may act in (SOU-200): their home tenant plus every\ntenant they hold an active StaffTenantGrant on — or every active tenant\nfor a super-admin. The single source of truth for the Switcher's\ntop-level list. See `Origins.Accounts.TenantEntry`.\n",
+      "description": "The tenants the actor may act in: their home tenant plus every tenant they\nhold an active StaffTenantGrant on, or every active tenant for a\nsuper-admin. Single source of truth for the Switcher's top-level list; see\n`Origins.Accounts.TenantEntry`.\n",
       "enableFilter": true,
       "enableSort": true,
       "functionName": "list_my_tenants",
@@ -316,6 +316,74 @@
       "variantNames": {
         "channel": "register_with_password_channel",
         "validation": "validate_register_with_password"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Verify an Apple id_token, resolve/create the user, and return a JWT (SDK entrypoint).",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "sign_in_with_apple_token",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "User",
+      "see": [],
+      "types": {
+        "input": "SignInWithAppleTokenInput",
+        "result": "SignInWithAppleTokenResult"
+      },
+      "variantNames": {
+        "channel": "sign_in_with_apple_token_channel",
+        "validation": "validate_sign_in_with_apple_token"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Verify a Google id_token, resolve/create the user, and return a JWT (SDK entrypoint).",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "sign_in_with_google_token",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "User",
+      "see": [],
+      "types": {
+        "input": "SignInWithGoogleTokenInput",
+        "result": "SignInWithGoogleTokenResult"
+      },
+      "variantNames": {
+        "channel": "sign_in_with_google_token_channel",
+        "validation": "validate_sign_in_with_google_token"
       },
       "variants": {
         "channel": true,
@@ -1771,6 +1839,219 @@
       "variantNames": {
         "channel": "list_app_templates_for_type_channel",
         "validation": "validate_list_app_templates_for_type"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read WebhookDelivery records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_webhook_deliveries",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "WebhookDelivery",
+      "see": [],
+      "types": {
+        "fields": "ListWebhookDeliveriesFields",
+        "filterInput": "WebhookDeliveryFilterInput",
+        "inferResult": "InferListWebhookDeliveriesResult",
+        "input": "ListWebhookDeliveriesInput",
+        "result": "ListWebhookDeliveriesResult"
+      },
+      "variantNames": {
+        "channel": "list_webhook_deliveries_channel",
+        "validation": "validate_list_webhook_deliveries"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "create",
+      "deprecated": false,
+      "description": "Create a new WebhookSubscription",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "create_webhook_subscription",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "WebhookSubscription",
+      "see": [],
+      "types": {
+        "fields": "CreateWebhookSubscriptionFields",
+        "inferResult": "InferCreateWebhookSubscriptionResult",
+        "input": "CreateWebhookSubscriptionInput",
+        "result": "CreateWebhookSubscriptionResult"
+      },
+      "variantNames": {
+        "channel": "create_webhook_subscription_channel",
+        "validation": "validate_create_webhook_subscription"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "destroy",
+      "deprecated": false,
+      "description": "Delete a WebhookSubscription",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "destroy_webhook_subscription",
+      "get": false,
+      "input": "none",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "WebhookSubscription",
+      "see": [],
+      "types": {
+        "result": "DestroyWebhookSubscriptionResult"
+      },
+      "variantNames": {
+        "channel": "destroy_webhook_subscription_channel",
+        "validation": "validate_destroy_webhook_subscription"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "read",
+      "deprecated": false,
+      "description": "Read WebhookSubscription records",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "list_webhook_subscriptions",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "WebhookSubscription",
+      "see": [],
+      "types": {
+        "fields": "ListWebhookSubscriptionsFields",
+        "filterInput": "WebhookSubscriptionFilterInput",
+        "inferResult": "InferListWebhookSubscriptionsResult",
+        "input": "ListWebhookSubscriptionsInput",
+        "result": "ListWebhookSubscriptionsResult"
+      },
+      "variantNames": {
+        "channel": "list_webhook_subscriptions_channel",
+        "validation": "validate_list_webhook_subscriptions"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
+      "description": "Synchronously POST a signed sample payload to this subscription's URL; returns the HTTP result.",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "send_test_webhook",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "WebhookSubscription",
+      "see": [],
+      "types": {
+        "input": "SendTestWebhookInput",
+        "result": "SendTestWebhookResult"
+      },
+      "variantNames": {
+        "channel": "send_test_webhook_channel",
+        "validation": "validate_send_test_webhook"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Update an existing WebhookSubscription",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "update_webhook_subscription",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "WebhookSubscription",
+      "see": [],
+      "types": {
+        "fields": "UpdateWebhookSubscriptionFields",
+        "inferResult": "InferUpdateWebhookSubscriptionResult",
+        "input": "UpdateWebhookSubscriptionInput",
+        "result": "UpdateWebhookSubscriptionResult"
+      },
+      "variantNames": {
+        "channel": "update_webhook_subscription_channel",
+        "validation": "validate_update_webhook_subscription"
       },
       "variants": {
         "channel": true,
@@ -5131,6 +5412,40 @@
     {
       "actionType": "action",
       "deprecated": false,
+      "description": "Dry-run a proposed sync filter against this Library's currently-tracked\nfiles: returns how many files (and cascaded video assets) the next sync\nwould orphan-remove, plus the removed paths. Powers the SPA confirmation\nstep before a tightened filter is saved.\n",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "preview_library_sync_filter",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Library",
+      "see": [],
+      "types": {
+        "input": "PreviewLibrarySyncFilterInput",
+        "result": "PreviewLibrarySyncFilterResult"
+      },
+      "variantNames": {
+        "channel": "preview_library_sync_filter_channel",
+        "validation": "validate_preview_library_sync_filter"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "action",
+      "deprecated": false,
       "description": "Run a one-shot source-adapter sync for this Library.",
       "enableFilter": true,
       "enableSort": true,
@@ -5190,6 +5505,42 @@
       "variantNames": {
         "channel": "update_library_channel",
         "validation": "validate_update_library"
+      },
+      "variants": {
+        "channel": true,
+        "valibot": false,
+        "validation": true,
+        "zod": false
+      }
+    },
+    {
+      "actionType": "update",
+      "deprecated": false,
+      "description": "Set this Library's sync filter (include/exclude path globs) under\n`adapter_config[\"filters\"]`, leaving the rest of the adapter config\nintact. Tightening the filter orphan-removes the now-excluded files on\nthe next sync — the SPA shows `Origins.Libraries.FilterImpact` first.\n",
+      "enableFilter": true,
+      "enableSort": true,
+      "functionName": "update_library_sync_filter",
+      "get": false,
+      "input": "required",
+      "namespace": null,
+      "pagination": {
+        "get": false,
+        "keyset": false,
+        "offset": false,
+        "required": false,
+        "supported": false
+      },
+      "resource": "Library",
+      "see": [],
+      "types": {
+        "fields": "UpdateLibrarySyncFilterFields",
+        "inferResult": "InferUpdateLibrarySyncFilterResult",
+        "input": "UpdateLibrarySyncFilterInput",
+        "result": "UpdateLibrarySyncFilterResult"
+      },
+      "variantNames": {
+        "channel": "update_library_sync_filter_channel",
+        "validation": "validate_update_library_sync_filter"
       },
       "variants": {
         "channel": true,
@@ -6386,7 +6737,7 @@
       "importPath": "./ash_types"
     }
   },
-  "generatedAt": "2026-05-29",
+  "generatedAt": "2026-06-06",
   "typedControllerRoutes": [],
   "version": "1.0"
 }

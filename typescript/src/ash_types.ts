@@ -96,6 +96,7 @@ export type UserResourceSchema = {
   deleted_at: UtcDateTimeUsec | null;
   reauthentication_sent_at: UtcDateTimeUsec | null;
   banned_until: UtcDateTimeUsec | null;
+  social_sign_in_response_type: { __type: "Relationship"; __resource: SocialSignInResponseResourceSchema | null; };
   tenant: { __type: "Relationship"; __resource: TenantResourceSchema; };
   staff_tenant_grants: { __type: "Relationship"; __array: true; __resource: StaffTenantGrantResourceSchema; };
   profile: { __type: "Relationship"; __resource: UserProfileResourceSchema | null; };
@@ -131,6 +132,33 @@ export type UserAttributesOnlySchema = {
   deleted_at: UtcDateTimeUsec | null;
   reauthentication_sent_at: UtcDateTimeUsec | null;
   banned_until: UtcDateTimeUsec | null;
+};
+
+
+// SocialSignInResponse Schema
+export type SocialSignInResponseResourceSchema = {
+  __type: "Resource";
+  __primitiveFields: "id" | "email" | "token";
+  id: UUID;
+  email: string;
+  token: string;
+};
+
+
+
+export type SocialSignInResponseAttributesOnlySchema = {
+  __type: "Resource";
+  __primitiveFields: "id" | "email" | "token";
+  id: UUID;
+  email: string;
+  token: string;
+};
+
+
+export type SocialSignInResponseInputSchema = {
+  id: UUID;
+  email: string;
+  token: string;
 };
 
 
@@ -475,6 +503,88 @@ export type AppTemplateAttributesOnlySchema = {
   sort_order: number;
   created_at: UtcDateTimeUsec;
   updated_at: UtcDateTimeUsec;
+};
+
+
+// WebhookDelivery Schema
+export type WebhookDeliveryResourceSchema = {
+  __type: "Resource";
+  __primitiveFields: "id" | "event_type" | "event_id" | "assessment_response_id" | "target_url" | "payload" | "status" | "attempts" | "last_status_code" | "last_error" | "delivered_at" | "created_at" | "updated_at" | "subscription_id" | "origin_entity_id";
+  id: UUID;
+  event_type: string;
+  event_id: UUID;
+  assessment_response_id: UUID | null;
+  target_url: string;
+  payload: Record<string, any>;
+  status: "delivered" | "failed" | "pending";
+  attempts: number;
+  last_status_code: number | null;
+  last_error: string | null;
+  delivered_at: UtcDateTime | null;
+  created_at: UtcDateTimeUsec;
+  updated_at: UtcDateTimeUsec;
+  subscription_id: UUID;
+  origin_entity_id: UUID;
+  subscription: { __type: "Relationship"; __resource: WebhookSubscriptionResourceSchema; };
+  origin_entity: { __type: "Relationship"; __resource: OriginEntityResourceSchema; };
+};
+
+
+
+export type WebhookDeliveryAttributesOnlySchema = {
+  __type: "Resource";
+  __primitiveFields: "id" | "event_type" | "event_id" | "assessment_response_id" | "target_url" | "payload" | "status" | "attempts" | "last_status_code" | "last_error" | "delivered_at" | "created_at" | "updated_at" | "subscription_id" | "origin_entity_id";
+  id: UUID;
+  event_type: string;
+  event_id: UUID;
+  assessment_response_id: UUID | null;
+  target_url: string;
+  payload: Record<string, any>;
+  status: "delivered" | "failed" | "pending";
+  attempts: number;
+  last_status_code: number | null;
+  last_error: string | null;
+  delivered_at: UtcDateTime | null;
+  created_at: UtcDateTimeUsec;
+  updated_at: UtcDateTimeUsec;
+  subscription_id: UUID;
+  origin_entity_id: UUID;
+};
+
+
+// WebhookSubscription Schema
+export type WebhookSubscriptionResourceSchema = {
+  __type: "Resource";
+  __primitiveFields: "id" | "target_url" | "secret" | "event_types" | "active" | "description" | "created_at" | "updated_at" | "origin_entity_id" | "app_id";
+  id: UUID;
+  target_url: string;
+  secret: string;
+  event_types: Array<string>;
+  active: boolean;
+  description: string | null;
+  created_at: UtcDateTimeUsec;
+  updated_at: UtcDateTimeUsec;
+  origin_entity_id: UUID;
+  app_id: UUID | null;
+  origin_entity: { __type: "Relationship"; __resource: OriginEntityResourceSchema; };
+  app: { __type: "Relationship"; __resource: AppResourceSchema | null; };
+};
+
+
+
+export type WebhookSubscriptionAttributesOnlySchema = {
+  __type: "Resource";
+  __primitiveFields: "id" | "target_url" | "secret" | "event_types" | "active" | "description" | "created_at" | "updated_at" | "origin_entity_id" | "app_id";
+  id: UUID;
+  target_url: string;
+  secret: string;
+  event_types: Array<string>;
+  active: boolean;
+  description: string | null;
+  created_at: UtcDateTimeUsec;
+  updated_at: UtcDateTimeUsec;
+  origin_entity_id: UUID;
+  app_id: UUID | null;
 };
 
 
@@ -1757,9 +1867,10 @@ export type GithubConnectionAttributesOnlySchema = {
 // Library Schema
 export type LibraryResourceSchema = {
   __type: "Resource";
-  __primitiveFields: "id" | "name" | "adapter_kind" | "adapter_config" | "inherits_to_descendants" | "status" | "last_synced_at" | "error_count" | "last_error" | "last_error_at" | "auto_resync_enabled" | "created_at" | "updated_at" | "origin_entity_id";
+  __primitiveFields: "id" | "name" | "slug" | "adapter_kind" | "adapter_config" | "inherits_to_descendants" | "status" | "last_synced_at" | "error_count" | "last_error" | "last_error_at" | "auto_resync_enabled" | "auto_ingest_videos" | "created_at" | "updated_at" | "origin_entity_id";
   id: UUID;
   name: string;
+  slug: string;
   adapter_kind: "curated" | "drive" | "github" | "raw_upload" | "s3" | "youtube";
   adapter_config: Record<string, any> | null;
   inherits_to_descendants: boolean;
@@ -1769,6 +1880,7 @@ export type LibraryResourceSchema = {
   last_error: string | null;
   last_error_at: UtcDateTime | null;
   auto_resync_enabled: boolean;
+  auto_ingest_videos: boolean;
   created_at: UtcDateTimeUsec;
   updated_at: UtcDateTimeUsec;
   origin_entity_id: UUID;
@@ -1781,9 +1893,10 @@ export type LibraryResourceSchema = {
 
 export type LibraryAttributesOnlySchema = {
   __type: "Resource";
-  __primitiveFields: "id" | "name" | "adapter_kind" | "adapter_config" | "inherits_to_descendants" | "status" | "last_synced_at" | "error_count" | "last_error" | "last_error_at" | "auto_resync_enabled" | "created_at" | "updated_at" | "origin_entity_id";
+  __primitiveFields: "id" | "name" | "slug" | "adapter_kind" | "adapter_config" | "inherits_to_descendants" | "status" | "last_synced_at" | "error_count" | "last_error" | "last_error_at" | "auto_resync_enabled" | "auto_ingest_videos" | "created_at" | "updated_at" | "origin_entity_id";
   id: UUID;
   name: string;
+  slug: string;
   adapter_kind: "curated" | "drive" | "github" | "raw_upload" | "s3" | "youtube";
   adapter_config: Record<string, any> | null;
   inherits_to_descendants: boolean;
@@ -1793,6 +1906,7 @@ export type LibraryAttributesOnlySchema = {
   last_error: string | null;
   last_error_at: UtcDateTime | null;
   auto_resync_enabled: boolean;
+  auto_ingest_videos: boolean;
   created_at: UtcDateTimeUsec;
   updated_at: UtcDateTimeUsec;
   origin_entity_id: UUID;
@@ -2401,6 +2515,13 @@ export type UserFilterInput = {
     is_nil?: boolean;
   };
 
+  social_sign_in_response_type?: {
+    eq?: SocialSignInResponseResourceSchema;
+    not_eq?: SocialSignInResponseResourceSchema;
+    in?: Array<SocialSignInResponseResourceSchema>;
+    is_nil?: boolean;
+  };
+
 
   tenant?: TenantFilterInput;
 
@@ -2411,6 +2532,32 @@ export type UserFilterInput = {
   origin_entity_memberships?: OriginEntityMembershipFilterInput;
 
   origin_entities?: OriginEntityFilterInput;
+
+};
+export type SocialSignInResponseFilterInput = {
+  and?: Array<SocialSignInResponseFilterInput>;
+  or?: Array<SocialSignInResponseFilterInput>;
+  not?: Array<SocialSignInResponseFilterInput>;
+
+  id?: {
+    eq?: UUID;
+    not_eq?: UUID;
+    in?: Array<UUID>;
+  };
+
+  email?: {
+    eq?: string;
+    not_eq?: string;
+    in?: Array<string>;
+  };
+
+  token?: {
+    eq?: string;
+    not_eq?: string;
+    in?: Array<string>;
+  };
+
+
 
 };
 export type WaitlistEntryFilterInput = {
@@ -3232,6 +3379,211 @@ export type AppTemplateFilterInput = {
   };
 
 
+
+};
+export type WebhookDeliveryFilterInput = {
+  and?: Array<WebhookDeliveryFilterInput>;
+  or?: Array<WebhookDeliveryFilterInput>;
+  not?: Array<WebhookDeliveryFilterInput>;
+
+  id?: {
+    eq?: UUID;
+    not_eq?: UUID;
+    in?: Array<UUID>;
+  };
+
+  event_type?: {
+    eq?: string;
+    not_eq?: string;
+    in?: Array<string>;
+  };
+
+  event_id?: {
+    eq?: UUID;
+    not_eq?: UUID;
+    in?: Array<UUID>;
+  };
+
+  assessment_response_id?: {
+    eq?: UUID;
+    not_eq?: UUID;
+    in?: Array<UUID>;
+    is_nil?: boolean;
+  };
+
+  target_url?: {
+    eq?: string;
+    not_eq?: string;
+    in?: Array<string>;
+  };
+
+  payload?: {
+    eq?: Record<string, any>;
+    not_eq?: Record<string, any>;
+    in?: Array<Record<string, any>>;
+  };
+
+  status?: {
+    eq?: "delivered" | "failed" | "pending";
+    not_eq?: "delivered" | "failed" | "pending";
+    in?: Array<"delivered" | "failed" | "pending">;
+  };
+
+  attempts?: {
+    eq?: number;
+    not_eq?: number;
+    greater_than?: number;
+    greater_than_or_equal?: number;
+    less_than?: number;
+    less_than_or_equal?: number;
+    in?: Array<number>;
+  };
+
+  last_status_code?: {
+    eq?: number;
+    not_eq?: number;
+    greater_than?: number;
+    greater_than_or_equal?: number;
+    less_than?: number;
+    less_than_or_equal?: number;
+    in?: Array<number>;
+    is_nil?: boolean;
+  };
+
+  last_error?: {
+    eq?: string;
+    not_eq?: string;
+    in?: Array<string>;
+    is_nil?: boolean;
+  };
+
+  delivered_at?: {
+    eq?: UtcDateTime;
+    not_eq?: UtcDateTime;
+    greater_than?: UtcDateTime;
+    greater_than_or_equal?: UtcDateTime;
+    less_than?: UtcDateTime;
+    less_than_or_equal?: UtcDateTime;
+    in?: Array<UtcDateTime>;
+    is_nil?: boolean;
+  };
+
+  created_at?: {
+    eq?: UtcDateTimeUsec;
+    not_eq?: UtcDateTimeUsec;
+    greater_than?: UtcDateTimeUsec;
+    greater_than_or_equal?: UtcDateTimeUsec;
+    less_than?: UtcDateTimeUsec;
+    less_than_or_equal?: UtcDateTimeUsec;
+    in?: Array<UtcDateTimeUsec>;
+  };
+
+  updated_at?: {
+    eq?: UtcDateTimeUsec;
+    not_eq?: UtcDateTimeUsec;
+    greater_than?: UtcDateTimeUsec;
+    greater_than_or_equal?: UtcDateTimeUsec;
+    less_than?: UtcDateTimeUsec;
+    less_than_or_equal?: UtcDateTimeUsec;
+    in?: Array<UtcDateTimeUsec>;
+  };
+
+  subscription_id?: {
+    eq?: UUID;
+    not_eq?: UUID;
+    in?: Array<UUID>;
+  };
+
+  origin_entity_id?: {
+    eq?: UUID;
+    not_eq?: UUID;
+    in?: Array<UUID>;
+  };
+
+
+  subscription?: WebhookSubscriptionFilterInput;
+
+  origin_entity?: OriginEntityFilterInput;
+
+};
+export type WebhookSubscriptionFilterInput = {
+  and?: Array<WebhookSubscriptionFilterInput>;
+  or?: Array<WebhookSubscriptionFilterInput>;
+  not?: Array<WebhookSubscriptionFilterInput>;
+
+  id?: {
+    eq?: UUID;
+    not_eq?: UUID;
+    in?: Array<UUID>;
+  };
+
+  target_url?: {
+    eq?: string;
+    not_eq?: string;
+    in?: Array<string>;
+  };
+
+  secret?: {
+    eq?: string;
+    not_eq?: string;
+    in?: Array<string>;
+  };
+
+  event_types?: {
+    eq?: Array<string>;
+    not_eq?: Array<string>;
+    in?: Array<Array<string>>;
+  };
+
+  active?: {
+    eq?: boolean;
+    not_eq?: boolean;
+  };
+
+  description?: {
+    eq?: string;
+    not_eq?: string;
+    in?: Array<string>;
+    is_nil?: boolean;
+  };
+
+  created_at?: {
+    eq?: UtcDateTimeUsec;
+    not_eq?: UtcDateTimeUsec;
+    greater_than?: UtcDateTimeUsec;
+    greater_than_or_equal?: UtcDateTimeUsec;
+    less_than?: UtcDateTimeUsec;
+    less_than_or_equal?: UtcDateTimeUsec;
+    in?: Array<UtcDateTimeUsec>;
+  };
+
+  updated_at?: {
+    eq?: UtcDateTimeUsec;
+    not_eq?: UtcDateTimeUsec;
+    greater_than?: UtcDateTimeUsec;
+    greater_than_or_equal?: UtcDateTimeUsec;
+    less_than?: UtcDateTimeUsec;
+    less_than_or_equal?: UtcDateTimeUsec;
+    in?: Array<UtcDateTimeUsec>;
+  };
+
+  origin_entity_id?: {
+    eq?: UUID;
+    not_eq?: UUID;
+    in?: Array<UUID>;
+  };
+
+  app_id?: {
+    eq?: UUID;
+    not_eq?: UUID;
+    in?: Array<UUID>;
+    is_nil?: boolean;
+  };
+
+
+  origin_entity?: OriginEntityFilterInput;
+
+  app?: AppFilterInput;
 
 };
 export type FeatureFlagFilterInput = {
@@ -6145,6 +6497,12 @@ export type LibraryFilterInput = {
     in?: Array<string>;
   };
 
+  slug?: {
+    eq?: string;
+    not_eq?: string;
+    in?: Array<string>;
+  };
+
   adapter_kind?: {
     eq?: "curated" | "drive" | "github" | "raw_upload" | "s3" | "youtube";
     not_eq?: "curated" | "drive" | "github" | "raw_upload" | "s3" | "youtube";
@@ -6209,6 +6567,11 @@ export type LibraryFilterInput = {
   };
 
   auto_resync_enabled?: {
+    eq?: boolean;
+    not_eq?: boolean;
+  };
+
+  auto_ingest_videos?: {
     eq?: boolean;
     not_eq?: boolean;
   };
@@ -6886,8 +7249,11 @@ export type StaffTenantGrantFilterField = (typeof staffTenantGrantFilterFields)[
 export const tenantFilterFields = ["id", "name", "slug", "status", "archived_at", "root_origin_entity_id", "created_at", "updated_at", "root_origin_entity"] as const;
 export type TenantFilterField = (typeof tenantFilterFields)[number];
 
-export const userFilterFields = ["id", "tenant_id", "instance_id", "aud", "role", "email", "email_confirmed_at", "invited_at", "confirmation_sent_at", "recovery_sent_at", "last_sign_in_at", "raw_app_meta_data", "raw_user_meta_data", "is_super_admin", "created_at", "updated_at", "phone", "phone_confirmed_at", "phone_change_sent_at", "confirmed_at", "deleted_at", "reauthentication_sent_at", "banned_until", "tenant", "identities", "staff_tenant_grants", "profile", "origin_entity_memberships", "origin_entities"] as const;
+export const userFilterFields = ["id", "tenant_id", "instance_id", "aud", "role", "email", "email_confirmed_at", "invited_at", "confirmation_sent_at", "recovery_sent_at", "last_sign_in_at", "raw_app_meta_data", "raw_user_meta_data", "is_super_admin", "created_at", "updated_at", "phone", "phone_confirmed_at", "phone_change_sent_at", "confirmed_at", "deleted_at", "reauthentication_sent_at", "banned_until", "social_sign_in_response_type", "tenant", "identities", "staff_tenant_grants", "profile", "origin_entity_memberships", "origin_entities"] as const;
 export type UserFilterField = (typeof userFilterFields)[number];
+
+export const socialSignInResponseFilterFields = ["id", "email", "token"] as const;
+export type SocialSignInResponseFilterField = (typeof socialSignInResponseFilterFields)[number];
 
 export const waitlistEntryFilterFields = ["id", "email", "full_name", "company_name", "role", "interest_areas", "message", "source", "metadata", "status", "invitation_token", "expires_at", "invited_at", "approved_by", "created_at", "updated_at"] as const;
 export type WaitlistEntryFilterField = (typeof waitlistEntryFilterFields)[number];
@@ -6915,6 +7281,12 @@ export type GenerationHistoryEntryFilterField = (typeof generationHistoryEntryFi
 
 export const appTemplateFilterFields = ["id", "name", "description", "app_type", "seed_markdoc_content", "sort_order", "created_at", "updated_at"] as const;
 export type AppTemplateFilterField = (typeof appTemplateFilterFields)[number];
+
+export const webhookDeliveryFilterFields = ["id", "event_type", "event_id", "assessment_response_id", "target_url", "payload", "status", "attempts", "last_status_code", "last_error", "delivered_at", "created_at", "updated_at", "subscription_id", "origin_entity_id", "subscription", "origin_entity"] as const;
+export type WebhookDeliveryFilterField = (typeof webhookDeliveryFilterFields)[number];
+
+export const webhookSubscriptionFilterFields = ["id", "target_url", "secret", "event_types", "active", "description", "created_at", "updated_at", "origin_entity_id", "app_id", "origin_entity", "app"] as const;
+export type WebhookSubscriptionFilterField = (typeof webhookSubscriptionFilterFields)[number];
 
 export const featureFlagFilterFields = ["id", "feature_name", "enabled", "created_at", "updated_at", "origin_entity_id", "origin_entity"] as const;
 export type FeatureFlagFilterField = (typeof featureFlagFilterFields)[number];
@@ -7003,13 +7375,13 @@ export type DriveConnectionFilterField = (typeof driveConnectionFilterFields)[nu
 export const githubConnectionFilterFields = ["id", "installation_id", "github_account_login", "github_account_type", "status", "connected_by_user_id", "created_at", "updated_at", "entity_profile_id", "entity_profile"] as const;
 export type GithubConnectionFilterField = (typeof githubConnectionFilterFields)[number];
 
-export const libraryFilterFields = ["id", "name", "adapter_kind", "adapter_config", "inherits_to_descendants", "status", "last_synced_at", "error_count", "last_error", "last_error_at", "auto_resync_enabled", "created_at", "updated_at", "origin_entity_id", "origin_entity", "files", "grants"] as const;
+export const libraryFilterFields = ["id", "name", "slug", "adapter_kind", "adapter_config", "inherits_to_descendants", "status", "last_synced_at", "error_count", "last_error", "last_error_at", "auto_resync_enabled", "auto_ingest_videos", "created_at", "updated_at", "origin_entity_id", "origin_entity", "files", "grants"] as const;
 export type LibraryFilterField = (typeof libraryFilterFields)[number];
 
 export const libraryAccessGrantFilterFields = ["id", "created_at", "updated_at", "library_id", "grantee_origin_entity_id", "library", "grantee_origin_entity"] as const;
 export type LibraryAccessGrantFilterField = (typeof libraryAccessGrantFilterFields)[number];
 
-export const libraryFileFilterFields = ["id", "path", "item_type", "item_name", "item_content", "s3_key", "sync_status", "source_metadata", "created_at", "updated_at", "library_id", "signed_s3_url", "library"] as const;
+export const libraryFileFilterFields = ["id", "path", "item_type", "item_name", "item_content", "s3_key", "sync_status", "source_metadata", "created_at", "updated_at", "library_id", "signed_s3_url", "library", "video_asset"] as const;
 export type LibraryFileFilterField = (typeof libraryFileFilterFields)[number];
 
 export const chatBindingFilterFields = ["id", "chat_guid", "prospect_labels", "notes", "bound_at", "created_at", "updated_at", "origin_entity_id", "prospect_phones", "origin_entity"] as const;
@@ -7031,8 +7403,11 @@ export type StaffTenantGrantSortField = (typeof staffTenantGrantSortFields)[numb
 export const tenantSortFields = ["id", "name", "slug", "status", "archived_at", "root_origin_entity_id", "created_at", "updated_at"] as const;
 export type TenantSortField = (typeof tenantSortFields)[number];
 
-export const userSortFields = ["id", "tenant_id", "instance_id", "aud", "role", "email", "email_confirmed_at", "invited_at", "confirmation_sent_at", "recovery_sent_at", "last_sign_in_at", "raw_app_meta_data", "raw_user_meta_data", "is_super_admin", "created_at", "updated_at", "phone", "phone_confirmed_at", "phone_change_sent_at", "confirmed_at", "deleted_at", "reauthentication_sent_at", "banned_until"] as const;
+export const userSortFields = ["id", "tenant_id", "instance_id", "aud", "role", "email", "email_confirmed_at", "invited_at", "confirmation_sent_at", "recovery_sent_at", "last_sign_in_at", "raw_app_meta_data", "raw_user_meta_data", "is_super_admin", "created_at", "updated_at", "phone", "phone_confirmed_at", "phone_change_sent_at", "confirmed_at", "deleted_at", "reauthentication_sent_at", "banned_until", "social_sign_in_response_type"] as const;
 export type UserSortField = (typeof userSortFields)[number];
+
+export const socialSignInResponseSortFields = ["id", "email", "token"] as const;
+export type SocialSignInResponseSortField = (typeof socialSignInResponseSortFields)[number];
 
 export const waitlistEntrySortFields = ["id", "email", "full_name", "company_name", "role", "interest_areas", "message", "source", "metadata", "status", "invitation_token", "expires_at", "invited_at", "approved_by", "created_at", "updated_at"] as const;
 export type WaitlistEntrySortField = (typeof waitlistEntrySortFields)[number];
@@ -7060,6 +7435,12 @@ export type GenerationHistoryEntrySortField = (typeof generationHistoryEntrySort
 
 export const appTemplateSortFields = ["id", "name", "description", "app_type", "seed_markdoc_content", "sort_order", "created_at", "updated_at"] as const;
 export type AppTemplateSortField = (typeof appTemplateSortFields)[number];
+
+export const webhookDeliverySortFields = ["id", "event_type", "event_id", "assessment_response_id", "target_url", "payload", "status", "attempts", "last_status_code", "last_error", "delivered_at", "created_at", "updated_at", "subscription_id", "origin_entity_id"] as const;
+export type WebhookDeliverySortField = (typeof webhookDeliverySortFields)[number];
+
+export const webhookSubscriptionSortFields = ["id", "target_url", "secret", "event_types", "active", "description", "created_at", "updated_at", "origin_entity_id", "app_id"] as const;
+export type WebhookSubscriptionSortField = (typeof webhookSubscriptionSortFields)[number];
 
 export const featureFlagSortFields = ["id", "feature_name", "enabled", "created_at", "updated_at", "origin_entity_id"] as const;
 export type FeatureFlagSortField = (typeof featureFlagSortFields)[number];
@@ -7148,7 +7529,7 @@ export type DriveConnectionSortField = (typeof driveConnectionSortFields)[number
 export const githubConnectionSortFields = ["id", "installation_id", "github_account_login", "github_account_type", "status", "connected_by_user_id", "created_at", "updated_at", "entity_profile_id"] as const;
 export type GithubConnectionSortField = (typeof githubConnectionSortFields)[number];
 
-export const librarySortFields = ["id", "name", "adapter_kind", "adapter_config", "inherits_to_descendants", "status", "last_synced_at", "error_count", "last_error", "last_error_at", "auto_resync_enabled", "created_at", "updated_at", "origin_entity_id"] as const;
+export const librarySortFields = ["id", "name", "slug", "adapter_kind", "adapter_config", "inherits_to_descendants", "status", "last_synced_at", "error_count", "last_error", "last_error_at", "auto_resync_enabled", "auto_ingest_videos", "created_at", "updated_at", "origin_entity_id"] as const;
 export type LibrarySortField = (typeof librarySortFields)[number];
 
 export const libraryAccessGrantSortFields = ["id", "created_at", "updated_at", "library_id", "grantee_origin_entity_id"] as const;
