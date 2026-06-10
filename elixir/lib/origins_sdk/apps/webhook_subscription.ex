@@ -53,4 +53,9 @@ defmodule OriginsSdk.Apps.WebhookSubscription do
       updated_at: OriginsSdk.Internal.decode_datetime(map["updated_at"])
     }
   end
+
+  @doc false
+  @spec from_list([map()] | nil) :: [t()] | nil
+  def from_list(nil), do: nil
+  def from_list(list) when is_list(list), do: Enum.map(list, &from_json/1)
 end

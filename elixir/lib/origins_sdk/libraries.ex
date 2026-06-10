@@ -242,7 +242,7 @@ defmodule OriginsSdk.Libraries do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &DriveConnection.from_json/1, nil)
+      decode_action_response(body, &DriveConnection.from_list/1, nil)
     end
   end
 
@@ -268,7 +268,7 @@ defmodule OriginsSdk.Libraries do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &GithubConnection.from_json/1, nil)
+      decode_action_response(body, &GithubConnection.from_list/1, nil)
     end
   end
 
@@ -329,24 +329,25 @@ defmodule OriginsSdk.Libraries do
   Generate OAuth URL and state for Google Drive authentication
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def initiate_drive_oauth(%InitiateDriveOauth.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, DriveConnection)
-
     payload =
       %{
         "action" => "initiate_drive_oauth",
-        "input" => InitiateDriveOauth.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => InitiateDriveOauth.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &DriveConnection.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -355,24 +356,25 @@ defmodule OriginsSdk.Libraries do
   Generate GitHub App install URL + signed state token.
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def initiate_github_oauth(%InitiateGithubOauth.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, GithubConnection)
-
     payload =
       %{
         "action" => "initiate_github_oauth",
-        "input" => InitiateGithubOauth.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => InitiateGithubOauth.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &GithubConnection.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -381,24 +383,25 @@ defmodule OriginsSdk.Libraries do
   Run a bash command against one or more attached Libraries.
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def library_shell_exec(%LibraryShellExec.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, Library)
-
     payload =
       %{
         "action" => "library_shell_exec",
-        "input" => LibraryShellExec.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => LibraryShellExec.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &Library.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -407,24 +410,25 @@ defmodule OriginsSdk.Libraries do
   List every file path visible across the given Libraries.
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def library_shell_list_tree(%LibraryShellListTree.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, Library)
-
     payload =
       %{
         "action" => "library_shell_list_tree",
-        "input" => LibraryShellListTree.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => LibraryShellListTree.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &Library.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -433,24 +437,25 @@ defmodule OriginsSdk.Libraries do
   Read a single file from one of the given Libraries.
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def library_shell_read(%LibraryShellRead.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, Library)
-
     payload =
       %{
         "action" => "library_shell_read",
-        "input" => LibraryShellRead.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => LibraryShellRead.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &Library.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -459,24 +464,25 @@ defmodule OriginsSdk.Libraries do
   List branches of a repository, scoped to a connection.
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def list_github_branches(%ListGithubBranches.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, GithubConnection)
-
     payload =
       %{
         "action" => "list_github_branches",
-        "input" => ListGithubBranches.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => ListGithubBranches.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &GithubConnection.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -485,24 +491,25 @@ defmodule OriginsSdk.Libraries do
   List repositories accessible to this App installation.
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def list_github_repositories(%ListGithubRepositories.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, GithubConnection)
-
     payload =
       %{
         "action" => "list_github_repositories",
-        "input" => ListGithubRepositories.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => ListGithubRepositories.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &GithubConnection.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -528,7 +535,7 @@ defmodule OriginsSdk.Libraries do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &Library.from_json/1, nil)
+      decode_action_response(body, &Library.from_list/1, nil)
     end
   end
 
@@ -560,7 +567,7 @@ defmodule OriginsSdk.Libraries do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &Library.from_json/1, nil)
+      decode_action_response(body, &Library.from_list/1, nil)
     end
   end
 
@@ -586,7 +593,7 @@ defmodule OriginsSdk.Libraries do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &LibraryAccessGrant.from_json/1, nil)
+      decode_action_response(body, &LibraryAccessGrant.from_list/1, nil)
     end
   end
 
@@ -612,7 +619,7 @@ defmodule OriginsSdk.Libraries do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &LibraryFile.from_json/1, nil)
+      decode_action_response(body, &LibraryFile.from_list/1, nil)
     end
   end
 
@@ -638,7 +645,7 @@ defmodule OriginsSdk.Libraries do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &LibraryFile.from_json/1, nil)
+      decode_action_response(body, &LibraryFile.from_list/1, nil)
     end
   end
 
@@ -651,24 +658,25 @@ defmodule OriginsSdk.Libraries do
   
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def preview_library_sync_filter(%PreviewLibrarySyncFilter.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, Library)
-
     payload =
       %{
         "action" => "preview_library_sync_filter",
-        "input" => PreviewLibrarySyncFilter.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => PreviewLibrarySyncFilter.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &Library.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -677,24 +685,25 @@ defmodule OriginsSdk.Libraries do
   Run a one-shot source-adapter sync for this Library.
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def sync_library_now(%SyncLibraryNow.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, Library)
-
     payload =
       %{
         "action" => "sync_library_now",
-        "input" => SyncLibraryNow.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => SyncLibraryNow.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &Library.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -813,6 +822,7 @@ defmodule OriginsSdk.Libraries do
   defp encode_fields(fields) do
     Enum.map(fields, fn
       atom when is_atom(atom) -> Atom.to_string(atom)
+      str when is_binary(str) -> str
       {parent, nested} -> %{Atom.to_string(parent) => encode_fields(nested)}
     end)
   end

@@ -86,4 +86,9 @@ defmodule OriginsSdk.Homepage.HomepageCard do
       use_gradient: map["use_gradient"]
     }
   end
+
+  @doc false
+  @spec from_list([map()] | nil) :: [t()] | nil
+  def from_list(nil), do: nil
+  def from_list(list) when is_list(list), do: Enum.map(list, &from_json/1)
 end

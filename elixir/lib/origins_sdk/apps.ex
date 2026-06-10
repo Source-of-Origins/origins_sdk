@@ -411,7 +411,7 @@ defmodule OriginsSdk.Apps do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &CourseEnrollment.from_json/1, nil)
+      decode_action_response(body, &CourseEnrollment.from_list/1, nil)
     end
   end
 
@@ -420,24 +420,25 @@ defmodule OriginsSdk.Apps do
   Run the `for_user_personalized` action.
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def for_user_personalized(%ForUserPersonalized.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, App)
-
     payload =
       %{
         "action" => "for_user_personalized",
-        "input" => ForUserPersonalized.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => ForUserPersonalized.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &App.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -541,7 +542,7 @@ defmodule OriginsSdk.Apps do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &AppLibrary.from_json/1, nil)
+      decode_action_response(body, &AppLibrary.from_list/1, nil)
     end
   end
 
@@ -567,7 +568,7 @@ defmodule OriginsSdk.Apps do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &Template.from_json/1, nil)
+      decode_action_response(body, &Template.from_list/1, nil)
     end
   end
 
@@ -593,7 +594,7 @@ defmodule OriginsSdk.Apps do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &Template.from_json/1, nil)
+      decode_action_response(body, &Template.from_list/1, nil)
     end
   end
 
@@ -619,7 +620,7 @@ defmodule OriginsSdk.Apps do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &Version.from_json/1, nil)
+      decode_action_response(body, &Version.from_list/1, nil)
     end
   end
 
@@ -645,7 +646,7 @@ defmodule OriginsSdk.Apps do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &App.from_json/1, nil)
+      decode_action_response(body, &App.from_list/1, nil)
     end
   end
 
@@ -671,7 +672,7 @@ defmodule OriginsSdk.Apps do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &App.from_json/1, nil)
+      decode_action_response(body, &App.from_list/1, nil)
     end
   end
 
@@ -697,7 +698,7 @@ defmodule OriginsSdk.Apps do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &AppLibrary.from_json/1, nil)
+      decode_action_response(body, &AppLibrary.from_list/1, nil)
     end
   end
 
@@ -723,7 +724,7 @@ defmodule OriginsSdk.Apps do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &WebhookDelivery.from_json/1, nil)
+      decode_action_response(body, &WebhookDelivery.from_list/1, nil)
     end
   end
 
@@ -749,7 +750,7 @@ defmodule OriginsSdk.Apps do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &WebhookSubscription.from_json/1, nil)
+      decode_action_response(body, &WebhookSubscription.from_list/1, nil)
     end
   end
 
@@ -758,24 +759,25 @@ defmodule OriginsSdk.Apps do
   Run the `parse_assessment_blocks` action.
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def parse_assessment_blocks(%ParseAssessmentBlocks.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, App)
-
     payload =
       %{
         "action" => "parse_assessment_blocks",
-        "input" => ParseAssessmentBlocks.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => ParseAssessmentBlocks.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &App.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -784,24 +786,25 @@ defmodule OriginsSdk.Apps do
   Run the `parse_course_blocks` action.
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def parse_course_blocks(%ParseCourseBlocks.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, App)
-
     payload =
       %{
         "action" => "parse_course_blocks",
-        "input" => ParseCourseBlocks.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => ParseCourseBlocks.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &App.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -810,24 +813,25 @@ defmodule OriginsSdk.Apps do
   Run the `parse_landing_blocks` action.
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def parse_landing_blocks(%ParseLandingBlocks.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, App)
-
     payload =
       %{
         "action" => "parse_landing_blocks",
-        "input" => ParseLandingBlocks.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => ParseLandingBlocks.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &App.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -940,24 +944,25 @@ defmodule OriginsSdk.Apps do
   Send a chat message to the expert page's persistent Letta agent
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def send_app_chat_message(%SendAppChatMessage.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, App)
-
     payload =
       %{
         "action" => "send_app_chat_message",
-        "input" => SendAppChatMessage.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => SendAppChatMessage.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &App.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -966,24 +971,25 @@ defmodule OriginsSdk.Apps do
   Synchronously POST a signed sample payload to this subscription's URL; returns the HTTP result.
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def send_test_webhook(%SendTestWebhook.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, WebhookSubscription)
-
     payload =
       %{
         "action" => "send_test_webhook",
-        "input" => SendTestWebhook.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => SendTestWebhook.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &WebhookSubscription.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -1072,6 +1078,7 @@ defmodule OriginsSdk.Apps do
   defp encode_fields(fields) do
     Enum.map(fields, fn
       atom when is_atom(atom) -> Atom.to_string(atom)
+      str when is_binary(str) -> str
       {parent, nested} -> %{Atom.to_string(parent) => encode_fields(nested)}
     end)
   end

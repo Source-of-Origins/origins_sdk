@@ -56,4 +56,9 @@ defmodule OriginsSdk.Identity.UserProfile do
       user_id: map["user_id"]
     }
   end
+
+  @doc false
+  @spec from_list([map()] | nil) :: [t()] | nil
+  def from_list(nil), do: nil
+  def from_list(list) when is_list(list), do: Enum.map(list, &from_json/1)
 end

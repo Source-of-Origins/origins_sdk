@@ -83,7 +83,7 @@ defmodule OriginsSdk.FeatureFlags do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &FeatureFlag.from_json/1, nil)
+      decode_action_response(body, &FeatureFlag.from_list/1, nil)
     end
   end
 
@@ -120,6 +120,7 @@ defmodule OriginsSdk.FeatureFlags do
   defp encode_fields(fields) do
     Enum.map(fields, fn
       atom when is_atom(atom) -> Atom.to_string(atom)
+      str when is_binary(str) -> str
       {parent, nested} -> %{Atom.to_string(parent) => encode_fields(nested)}
     end)
   end

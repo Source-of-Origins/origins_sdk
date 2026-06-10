@@ -61,24 +61,25 @@ defmodule OriginsSdk.Accounts do
   
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def create_tenant_for_user(%CreateTenantForUser.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, Tenant)
-
     payload =
       %{
         "action" => "create_tenant_for_user",
-        "input" => CreateTenantForUser.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => CreateTenantForUser.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &Tenant.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -208,7 +209,7 @@ defmodule OriginsSdk.Accounts do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &Tenant.from_json/1, nil)
+      decode_action_response(body, &Tenant.from_list/1, nil)
     end
   end
 
@@ -234,7 +235,7 @@ defmodule OriginsSdk.Accounts do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &User.from_json/1, nil)
+      decode_action_response(body, &User.from_list/1, nil)
     end
   end
 
@@ -260,7 +261,7 @@ defmodule OriginsSdk.Accounts do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &StaffTenantGrant.from_json/1, nil)
+      decode_action_response(body, &StaffTenantGrant.from_list/1, nil)
     end
   end
 
@@ -290,7 +291,7 @@ defmodule OriginsSdk.Accounts do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &Tenant.from_json/1, nil)
+      decode_action_response(body, &Tenant.from_list/1, nil)
     end
   end
 
@@ -316,7 +317,7 @@ defmodule OriginsSdk.Accounts do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &WaitlistEntry.from_json/1, nil)
+      decode_action_response(body, &WaitlistEntry.from_list/1, nil)
     end
   end
 
@@ -407,24 +408,25 @@ defmodule OriginsSdk.Accounts do
   Verify an Apple id_token, resolve/create the user, and return a JWT (SDK entrypoint).
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def sign_in_with_apple_token(%SignInWithAppleToken.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, User)
-
     payload =
       %{
         "action" => "sign_in_with_apple_token",
-        "input" => SignInWithAppleToken.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => SignInWithAppleToken.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &User.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -433,24 +435,25 @@ defmodule OriginsSdk.Accounts do
   Verify a Google id_token, resolve/create the user, and return a JWT (SDK entrypoint).
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def sign_in_with_google_token(%SignInWithGoogleToken.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, User)
-
     payload =
       %{
         "action" => "sign_in_with_google_token",
-        "input" => SignInWithGoogleToken.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => SignInWithGoogleToken.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &User.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -487,24 +490,25 @@ defmodule OriginsSdk.Accounts do
   Mint an acting-as-tenant JWT for a tenant the caller has a grant for.
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def start_tenant_session(%StartTenantSession.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, User)
-
     payload =
       %{
         "action" => "start_tenant_session",
-        "input" => StartTenantSession.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => StartTenantSession.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &User.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -541,6 +545,7 @@ defmodule OriginsSdk.Accounts do
   defp encode_fields(fields) do
     Enum.map(fields, fn
       atom when is_atom(atom) -> Atom.to_string(atom)
+      str when is_binary(str) -> str
       {parent, nested} -> %{Atom.to_string(parent) => encode_fields(nested)}
     end)
   end

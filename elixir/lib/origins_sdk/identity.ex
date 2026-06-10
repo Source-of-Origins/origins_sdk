@@ -129,24 +129,25 @@ defmodule OriginsSdk.Identity do
   Clone a voice using Cartesia API
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def clone_cartesia_voice(%CloneCartesiaVoice.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginEntity)
-
     payload =
       %{
         "action" => "clone_cartesia_voice",
-        "input" => CloneCartesiaVoice.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => CloneCartesiaVoice.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntity.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -477,24 +478,25 @@ defmodule OriginsSdk.Identity do
   Combined: scrape website + discover links + structure profile in one step
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def discover_and_extract_profile(%DiscoverAndExtractProfile.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginEntity)
-
     payload =
       %{
         "action" => "discover_and_extract_profile",
-        "input" => DiscoverAndExtractProfile.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => DiscoverAndExtractProfile.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntity.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -503,24 +505,25 @@ defmodule OriginsSdk.Identity do
   Discover social media links and official website for an entity using AI with confidence scores
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def discover_entity_links(%DiscoverEntityLinks.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginEntity)
-
     payload =
       %{
         "action" => "discover_entity_links",
-        "input" => DiscoverEntityLinks.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => DiscoverEntityLinks.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntity.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -529,24 +532,25 @@ defmodule OriginsSdk.Identity do
   Run the `edit_asset_image` action.
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def edit_asset_image(%EditAssetImage.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginAsset)
-
     payload =
       %{
         "action" => "edit_asset_image",
-        "input" => EditAssetImage.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => EditAssetImage.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginAsset.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -555,24 +559,25 @@ defmodule OriginsSdk.Identity do
   Generate conversation starters from episode transcript or origin profile using AI
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def generate_conversation_starters(%GenerateConversationStarters.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, SoulConfig)
-
     payload =
       %{
         "action" => "generate_conversation_starters",
-        "input" => GenerateConversationStarters.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => GenerateConversationStarters.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &SoulConfig.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -581,24 +586,25 @@ defmodule OriginsSdk.Identity do
   Generate or enhance a profile description using AI
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def generate_profile_description(%GenerateProfileDescription.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginEntity)
-
     payload =
       %{
         "action" => "generate_profile_description",
-        "input" => GenerateProfileDescription.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => GenerateProfileDescription.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntity.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -607,24 +613,25 @@ defmodule OriginsSdk.Identity do
   Generate AI soul configuration (personality, purpose, speaking style, etc.)
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def generate_soul_config(%GenerateSoulConfig.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginEntity)
-
     payload =
       %{
         "action" => "generate_soul_config",
-        "input" => GenerateSoulConfig.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => GenerateSoulConfig.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntity.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -650,7 +657,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntityMembership.from_json/1, nil)
+      decode_action_response(body, &OriginEntityMembership.from_list/1, nil)
     end
   end
 
@@ -702,7 +709,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntityMembership.from_json/1, nil)
+      decode_action_response(body, &OriginEntityMembership.from_list/1, nil)
     end
   end
 
@@ -728,7 +735,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntityMembership.from_json/1, nil)
+      decode_action_response(body, &OriginEntityMembership.from_list/1, nil)
     end
   end
 
@@ -832,7 +839,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntityMembership.from_json/1, nil)
+      decode_action_response(body, &OriginEntityMembership.from_list/1, nil)
     end
   end
 
@@ -841,24 +848,25 @@ defmodule OriginsSdk.Identity do
   Run the `get_prompt_context_public_title` action.
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def get_prompt_context_public_title(%GetPromptContextPublicTitle.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, PromptContext)
-
     payload =
       %{
         "action" => "get_prompt_context_public_title",
-        "input" => GetPromptContextPublicTitle.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => GetPromptContextPublicTitle.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &PromptContext.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -923,24 +931,25 @@ defmodule OriginsSdk.Identity do
   Run the `list_cartesia_voices` action.
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def list_cartesia_voices(%ListCartesiaVoices.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginEntity)
-
     payload =
       %{
         "action" => "list_cartesia_voices",
-        "input" => ListCartesiaVoices.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => ListCartesiaVoices.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntity.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -966,7 +975,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &ChatConfig.from_json/1, nil)
+      decode_action_response(body, &ChatConfig.from_list/1, nil)
     end
   end
 
@@ -992,7 +1001,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginAsset.from_json/1, nil)
+      decode_action_response(body, &OriginAsset.from_list/1, nil)
     end
   end
 
@@ -1018,7 +1027,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntity.from_json/1, nil)
+      decode_action_response(body, &OriginEntity.from_list/1, nil)
     end
   end
 
@@ -1052,7 +1061,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntity.from_json/1, nil)
+      decode_action_response(body, &OriginEntity.from_list/1, nil)
     end
   end
 
@@ -1078,7 +1087,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntity.from_json/1, nil)
+      decode_action_response(body, &OriginEntity.from_list/1, nil)
     end
   end
 
@@ -1104,7 +1113,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntityMembership.from_json/1, nil)
+      decode_action_response(body, &OriginEntityMembership.from_list/1, nil)
     end
   end
 
@@ -1130,7 +1139,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &PromptContext.from_json/1, nil)
+      decode_action_response(body, &PromptContext.from_list/1, nil)
     end
   end
 
@@ -1156,7 +1165,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &PromptTool.from_json/1, nil)
+      decode_action_response(body, &PromptTool.from_list/1, nil)
     end
   end
 
@@ -1190,7 +1199,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntity.from_json/1, nil)
+      decode_action_response(body, &OriginEntity.from_list/1, nil)
     end
   end
 
@@ -1216,7 +1225,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &SetupProgress.from_json/1, nil)
+      decode_action_response(body, &SetupProgress.from_list/1, nil)
     end
   end
 
@@ -1242,7 +1251,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &SoulConfig.from_json/1, nil)
+      decode_action_response(body, &SoulConfig.from_list/1, nil)
     end
   end
 
@@ -1268,7 +1277,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &UserProfile.from_json/1, nil)
+      decode_action_response(body, &UserProfile.from_list/1, nil)
     end
   end
 
@@ -1277,24 +1286,25 @@ defmodule OriginsSdk.Identity do
   Scrape and extract content from a website URL
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def scrape_website_content(%ScrapeWebsiteContent.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginEntity)
-
     payload =
       %{
         "action" => "scrape_website_content",
-        "input" => ScrapeWebsiteContent.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => ScrapeWebsiteContent.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntity.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -1303,24 +1313,25 @@ defmodule OriginsSdk.Identity do
   Transcribe audio data to text
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def speech_to_text(%SpeechToText.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginEntity)
-
     payload =
       %{
         "action" => "speech_to_text",
-        "input" => SpeechToText.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => SpeechToText.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntity.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -1355,24 +1366,25 @@ defmodule OriginsSdk.Identity do
   Generate speech from text using Cartesia API
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def text_to_speech(%TextToSpeech.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginEntity)
-
     payload =
       %{
         "action" => "text_to_speech",
-        "input" => TextToSpeech.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => TextToSpeech.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntity.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -1643,6 +1655,7 @@ defmodule OriginsSdk.Identity do
   defp encode_fields(fields) do
     Enum.map(fields, fn
       atom when is_atom(atom) -> Atom.to_string(atom)
+      str when is_binary(str) -> str
       {parent, nested} -> %{Atom.to_string(parent) => encode_fields(nested)}
     end)
   end

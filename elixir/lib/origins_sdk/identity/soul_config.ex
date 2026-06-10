@@ -68,4 +68,9 @@ defmodule OriginsSdk.Identity.SoulConfig do
       vocabulary_preferences: map["vocabulary_preferences"]
     }
   end
+
+  @doc false
+  @spec from_list([map()] | nil) :: [t()] | nil
+  def from_list(nil), do: nil
+  def from_list(list) when is_list(list), do: Enum.map(list, &from_json/1)
 end

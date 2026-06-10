@@ -10,7 +10,6 @@ defmodule OriginsSdk.Interviews do
   alias OriginsSdk.Interviews.GenerateInterviewQuestion
   alias OriginsSdk.Interviews.GetInterviewSession
   alias OriginsSdk.Interviews.InterviewGeneratedContent
-  alias OriginsSdk.Interviews.InterviewRecording
   alias OriginsSdk.Interviews.InterviewSession
   alias OriginsSdk.Interviews.InterviewTurn
   alias OriginsSdk.Interviews.ListInterviewGeneratedContents
@@ -101,24 +100,25 @@ defmodule OriginsSdk.Interviews do
   Generate the next interview question using a Letta agent
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def generate_interview_question(%GenerateInterviewQuestion.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, InterviewSession)
-
     payload =
       %{
         "action" => "generate_interview_question",
-        "input" => GenerateInterviewQuestion.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => GenerateInterviewQuestion.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &InterviewSession.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -170,7 +170,7 @@ defmodule OriginsSdk.Interviews do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &InterviewGeneratedContent.from_json/1, nil)
+      decode_action_response(body, &InterviewGeneratedContent.from_list/1, nil)
     end
   end
 
@@ -196,7 +196,7 @@ defmodule OriginsSdk.Interviews do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &InterviewSession.from_json/1, nil)
+      decode_action_response(body, &InterviewSession.from_list/1, nil)
     end
   end
 
@@ -205,24 +205,25 @@ defmodule OriginsSdk.Interviews do
   Generate a presigned URL for downloading the recording
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def presign_recording_download_url(%PresignRecordingDownloadUrl.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, InterviewRecording)
-
     payload =
       %{
         "action" => "presign_recording_download_url",
-        "input" => PresignRecordingDownloadUrl.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => PresignRecordingDownloadUrl.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &InterviewRecording.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -285,6 +286,7 @@ defmodule OriginsSdk.Interviews do
   defp encode_fields(fields) do
     Enum.map(fields, fn
       atom when is_atom(atom) -> Atom.to_string(atom)
+      str when is_binary(str) -> str
       {parent, nested} -> %{Atom.to_string(parent) => encode_fields(nested)}
     end)
   end

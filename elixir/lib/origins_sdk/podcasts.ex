@@ -106,24 +106,25 @@ defmodule OriginsSdk.Podcasts do
   Fetch a single video from YouTube and save it as an episode
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def fetch_youtube_single_video(%FetchYoutubeSingleVideo.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, YoutubeEpisode)
-
     payload =
       %{
         "action" => "fetch_youtube_single_video",
-        "input" => FetchYoutubeSingleVideo.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => FetchYoutubeSingleVideo.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &YoutubeEpisode.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -132,24 +133,25 @@ defmodule OriginsSdk.Podcasts do
   Fetch transcript/captions from a YouTube video
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def fetch_youtube_transcript(%FetchYoutubeTranscript.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, YoutubeEpisode)
-
     payload =
       %{
         "action" => "fetch_youtube_transcript",
-        "input" => FetchYoutubeTranscript.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => FetchYoutubeTranscript.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &YoutubeEpisode.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -175,7 +177,7 @@ defmodule OriginsSdk.Podcasts do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &PodcastEpisodeSettings.from_json/1, nil)
+      decode_action_response(body, &PodcastEpisodeSettings.from_list/1, nil)
     end
   end
 
@@ -201,7 +203,7 @@ defmodule OriginsSdk.Podcasts do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &PodcastEpisodeSettings.from_json/1, nil)
+      decode_action_response(body, &PodcastEpisodeSettings.from_list/1, nil)
     end
   end
 
@@ -253,7 +255,7 @@ defmodule OriginsSdk.Podcasts do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &PodcastConfig.from_json/1, nil)
+      decode_action_response(body, &PodcastConfig.from_list/1, nil)
     end
   end
 
@@ -279,7 +281,7 @@ defmodule OriginsSdk.Podcasts do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &PodcastEpisodeSettings.from_json/1, nil)
+      decode_action_response(body, &PodcastEpisodeSettings.from_list/1, nil)
     end
   end
 
@@ -305,7 +307,7 @@ defmodule OriginsSdk.Podcasts do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &YoutubeEpisode.from_json/1, nil)
+      decode_action_response(body, &YoutubeEpisode.from_list/1, nil)
     end
   end
 
@@ -314,24 +316,25 @@ defmodule OriginsSdk.Podcasts do
   Sync YouTube playlist episodes
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def sync_podcast_episodes(%SyncPodcastEpisodes.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, PodcastConfig)
-
     payload =
       %{
         "action" => "sync_podcast_episodes",
-        "input" => SyncPodcastEpisodes.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => SyncPodcastEpisodes.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &PodcastConfig.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -418,24 +421,25 @@ defmodule OriginsSdk.Podcasts do
   Fetch public data from a YouTube channel URL and upsert episodes
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def youtube_fetch_public_data(%YoutubeFetchPublicData.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, YoutubeEpisode)
-
     payload =
       %{
         "action" => "youtube_fetch_public_data",
-        "input" => YoutubeFetchPublicData.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => YoutubeFetchPublicData.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &YoutubeEpisode.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -446,6 +450,7 @@ defmodule OriginsSdk.Podcasts do
   defp encode_fields(fields) do
     Enum.map(fields, fn
       atom when is_atom(atom) -> Atom.to_string(atom)
+      str when is_binary(str) -> str
       {parent, nested} -> %{Atom.to_string(parent) => encode_fields(nested)}
     end)
   end

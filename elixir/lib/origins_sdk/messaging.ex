@@ -42,24 +42,25 @@ defmodule OriginsSdk.Messaging do
   First user/assistant exchange from the latest bound conversation for an OE.
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def get_binding_preview(%GetBindingPreview.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, ChatBinding)
-
     payload =
       %{
         "action" => "get_binding_preview",
-        "input" => GetBindingPreview.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => GetBindingPreview.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &ChatBinding.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -85,7 +86,7 @@ defmodule OriginsSdk.Messaging do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &ChatBinding.from_json/1, nil)
+      decode_action_response(body, &ChatBinding.from_list/1, nil)
     end
   end
 
@@ -111,7 +112,7 @@ defmodule OriginsSdk.Messaging do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &ChatBinding.from_json/1, nil)
+      decode_action_response(body, &ChatBinding.from_list/1, nil)
     end
   end
 
@@ -146,24 +147,25 @@ defmodule OriginsSdk.Messaging do
   Resolve the messaging line + source for an OriginEntity.
 
   ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
   """
   def resolve_messaging_line(%ResolveMessagingLine.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, ChatBinding)
-
     payload =
       %{
         "action" => "resolve_messaging_line",
-        "input" => ResolveMessagingLine.Input.to_json(input),
-        "fields" => encode_fields(fields)
+        "input" => ResolveMessagingLine.Input.to_json(input)
       }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &ChatBinding.from_json/1, nil)
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -174,6 +176,7 @@ defmodule OriginsSdk.Messaging do
   defp encode_fields(fields) do
     Enum.map(fields, fn
       atom when is_atom(atom) -> Atom.to_string(atom)
+      str when is_binary(str) -> str
       {parent, nested} -> %{Atom.to_string(parent) => encode_fields(nested)}
     end)
   end
