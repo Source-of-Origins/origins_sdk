@@ -5,6 +5,9 @@ defmodule OriginsSdk.Agent do
 
   alias OriginsSdk.{Client, Error}
   alias OriginsSdk.Agent.AvatarPublicChat
+  alias OriginsSdk.Agent.ChatMessage
+  alias OriginsSdk.Agent.ChatReply
+  alias OriginsSdk.Agent.ChatSuggestions
   alias OriginsSdk.Agent.Conversation
   alias OriginsSdk.Agent.CreateConversation
   alias OriginsSdk.Agent.FindRootConversation
@@ -22,13 +25,12 @@ defmodule OriginsSdk.Agent do
   Public chat with an Origin (brand or avatar) using Letta agents
 
   ## Options
-    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action's declared return is not a single resource, so `data` is
-  returned undecoded (a raw map or list).
+  The action returns an embedded `ChatReply` (a fixed shape, no
+  field selection), decoded from the response body.
   """
   def avatar_public_chat(%AvatarPublicChat.Input{} = input, opts \\ []) do
     payload =
@@ -36,11 +38,10 @@ defmodule OriginsSdk.Agent do
         "action" => "avatar_public_chat",
         "input" => AvatarPublicChat.Input.to_json(input)
       }
-      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, & &1, nil)
+      decode_action_response(body, &ChatReply.from_json/1, nil)
     end
   end
 
@@ -101,13 +102,12 @@ defmodule OriginsSdk.Agent do
   Generate contextual chat suggestions based on conversation history
 
   ## Options
-    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action's declared return is not a single resource, so `data` is
-  returned undecoded (a raw map or list).
+  The action returns an embedded `ChatSuggestions` (a fixed shape, no
+  field selection), decoded from the response body.
   """
   def generate_chat_suggestions(%GenerateChatSuggestions.Input{} = input, opts \\ []) do
     payload =
@@ -115,11 +115,10 @@ defmodule OriginsSdk.Agent do
         "action" => "generate_chat_suggestions",
         "input" => GenerateChatSuggestions.Input.to_json(input)
       }
-      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, & &1, nil)
+      decode_action_response(body, &ChatSuggestions.from_json/1, nil)
     end
   end
 
@@ -155,13 +154,12 @@ defmodule OriginsSdk.Agent do
   Get conversation history from Letta agent
 
   ## Options
-    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action's declared return is not a single resource, so `data` is
-  returned undecoded (a raw map or list).
+  The action returns an embedded `ChatMessage` (a fixed shape, no
+  field selection), decoded from the response body.
   """
   def get_conversation_history(%GetConversationHistory.Input{} = input, opts \\ []) do
     payload =
@@ -169,11 +167,10 @@ defmodule OriginsSdk.Agent do
         "action" => "get_conversation_history",
         "input" => GetConversationHistory.Input.to_json(input)
       }
-      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, & &1, nil)
+      decode_action_response(body, &ChatMessage.from_list/1, nil)
     end
   end
 
@@ -261,13 +258,12 @@ defmodule OriginsSdk.Agent do
   Preview chat for testing brand/avatar Origin configuration
 
   ## Options
-    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action's declared return is not a single resource, so `data` is
-  returned undecoded (a raw map or list).
+  The action returns an embedded `ChatReply` (a fixed shape, no
+  field selection), decoded from the response body.
   """
   def preview_chat(%PreviewChat.Input{} = input, opts \\ []) do
     payload =
@@ -275,11 +271,10 @@ defmodule OriginsSdk.Agent do
         "action" => "preview_chat",
         "input" => PreviewChat.Input.to_json(input)
       }
-      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, & &1, nil)
+      decode_action_response(body, &ChatReply.from_json/1, nil)
     end
   end
 

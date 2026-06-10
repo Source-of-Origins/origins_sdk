@@ -56,6 +56,7 @@ defmodule OriginsSdk.Identity do
   alias OriginsSdk.Identity.PromptContext
   alias OriginsSdk.Identity.PromptTool
   alias OriginsSdk.Identity.ScrapeWebsiteContent
+  alias OriginsSdk.Identity.ScrapedWebsiteContent
   alias OriginsSdk.Identity.SetupProgress
   alias OriginsSdk.Identity.SoulConfig
   alias OriginsSdk.Identity.SpeechToText
@@ -1286,13 +1287,12 @@ defmodule OriginsSdk.Identity do
   Scrape and extract content from a website URL
 
   ## Options
-    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action's declared return is not a single resource, so `data` is
-  returned undecoded (a raw map or list).
+  The action returns an embedded `ScrapedWebsiteContent` (a fixed shape, no
+  field selection), decoded from the response body.
   """
   def scrape_website_content(%ScrapeWebsiteContent.Input{} = input, opts \\ []) do
     payload =
@@ -1300,11 +1300,10 @@ defmodule OriginsSdk.Identity do
         "action" => "scrape_website_content",
         "input" => ScrapeWebsiteContent.Input.to_json(input)
       }
-      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, & &1, nil)
+      decode_action_response(body, &ScrapedWebsiteContent.from_json/1, nil)
     end
   end
 

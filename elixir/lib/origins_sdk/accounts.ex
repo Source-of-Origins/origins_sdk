@@ -21,6 +21,7 @@ defmodule OriginsSdk.Accounts do
   alias OriginsSdk.Accounts.SignInWithAppleToken
   alias OriginsSdk.Accounts.SignInWithGoogleToken
   alias OriginsSdk.Accounts.SignInWithPassword
+  alias OriginsSdk.Accounts.SocialSignInResponse
   alias OriginsSdk.Accounts.StaffTenantGrant
   alias OriginsSdk.Accounts.StartTenantSession
   alias OriginsSdk.Accounts.SubmitWaitlistEntry
@@ -408,13 +409,12 @@ defmodule OriginsSdk.Accounts do
   Verify an Apple id_token, resolve/create the user, and return a JWT (SDK entrypoint).
 
   ## Options
-    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action's declared return is not a single resource, so `data` is
-  returned undecoded (a raw map or list).
+  The action returns an embedded `SocialSignInResponse` (a fixed shape, no
+  field selection), decoded from the response body.
   """
   def sign_in_with_apple_token(%SignInWithAppleToken.Input{} = input, opts \\ []) do
     payload =
@@ -422,11 +422,10 @@ defmodule OriginsSdk.Accounts do
         "action" => "sign_in_with_apple_token",
         "input" => SignInWithAppleToken.Input.to_json(input)
       }
-      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, & &1, nil)
+      decode_action_response(body, &SocialSignInResponse.from_json/1, nil)
     end
   end
 
@@ -435,13 +434,12 @@ defmodule OriginsSdk.Accounts do
   Verify a Google id_token, resolve/create the user, and return a JWT (SDK entrypoint).
 
   ## Options
-    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action's declared return is not a single resource, so `data` is
-  returned undecoded (a raw map or list).
+  The action returns an embedded `SocialSignInResponse` (a fixed shape, no
+  field selection), decoded from the response body.
   """
   def sign_in_with_google_token(%SignInWithGoogleToken.Input{} = input, opts \\ []) do
     payload =
@@ -449,11 +447,10 @@ defmodule OriginsSdk.Accounts do
         "action" => "sign_in_with_google_token",
         "input" => SignInWithGoogleToken.Input.to_json(input)
       }
-      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, & &1, nil)
+      decode_action_response(body, &SocialSignInResponse.from_json/1, nil)
     end
   end
 
