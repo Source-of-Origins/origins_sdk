@@ -4,18 +4,28 @@ defmodule OriginsSdk.Apps do
   """
 
   alias OriginsSdk.{Client, Error}
+  alias OriginsSdk.Apps.AdvanceEnrollmentSession
+  alias OriginsSdk.Apps.AnswerActivityPrompt
   alias OriginsSdk.Apps.App
   alias OriginsSdk.Apps.AppLibrary
   alias OriginsSdk.Apps.AttachLibraryToApp
+  alias OriginsSdk.Apps.CompleteActivityStep
+  alias OriginsSdk.Apps.CompleteEnrollment
+  alias OriginsSdk.Apps.CourseActivityCompletion
+  alias OriginsSdk.Apps.CourseEnrollment
   alias OriginsSdk.Apps.CreateApp
   alias OriginsSdk.Apps.CreateAppFromTemplate
+  alias OriginsSdk.Apps.CreateEnrollment
   alias OriginsSdk.Apps.CreateWebhookSubscription
   alias OriginsSdk.Apps.DestroyApp
   alias OriginsSdk.Apps.DestroyWebhookSubscription
   alias OriginsSdk.Apps.DetachLibraryFromApp
   alias OriginsSdk.Apps.DuplicateApp
+  alias OriginsSdk.Apps.FindEnrollment
+  alias OriginsSdk.Apps.ForUserPersonalized
   alias OriginsSdk.Apps.GetApp
   alias OriginsSdk.Apps.GetAppForOriginTypeAndSlug
+  alias OriginsSdk.Apps.GetEnrollment
   alias OriginsSdk.Apps.ListAppLibraries
   alias OriginsSdk.Apps.ListAppTemplates
   alias OriginsSdk.Apps.ListAppTemplatesForType
@@ -28,15 +38,71 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.ParseAssessmentBlocks
   alias OriginsSdk.Apps.ParseCourseBlocks
   alias OriginsSdk.Apps.ParseLandingBlocks
+  alias OriginsSdk.Apps.PauseEnrollment
+  alias OriginsSdk.Apps.ReactivateEnrollment
   alias OriginsSdk.Apps.RestoreAppVersion
+  alias OriginsSdk.Apps.ResumeEnrollment
   alias OriginsSdk.Apps.SendAppChatMessage
   alias OriginsSdk.Apps.SendTestWebhook
+  alias OriginsSdk.Apps.StartEnrollment
   alias OriginsSdk.Apps.Template
   alias OriginsSdk.Apps.UpdateApp
   alias OriginsSdk.Apps.UpdateWebhookSubscription
   alias OriginsSdk.Apps.Version
   alias OriginsSdk.Apps.WebhookDelivery
   alias OriginsSdk.Apps.WebhookSubscription
+
+  @doc """
+  Run the `advance_enrollment_session` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def advance_enrollment_session(%AdvanceEnrollmentSession.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, CourseEnrollment)
+
+    payload =
+      %{
+        "action" => "advance_enrollment_session",
+        "input" => AdvanceEnrollmentSession.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &CourseEnrollment.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `answer_activity_prompt` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def answer_activity_prompt(%AnswerActivityPrompt.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, CourseActivityCompletion)
+
+    payload =
+      %{
+        "action" => "answer_activity_prompt",
+        "input" => AnswerActivityPrompt.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &CourseActivityCompletion.from_json/1, nil)
+    end
+  end
+
 
   @doc """
   Run the `attach_library_to_app` action.
@@ -60,6 +126,58 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &AppLibrary.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `complete_activity_step` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def complete_activity_step(%CompleteActivityStep.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, CourseActivityCompletion)
+
+    payload =
+      %{
+        "action" => "complete_activity_step",
+        "input" => CompleteActivityStep.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &CourseActivityCompletion.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `complete_enrollment` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def complete_enrollment(%CompleteEnrollment.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, CourseEnrollment)
+
+    payload =
+      %{
+        "action" => "complete_enrollment",
+        "input" => CompleteEnrollment.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &CourseEnrollment.from_json/1, nil)
     end
   end
 
@@ -112,6 +230,32 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &App.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `create_enrollment` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def create_enrollment(%CreateEnrollment.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, CourseEnrollment)
+
+    payload =
+      %{
+        "action" => "create_enrollment",
+        "input" => CreateEnrollment.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &CourseEnrollment.from_json/1, nil)
     end
   end
 
@@ -247,6 +391,58 @@ defmodule OriginsSdk.Apps do
 
 
   @doc """
+  Run the `find_enrollment` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def find_enrollment(%FindEnrollment.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, CourseEnrollment)
+
+    payload =
+      %{
+        "action" => "find_enrollment",
+        "input" => FindEnrollment.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &CourseEnrollment.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `for_user_personalized` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def for_user_personalized(%ForUserPersonalized.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, App)
+
+    payload =
+      %{
+        "action" => "for_user_personalized",
+        "input" => ForUserPersonalized.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &App.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
   Run the `get_app` action.
 
   ## Options
@@ -294,6 +490,32 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &App.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `get_enrollment` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def get_enrollment(%GetEnrollment.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, CourseEnrollment)
+
+    payload =
+      %{
+        "action" => "get_enrollment",
+        "input" => GetEnrollment.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &CourseEnrollment.from_json/1, nil)
     end
   end
 
@@ -611,6 +833,58 @@ defmodule OriginsSdk.Apps do
 
 
   @doc """
+  Run the `pause_enrollment` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def pause_enrollment(%PauseEnrollment.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, CourseEnrollment)
+
+    payload =
+      %{
+        "action" => "pause_enrollment",
+        "input" => PauseEnrollment.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &CourseEnrollment.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `reactivate_enrollment` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def reactivate_enrollment(%ReactivateEnrollment.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, CourseEnrollment)
+
+    payload =
+      %{
+        "action" => "reactivate_enrollment",
+        "input" => ReactivateEnrollment.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &CourseEnrollment.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
   Restore content from a paper trail version snapshot
 
   ## Options
@@ -632,6 +906,32 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &App.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `resume_enrollment` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def resume_enrollment(%ResumeEnrollment.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, CourseEnrollment)
+
+    payload =
+      %{
+        "action" => "resume_enrollment",
+        "input" => ResumeEnrollment.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &CourseEnrollment.from_json/1, nil)
     end
   end
 
@@ -684,6 +984,32 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &WebhookSubscription.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `start_enrollment` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def start_enrollment(%StartEnrollment.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, CourseEnrollment)
+
+    payload =
+      %{
+        "action" => "start_enrollment",
+        "input" => StartEnrollment.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &CourseEnrollment.from_json/1, nil)
     end
   end
 

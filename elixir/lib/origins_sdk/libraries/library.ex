@@ -20,6 +20,7 @@ defmodule OriginsSdk.Libraries.Library do
     origin_entity_id: String.t(),
     slug: String.t(),
     status: any(),
+    transcribe_media: boolean(),
     updated_at: DateTime.t()
     }
 
@@ -39,10 +40,11 @@ defmodule OriginsSdk.Libraries.Library do
     :origin_entity_id,
     :slug,
     :status,
+    :transcribe_media,
     :updated_at
   ]
 
-  @primitive_fields ~w(adapter_config adapter_kind auto_ingest_videos auto_resync_enabled created_at error_count id inherits_to_descendants last_error last_error_at last_synced_at name origin_entity_id slug status updated_at)a
+  @primitive_fields ~w(adapter_config adapter_kind auto_ingest_videos auto_resync_enabled created_at error_count id inherits_to_descendants last_error last_error_at last_synced_at name origin_entity_id slug status transcribe_media updated_at)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -68,6 +70,7 @@ defmodule OriginsSdk.Libraries.Library do
       origin_entity_id: map["origin_entity_id"],
       slug: map["slug"],
       status: map["status"],
+      transcribe_media: map["transcribe_media"],
       updated_at: OriginsSdk.Internal.decode_datetime(map["updated_at"])
     }
   end
