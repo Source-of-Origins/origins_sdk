@@ -21,6 +21,13 @@ defmodule OriginsSdk.Internal do
   end
 
   def decode_atom(nil), do: nil
-  def decode_atom(str) when is_binary(str), do: String.to_atom(str)
   def decode_atom(atom) when is_atom(atom), do: atom
+
+  def decode_atom(str) when is_binary(str) do
+    String.to_existing_atom(str)
+  rescue
+    # Unknown enum value (e.g. server added one this SDK predates) —
+    # keep the raw string rather than minting an atom from untrusted input.
+    ArgumentError -> str
+  end
 end
