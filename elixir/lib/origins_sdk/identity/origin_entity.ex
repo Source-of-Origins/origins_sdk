@@ -10,6 +10,7 @@ defmodule OriginsSdk.Identity.OriginEntity do
     appearance_config: any() | nil,
     banner_key: String.t() | nil,
     banner_url: String.t() | nil,
+    brand_conversation_config: any() | nil,
     categories: list() | nil,
     content_tabs_config: map() | nil,
     content_themes: list() | nil,
@@ -62,6 +63,7 @@ defmodule OriginsSdk.Identity.OriginEntity do
     :appearance_config,
     :banner_key,
     :banner_url,
+    :brand_conversation_config,
     :categories,
     :content_tabs_config,
     :content_themes,
@@ -108,7 +110,7 @@ defmodule OriginsSdk.Identity.OriginEntity do
     :youtube_sync_settings
   ]
 
-  @primitive_fields ~w(accent_colors ai_generated_summary appearance_config banner_key banner_url categories content_tabs_config content_themes core_values created_at description engagement_metrics extracted_content guardrails_settings id is_active is_featured is_public key_messaging last_website_scrape mission_statement name page_sections_config parent_origin_entity_id personality_traits picture_key picture_url podcast_button_color podcast_button_link podcast_button_text podcast_button_text_color podcast_button_visible podcast_content_settings public_profile_config setup_progress_id slug social_links target_audience tenant_id title tone_of_voice updated_at voice_config voice_settings website_content youtube_channel_data youtube_channel_id youtube_content_settings youtube_sync_settings)a
+  @primitive_fields ~w(accent_colors ai_generated_summary appearance_config banner_key banner_url brand_conversation_config categories content_tabs_config content_themes core_values created_at description engagement_metrics extracted_content guardrails_settings id is_active is_featured is_public key_messaging last_website_scrape mission_statement name page_sections_config parent_origin_entity_id personality_traits picture_key picture_url podcast_button_color podcast_button_link podcast_button_text podcast_button_text_color podcast_button_visible podcast_content_settings public_profile_config setup_progress_id slug social_links target_audience tenant_id title tone_of_voice updated_at voice_config voice_settings website_content youtube_channel_data youtube_channel_id youtube_content_settings youtube_sync_settings)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -124,6 +126,7 @@ defmodule OriginsSdk.Identity.OriginEntity do
       appearance_config: map["appearance_config"],
       banner_key: map["banner_key"],
       banner_url: map["banner_url"],
+      brand_conversation_config: map["brand_conversation_config"],
       categories: map["categories"],
       content_tabs_config: map["content_tabs_config"],
       content_themes: map["content_themes"],

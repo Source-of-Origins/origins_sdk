@@ -33,6 +33,8 @@ defmodule OriginsSdk.Libraries do
   alias OriginsSdk.Libraries.ListLibraryFiles
   alias OriginsSdk.Libraries.ListLibraryFilesForLibrary
   alias OriginsSdk.Libraries.PreviewLibrarySyncFilter
+  alias OriginsSdk.Libraries.ResolveVideoPlayback
+  alias OriginsSdk.Libraries.ResolvedPlayback
   alias OriginsSdk.Libraries.SyncLibraryNow
   alias OriginsSdk.Libraries.UpdateLibrary
   alias OriginsSdk.Libraries.UpdateLibraryFile
@@ -677,6 +679,31 @@ defmodule OriginsSdk.Libraries do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
+  Resolve a VFS path to a playable HLS URL (read-only, zero side effects).
+
+  ## Options
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action returns an embedded `ResolvedPlayback` (a fixed shape, no
+  field selection), decoded from the response body.
+  """
+  def resolve_video_playback(%ResolveVideoPlayback.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "resolve_video_playback",
+        "input" => ResolveVideoPlayback.Input.to_json(input)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &ResolvedPlayback.from_json/1, nil)
     end
   end
 

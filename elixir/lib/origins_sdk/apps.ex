@@ -8,6 +8,8 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.AnswerActivityPrompt
   alias OriginsSdk.Apps.App
   alias OriginsSdk.Apps.AppLibrary
+  alias OriginsSdk.Apps.AssessmentGraph
+  alias OriginsSdk.Apps.AssessmentResponse
   alias OriginsSdk.Apps.AttachLibraryToApp
   alias OriginsSdk.Apps.CompleteActivityStep
   alias OriginsSdk.Apps.CompleteEnrollment
@@ -25,7 +27,9 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.ForUserPersonalized
   alias OriginsSdk.Apps.GetApp
   alias OriginsSdk.Apps.GetAppForOriginTypeAndSlug
+  alias OriginsSdk.Apps.GetAssessmentGraph
   alias OriginsSdk.Apps.GetEnrollment
+  alias OriginsSdk.Apps.GetMyAssessmentResponse
   alias OriginsSdk.Apps.ListAppLibraries
   alias OriginsSdk.Apps.ListAppTemplates
   alias OriginsSdk.Apps.ListAppTemplatesForType
@@ -48,6 +52,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.Template
   alias OriginsSdk.Apps.UpdateApp
   alias OriginsSdk.Apps.UpdateWebhookSubscription
+  alias OriginsSdk.Apps.UpsertAssessmentResponse
   alias OriginsSdk.Apps.Version
   alias OriginsSdk.Apps.WebhookDelivery
   alias OriginsSdk.Apps.WebhookSubscription
@@ -496,6 +501,31 @@ defmodule OriginsSdk.Apps do
 
 
   @doc """
+  Run the `get_assessment_graph` action.
+
+  ## Options
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action returns an embedded `AssessmentGraph` (a fixed shape, no
+  field selection), decoded from the response body.
+  """
+  def get_assessment_graph(%GetAssessmentGraph.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "get_assessment_graph",
+        "input" => GetAssessmentGraph.Input.to_json(input)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &AssessmentGraph.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
   Run the `get_enrollment` action.
 
   ## Options
@@ -517,6 +547,32 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &CourseEnrollment.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `get_my_assessment_response` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def get_my_assessment_response(%GetMyAssessmentResponse.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, AssessmentResponse)
+
+    payload =
+      %{
+        "action" => "get_my_assessment_response",
+        "input" => GetMyAssessmentResponse.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &AssessmentResponse.from_list/1, nil)
     end
   end
 
@@ -1068,6 +1124,32 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &WebhookSubscription.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `upsert_assessment_response` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def upsert_assessment_response(%UpsertAssessmentResponse.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, AssessmentResponse)
+
+    payload =
+      %{
+        "action" => "upsert_assessment_response",
+        "input" => UpsertAssessmentResponse.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &AssessmentResponse.from_json/1, nil)
     end
   end
 
