@@ -7,17 +7,18 @@ defmodule OriginsSdk.Accounts.RegisterWithPassword do
     @moduledoc "Required arguments for `register_with_password`."
 
     @type t :: %__MODULE__{
+          confirm_redirect_path: String.t() | nil,
           email: String.t(),
           password: String.t(),
           password_confirmation: String.t()
         }
 
     @enforce_keys [:email, :password, :password_confirmation]
-    defstruct [:email, :password, :password_confirmation]
+    defstruct [:confirm_redirect_path, :email, :password, :password_confirmation]
 
     @doc false
     def to_json(%__MODULE__{} = input) do
-      %{"email" => input.email, "password" => input.password, "password_confirmation" => input.password_confirmation}
+      %{"confirm_redirect_path" => input.confirm_redirect_path, "email" => input.email, "password" => input.password, "password_confirmation" => input.password_confirmation}
     end
   end
 

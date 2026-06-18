@@ -12,11 +12,13 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.AssessmentResponse
   alias OriginsSdk.Apps.AttachLibraryToApp
   alias OriginsSdk.Apps.CompleteActivityStep
+  alias OriginsSdk.Apps.CompleteAssessment
   alias OriginsSdk.Apps.CompleteEnrollment
   alias OriginsSdk.Apps.CourseActivityCompletion
   alias OriginsSdk.Apps.CourseEnrollment
   alias OriginsSdk.Apps.CreateApp
   alias OriginsSdk.Apps.CreateAppFromTemplate
+  alias OriginsSdk.Apps.CreateAssessmentResponse
   alias OriginsSdk.Apps.CreateEnrollment
   alias OriginsSdk.Apps.CreateWebhookSubscription
   alias OriginsSdk.Apps.DestroyApp
@@ -49,10 +51,10 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.SendAppChatMessage
   alias OriginsSdk.Apps.SendTestWebhook
   alias OriginsSdk.Apps.StartEnrollment
+  alias OriginsSdk.Apps.SyncAssessmentProgress
   alias OriginsSdk.Apps.Template
   alias OriginsSdk.Apps.UpdateApp
   alias OriginsSdk.Apps.UpdateWebhookSubscription
-  alias OriginsSdk.Apps.UpsertAssessmentResponse
   alias OriginsSdk.Apps.Version
   alias OriginsSdk.Apps.WebhookDelivery
   alias OriginsSdk.Apps.WebhookSubscription
@@ -162,6 +164,32 @@ defmodule OriginsSdk.Apps do
 
 
   @doc """
+  Run the `complete_assessment` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def complete_assessment(%CompleteAssessment.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, AssessmentResponse)
+
+    payload =
+      %{
+        "action" => "complete_assessment",
+        "input" => CompleteAssessment.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &AssessmentResponse.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
   Run the `complete_enrollment` action.
 
   ## Options
@@ -235,6 +263,32 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &App.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `create_assessment_response` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def create_assessment_response(%CreateAssessmentResponse.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, AssessmentResponse)
+
+    payload =
+      %{
+        "action" => "create_assessment_response",
+        "input" => CreateAssessmentResponse.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &AssessmentResponse.from_json/1, nil)
     end
   end
 
@@ -1077,6 +1131,32 @@ defmodule OriginsSdk.Apps do
 
 
   @doc """
+  Run the `sync_assessment_progress` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def sync_assessment_progress(%SyncAssessmentProgress.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, AssessmentResponse)
+
+    payload =
+      %{
+        "action" => "sync_assessment_progress",
+        "input" => SyncAssessmentProgress.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &AssessmentResponse.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
   Run the `update_app` action.
 
   ## Options
@@ -1124,32 +1204,6 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &WebhookSubscription.from_json/1, nil)
-    end
-  end
-
-
-  @doc """
-  Run the `upsert_assessment_response` action.
-
-  ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-  """
-  def upsert_assessment_response(%UpsertAssessmentResponse.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, AssessmentResponse)
-
-    payload =
-      %{
-        "action" => "upsert_assessment_response",
-        "input" => UpsertAssessmentResponse.Input.to_json(input),
-        "fields" => encode_fields(fields)
-      }
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &AssessmentResponse.from_json/1, nil)
     end
   end
 
