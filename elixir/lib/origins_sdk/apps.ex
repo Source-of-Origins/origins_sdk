@@ -25,12 +25,14 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.DestroyWebhookSubscription
   alias OriginsSdk.Apps.DetachLibraryFromApp
   alias OriginsSdk.Apps.DuplicateApp
+  alias OriginsSdk.Apps.EnrollmentCompletions
   alias OriginsSdk.Apps.FindEnrollment
   alias OriginsSdk.Apps.ForUserPersonalized
   alias OriginsSdk.Apps.GetApp
   alias OriginsSdk.Apps.GetAppForOriginTypeAndSlug
   alias OriginsSdk.Apps.GetAssessmentGraph
   alias OriginsSdk.Apps.GetEnrollment
+  alias OriginsSdk.Apps.GetEnrollmentCompletions
   alias OriginsSdk.Apps.GetMyAssessmentResponse
   alias OriginsSdk.Apps.ListAppLibraries
   alias OriginsSdk.Apps.ListAppTemplates
@@ -601,6 +603,31 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &CourseEnrollment.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `get_enrollment_completions` action.
+
+  ## Options
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action returns an embedded `EnrollmentCompletions` (a fixed shape, no
+  field selection), decoded from the response body.
+  """
+  def get_enrollment_completions(%GetEnrollmentCompletions.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "get_enrollment_completions",
+        "input" => GetEnrollmentCompletions.Input.to_json(input)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &EnrollmentCompletions.from_json/1, nil)
     end
   end
 
