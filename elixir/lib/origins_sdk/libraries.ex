@@ -4,6 +4,8 @@ defmodule OriginsSdk.Libraries do
   """
 
   alias OriginsSdk.{Client, Error}
+  alias OriginsSdk.Libraries.AddItem
+  alias OriginsSdk.Libraries.Create
   alias OriginsSdk.Libraries.CreateLibrary
   alias OriginsSdk.Libraries.CreateLibraryAccessGrant
   alias OriginsSdk.Libraries.CreateLibraryFile
@@ -11,7 +13,9 @@ defmodule OriginsSdk.Libraries do
   alias OriginsSdk.Libraries.DeleteLibrary
   alias OriginsSdk.Libraries.DeleteLibraryAccessGrant
   alias OriginsSdk.Libraries.DeleteLibraryFile
+  alias OriginsSdk.Libraries.Destroy
   alias OriginsSdk.Libraries.DriveConnection
+  alias OriginsSdk.Libraries.GetById
   alias OriginsSdk.Libraries.GetDriveConnectionForEntity
   alias OriginsSdk.Libraries.GetGithubConnectionForEntity
   alias OriginsSdk.Libraries.GetLibrary
@@ -25,6 +29,8 @@ defmodule OriginsSdk.Libraries do
   alias OriginsSdk.Libraries.LibraryShellExec
   alias OriginsSdk.Libraries.LibraryShellListTree
   alias OriginsSdk.Libraries.LibraryShellRead
+  alias OriginsSdk.Libraries.ListForPlaylist
+  alias OriginsSdk.Libraries.ListForUser
   alias OriginsSdk.Libraries.ListGithubBranches
   alias OriginsSdk.Libraries.ListGithubRepositories
   alias OriginsSdk.Libraries.ListLibraries
@@ -32,14 +38,71 @@ defmodule OriginsSdk.Libraries do
   alias OriginsSdk.Libraries.ListLibraryAccessGrants
   alias OriginsSdk.Libraries.ListLibraryFiles
   alias OriginsSdk.Libraries.ListLibraryFilesForLibrary
+  alias OriginsSdk.Libraries.Playlist
+  alias OriginsSdk.Libraries.PlaylistItem
   alias OriginsSdk.Libraries.PreviewLibrarySyncFilter
+  alias OriginsSdk.Libraries.RemoveItem
+  alias OriginsSdk.Libraries.Reorder
   alias OriginsSdk.Libraries.ResolveVideoPlayback
   alias OriginsSdk.Libraries.ResolvedPlayback
   alias OriginsSdk.Libraries.SyncLibraryNow
+  alias OriginsSdk.Libraries.Update
   alias OriginsSdk.Libraries.UpdateLibrary
   alias OriginsSdk.Libraries.UpdateLibraryFile
   alias OriginsSdk.Libraries.UpdateLibrarySyncFilter
   alias OriginsSdk.Libraries.UpsertWebsiteScrapeLibraryFile
+
+  @doc """
+  Add a LibraryFile to a playlist with auto-assigned position.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def add_item(%AddItem.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, PlaylistItem)
+
+    payload =
+      %{
+        "action" => "add_item",
+        "input" => AddItem.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &PlaylistItem.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `create` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def create(%Create.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, Playlist)
+
+    payload =
+      %{
+        "action" => "create",
+        "input" => Create.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &Playlist.from_json/1, nil)
+    end
+  end
+
 
   @doc """
   Run the `create_library` action.
@@ -219,6 +282,58 @@ defmodule OriginsSdk.Libraries do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &LibraryFile.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `destroy` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def destroy(%Destroy.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, Playlist)
+
+    payload =
+      %{
+        "action" => "destroy",
+        "input" => Destroy.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &Playlist.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `get_by_id` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def get_by_id(%GetById.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, Playlist)
+
+    payload =
+      %{
+        "action" => "get_by_id",
+        "input" => GetById.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &Playlist.from_json/1, nil)
     end
   end
 
@@ -463,6 +578,58 @@ defmodule OriginsSdk.Libraries do
 
 
   @doc """
+  All items in a playlist, ordered by position.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def list_for_playlist(%ListForPlaylist.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, PlaylistItem)
+
+    payload =
+      %{
+        "action" => "list_for_playlist",
+        "input" => ListForPlaylist.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &PlaylistItem.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
+  All playlists owned by the current user.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def list_for_user(%ListForUser.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, Playlist)
+
+    payload =
+      %{
+        "action" => "list_for_user",
+        "input" => ListForUser.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &Playlist.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
   List branches of a repository, scoped to a connection.
 
   ## Options
@@ -684,6 +851,58 @@ defmodule OriginsSdk.Libraries do
 
 
   @doc """
+  Remove an item from a playlist.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def remove_item(%RemoveItem.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, PlaylistItem)
+
+    payload =
+      %{
+        "action" => "remove_item",
+        "input" => RemoveItem.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &PlaylistItem.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Update item position for drag-and-drop reordering.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def reorder(%Reorder.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, PlaylistItem)
+
+    payload =
+      %{
+        "action" => "reorder",
+        "input" => Reorder.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &PlaylistItem.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
   Resolve a VFS path to a playable HLS URL (read-only, zero side effects).
 
   ## Options
@@ -731,6 +950,32 @@ defmodule OriginsSdk.Libraries do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `update` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def update(%Update.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, Playlist)
+
+    payload =
+      %{
+        "action" => "update",
+        "input" => Update.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &Playlist.from_json/1, nil)
     end
   end
 
