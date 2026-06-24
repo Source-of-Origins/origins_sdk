@@ -7,7 +7,9 @@ defmodule OriginsSdk.Libraries.PlaylistItem do
   @type t :: %__MODULE__{
     created_at: DateTime.t(),
     id: String.t(),
-    library_file_id: String.t(),
+    item_type: any(),
+    library_file_id: String.t() | nil,
+    library_id: String.t() | nil,
     playlist_id: String.t(),
     position: integer(),
     updated_at: DateTime.t()
@@ -16,13 +18,15 @@ defmodule OriginsSdk.Libraries.PlaylistItem do
   defstruct [
     :created_at,
     :id,
+    :item_type,
     :library_file_id,
+    :library_id,
     :playlist_id,
     :position,
     :updated_at
   ]
 
-  @primitive_fields ~w(created_at id library_file_id playlist_id position updated_at)a
+  @primitive_fields ~w(created_at id item_type library_file_id library_id playlist_id position updated_at)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -35,7 +39,9 @@ defmodule OriginsSdk.Libraries.PlaylistItem do
     %__MODULE__{
       created_at: OriginsSdk.Internal.decode_datetime(map["created_at"]),
       id: map["id"],
+      item_type: map["item_type"],
       library_file_id: map["library_file_id"],
+      library_id: map["library_id"],
       playlist_id: map["playlist_id"],
       position: map["position"],
       updated_at: OriginsSdk.Internal.decode_datetime(map["updated_at"])

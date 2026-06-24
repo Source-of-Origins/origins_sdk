@@ -7,16 +7,18 @@ defmodule OriginsSdk.Libraries.AddItem do
     @moduledoc "Required arguments for `add_item`."
 
     @type t :: %__MODULE__{
-          library_file_id: String.t(),
+          item_type: any(),
+          library_file_id: String.t() | nil,
+          library_id: String.t() | nil,
           playlist_id: String.t()
         }
 
-    @enforce_keys [:library_file_id, :playlist_id]
-    defstruct [:library_file_id, :playlist_id]
+    @enforce_keys [:item_type, :playlist_id]
+    defstruct [:item_type, :library_file_id, :library_id, :playlist_id]
 
     @doc false
     def to_json(%__MODULE__{} = input) do
-      %{"library_file_id" => input.library_file_id, "playlist_id" => input.playlist_id}
+      %{"item_type" => input.item_type, "library_file_id" => input.library_file_id, "library_id" => input.library_id, "playlist_id" => input.playlist_id}
     end
   end
 

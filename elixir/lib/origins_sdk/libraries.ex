@@ -53,7 +53,7 @@ defmodule OriginsSdk.Libraries do
   alias OriginsSdk.Libraries.UpsertWebsiteScrapeLibraryFile
 
   @doc """
-  Add a LibraryFile to a playlist with auto-assigned position.
+  Add an item to a playlist. Set item_type to :video with library_file_id, or :library with library_id.
 
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
