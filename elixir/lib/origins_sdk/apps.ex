@@ -21,6 +21,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.CreateAssessmentResponse
   alias OriginsSdk.Apps.CreateEnrollment
   alias OriginsSdk.Apps.CreateWebhookSubscription
+  alias OriginsSdk.Apps.DailyBriefing
   alias OriginsSdk.Apps.DestroyApp
   alias OriginsSdk.Apps.DestroyWebhookSubscription
   alias OriginsSdk.Apps.DetachLibraryFromApp
@@ -343,6 +344,31 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &WebhookSubscription.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `daily_briefing` action.
+
+  ## Options
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action returns an embedded `DailyBriefing` (a fixed shape, no
+  field selection), decoded from the response body.
+  """
+  def daily_briefing(%DailyBriefing.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "daily_briefing",
+        "input" => DailyBriefing.Input.to_json(input)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &DailyBriefing.from_json/1, nil)
     end
   end
 

@@ -5,6 +5,7 @@ defmodule OriginsSdk.Accounts do
 
   alias OriginsSdk.{Client, Error}
   alias OriginsSdk.Accounts.ApproveWaitlistEntry
+  alias OriginsSdk.Accounts.ConfirmAnonymousAccount
   alias OriginsSdk.Accounts.CreateTenantForUser
   alias OriginsSdk.Accounts.DeleteWaitlistEntry
   alias OriginsSdk.Accounts.GetCurrentUser
@@ -51,6 +52,31 @@ defmodule OriginsSdk.Accounts do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &WaitlistEntry.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Set a password on an anonymous quiz account from an emailed claim link, and return a JWT.
+
+  ## Options
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action returns an embedded `SocialSignInResponse` (a fixed shape, no
+  field selection), decoded from the response body.
+  """
+  def confirm_anonymous_account(%ConfirmAnonymousAccount.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "confirm_anonymous_account",
+        "input" => ConfirmAnonymousAccount.Input.to_json(input)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &SocialSignInResponse.from_json/1, nil)
     end
   end
 

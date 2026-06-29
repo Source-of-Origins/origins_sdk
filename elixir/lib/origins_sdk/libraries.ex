@@ -38,13 +38,17 @@ defmodule OriginsSdk.Libraries do
   alias OriginsSdk.Libraries.ListLibraryAccessGrants
   alias OriginsSdk.Libraries.ListLibraryFiles
   alias OriginsSdk.Libraries.ListLibraryFilesForLibrary
+  alias OriginsSdk.Libraries.ListVideoStaticRenditions
   alias OriginsSdk.Libraries.Playlist
   alias OriginsSdk.Libraries.PlaylistItem
   alias OriginsSdk.Libraries.PreviewLibrarySyncFilter
   alias OriginsSdk.Libraries.RemoveItem
   alias OriginsSdk.Libraries.Reorder
+  alias OriginsSdk.Libraries.RequestStaticRenditions
   alias OriginsSdk.Libraries.ResolveVideoPlayback
   alias OriginsSdk.Libraries.ResolvedPlayback
+  alias OriginsSdk.Libraries.StaticRendition
+  alias OriginsSdk.Libraries.StaticRenditionRequestResult
   alias OriginsSdk.Libraries.SyncLibraryNow
   alias OriginsSdk.Libraries.Update
   alias OriginsSdk.Libraries.UpdateLibrary
@@ -820,6 +824,31 @@ defmodule OriginsSdk.Libraries do
 
 
   @doc """
+  List downloadable static renditions for a library file (read-only, off the playback hot path).
+
+  ## Options
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action returns an embedded `StaticRendition` (a fixed shape, no
+  field selection), decoded from the response body.
+  """
+  def list_video_static_renditions(%ListVideoStaticRenditions.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "list_video_static_renditions",
+        "input" => ListVideoStaticRenditions.Input.to_json(input)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &StaticRendition.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
   Dry-run a proposed sync filter against this Library's currently-tracked
   files: returns how many files (and cascaded video assets) the next sync
   would orphan-remove, plus the removed paths. Powers the SPA confirmation
@@ -898,6 +927,31 @@ defmodule OriginsSdk.Libraries do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &PlaylistItem.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Ask Otterwake to mint downloadable static renditions (presigns the source server-side).
+
+  ## Options
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action returns an embedded `StaticRenditionRequestResult` (a fixed shape, no
+  field selection), decoded from the response body.
+  """
+  def request_static_renditions(%RequestStaticRenditions.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "request_static_renditions",
+        "input" => RequestStaticRenditions.Input.to_json(input)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &StaticRenditionRequestResult.from_json/1, nil)
     end
   end
 
