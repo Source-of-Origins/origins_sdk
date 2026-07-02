@@ -44,6 +44,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.ListLibrariesForApp
   alias OriginsSdk.Apps.ListWebhookDeliveries
   alias OriginsSdk.Apps.ListWebhookSubscriptions
+  alias OriginsSdk.Apps.MarkBriefingRead
   alias OriginsSdk.Apps.ParseAssessmentBlocks
   alias OriginsSdk.Apps.ParseCourseBlocks
   alias OriginsSdk.Apps.ParseLandingBlocks
@@ -914,6 +915,31 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &WebhookSubscription.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `mark_briefing_read` action.
+
+  ## Options
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action returns an embedded `DailyBriefing` (a fixed shape, no
+  field selection), decoded from the response body.
+  """
+  def mark_briefing_read(%MarkBriefingRead.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "mark_briefing_read",
+        "input" => MarkBriefingRead.Input.to_json(input)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &DailyBriefing.from_json/1, nil)
     end
   end
 
