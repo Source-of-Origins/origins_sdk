@@ -7,7 +7,6 @@ defmodule OriginsSdk.Apps.CreateApp do
     @moduledoc "Required arguments for `create_app`."
 
     @type t :: %__MODULE__{
-          app_type: String.t(),
           generation_error: String.t() | nil,
           generation_format: String.t() | nil,
           generation_prompt: String.t() | nil,
@@ -16,17 +15,18 @@ defmodule OriginsSdk.Apps.CreateApp do
           markdoc_content: String.t(),
           meta: map() | nil,
           origin_entity_id: String.t(),
+          page_type: String.t(),
           slug: String.t(),
           source: String.t(),
           title: String.t() | nil
         }
 
-    @enforce_keys [:app_type, :generation_status, :markdoc_content, :origin_entity_id, :slug, :source]
-    defstruct [:app_type, :generation_error, :generation_format, :generation_prompt, :generation_status, :is_published, :markdoc_content, :meta, :origin_entity_id, :slug, :source, :title]
+    @enforce_keys [:generation_status, :markdoc_content, :origin_entity_id, :page_type, :slug, :source]
+    defstruct [:generation_error, :generation_format, :generation_prompt, :generation_status, :is_published, :markdoc_content, :meta, :origin_entity_id, :page_type, :slug, :source, :title]
 
     @doc false
     def to_json(%__MODULE__{} = input) do
-      %{"app_type" => input.app_type, "generation_error" => input.generation_error, "generation_format" => input.generation_format, "generation_prompt" => input.generation_prompt, "generation_status" => input.generation_status, "is_published" => input.is_published, "markdoc_content" => input.markdoc_content, "meta" => input.meta, "origin_entity_id" => input.origin_entity_id, "slug" => input.slug, "source" => input.source, "title" => input.title}
+      %{"generation_error" => input.generation_error, "generation_format" => input.generation_format, "generation_prompt" => input.generation_prompt, "generation_status" => input.generation_status, "is_published" => input.is_published, "markdoc_content" => input.markdoc_content, "meta" => input.meta, "origin_entity_id" => input.origin_entity_id, "page_type" => input.page_type, "slug" => input.slug, "source" => input.source, "title" => input.title}
     end
   end
 

@@ -20,9 +20,11 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.CreateAppFromTemplate
   alias OriginsSdk.Apps.CreateAssessmentResponse
   alias OriginsSdk.Apps.CreateEnrollment
+  alias OriginsSdk.Apps.CreateProgramTest
   alias OriginsSdk.Apps.CreateWebhookSubscription
   alias OriginsSdk.Apps.DailyBriefing
   alias OriginsSdk.Apps.DestroyApp
+  alias OriginsSdk.Apps.DestroyProgramTest
   alias OriginsSdk.Apps.DestroyWebhookSubscription
   alias OriginsSdk.Apps.DetachLibraryFromApp
   alias OriginsSdk.Apps.DuplicateApp
@@ -35,6 +37,9 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.GetEnrollment
   alias OriginsSdk.Apps.GetEnrollmentCompletions
   alias OriginsSdk.Apps.GetMyAssessmentResponse
+  alias OriginsSdk.Apps.GetProgramAssessment
+  alias OriginsSdk.Apps.GetProgramMemory
+  alias OriginsSdk.Apps.InitializePersonalization
   alias OriginsSdk.Apps.ListAppLibraries
   alias OriginsSdk.Apps.ListAppTemplates
   alias OriginsSdk.Apps.ListAppTemplatesForType
@@ -42,6 +47,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.ListAppsForOrigin
   alias OriginsSdk.Apps.ListAppsForOriginAndType
   alias OriginsSdk.Apps.ListLibrariesForApp
+  alias OriginsSdk.Apps.ListProgramTests
   alias OriginsSdk.Apps.ListWebhookDeliveries
   alias OriginsSdk.Apps.ListWebhookSubscriptions
   alias OriginsSdk.Apps.MarkBriefingRead
@@ -49,14 +55,18 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.ParseCourseBlocks
   alias OriginsSdk.Apps.ParseLandingBlocks
   alias OriginsSdk.Apps.PauseEnrollment
+  alias OriginsSdk.Apps.ProgramTest
+  alias OriginsSdk.Apps.PublishApp
   alias OriginsSdk.Apps.ReactivateEnrollment
   alias OriginsSdk.Apps.RestoreAppVersion
   alias OriginsSdk.Apps.ResumeEnrollment
   alias OriginsSdk.Apps.SendAppChatMessage
   alias OriginsSdk.Apps.SendTestWebhook
   alias OriginsSdk.Apps.StartEnrollment
+  alias OriginsSdk.Apps.StartProgramTestRun
   alias OriginsSdk.Apps.SyncAssessmentProgress
   alias OriginsSdk.Apps.Template
+  alias OriginsSdk.Apps.UnpublishApp
   alias OriginsSdk.Apps.UpdateApp
   alias OriginsSdk.Apps.UpdateWebhookSubscription
   alias OriginsSdk.Apps.Version
@@ -324,6 +334,32 @@ defmodule OriginsSdk.Apps do
 
 
   @doc """
+  Run the `create_program_test` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def create_program_test(%CreateProgramTest.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, ProgramTest)
+
+    payload =
+      %{
+        "action" => "create_program_test",
+        "input" => CreateProgramTest.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &ProgramTest.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
   Run the `create_webhook_subscription` action.
 
   ## Options
@@ -396,6 +432,32 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &App.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `destroy_program_test` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def destroy_program_test(%DestroyProgramTest.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, ProgramTest)
+
+    payload =
+      %{
+        "action" => "destroy_program_test",
+        "input" => DestroyProgramTest.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &ProgramTest.from_json/1, nil)
     end
   end
 
@@ -686,6 +748,87 @@ defmodule OriginsSdk.Apps do
 
 
   @doc """
+  Run the `get_program_assessment` action.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def get_program_assessment(%GetProgramAssessment.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "get_program_assessment",
+        "input" => GetProgramAssessment.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `get_program_memory` action.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def get_program_memory(%GetProgramMemory.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "get_program_memory",
+        "input" => GetProgramMemory.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `initialize_personalization` action.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def initialize_personalization(%InitializePersonalization.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "initialize_personalization",
+        "input" => InitializePersonalization.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
   Run the `list_app_libraries` action.
 
   ## Options
@@ -863,6 +1006,32 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &AppLibrary.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `list_program_tests` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def list_program_tests(%ListProgramTests.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, ProgramTest)
+
+    payload =
+      %{
+        "action" => "list_program_tests",
+        "input" => ListProgramTests.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &ProgramTest.from_list/1, nil)
     end
   end
 
@@ -1052,6 +1221,32 @@ defmodule OriginsSdk.Apps do
 
 
   @doc """
+  Run the `publish_app` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def publish_app(%PublishApp.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, App)
+
+    payload =
+      %{
+        "action" => "publish_app",
+        "input" => PublishApp.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &App.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
   Run the `reactivate_enrollment` action.
 
   ## Options
@@ -1210,6 +1405,33 @@ defmodule OriginsSdk.Apps do
 
 
   @doc """
+  Run the `start_program_test_run` action.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def start_program_test_run(%StartProgramTestRun.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "start_program_test_run",
+        "input" => StartProgramTestRun.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
   Run the `sync_assessment_progress` action.
 
   ## Options
@@ -1231,6 +1453,32 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &AssessmentResponse.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `unpublish_app` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def unpublish_app(%UnpublishApp.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, App)
+
+    payload =
+      %{
+        "action" => "unpublish_app",
+        "input" => UnpublishApp.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &App.from_json/1, nil)
     end
   end
 

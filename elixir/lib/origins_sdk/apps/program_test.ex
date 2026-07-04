@@ -1,32 +1,30 @@
-defmodule OriginsSdk.Apps.Template do
+defmodule OriginsSdk.Apps.ProgramTest do
   @moduledoc """
-  Mirror of `Origins.Apps.Template` over the wire.
+  Mirror of `Origins.Apps.ProgramTest` over the wire.
   Generated — do not edit by hand.
   """
 
   @type t :: %__MODULE__{
+    coach_conversation_id: String.t() | nil,
     created_at: DateTime.t(),
-    description: String.t(),
     id: String.t(),
     name: String.t(),
-    page_type: String.t(),
-    seed_markdoc_content: String.t(),
-    sort_order: integer(),
+    program_id: String.t(),
+    test_user_id: String.t() | nil,
     updated_at: DateTime.t()
     }
 
   defstruct [
+    :coach_conversation_id,
     :created_at,
-    :description,
     :id,
     :name,
-    :page_type,
-    :seed_markdoc_content,
-    :sort_order,
+    :program_id,
+    :test_user_id,
     :updated_at
   ]
 
-  @primitive_fields ~w(created_at description id name page_type seed_markdoc_content sort_order updated_at)a
+  @primitive_fields ~w(coach_conversation_id created_at id name program_id test_user_id updated_at)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -37,13 +35,12 @@ defmodule OriginsSdk.Apps.Template do
 
   def from_json(map) when is_map(map) do
     %__MODULE__{
+      coach_conversation_id: map["coach_conversation_id"],
       created_at: OriginsSdk.Internal.decode_datetime(map["created_at"]),
-      description: map["description"],
       id: map["id"],
       name: map["name"],
-      page_type: map["page_type"],
-      seed_markdoc_content: map["seed_markdoc_content"],
-      sort_order: map["sort_order"],
+      program_id: map["program_id"],
+      test_user_id: map["test_user_id"],
       updated_at: OriginsSdk.Internal.decode_datetime(map["updated_at"])
     }
   end
