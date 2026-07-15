@@ -9,6 +9,7 @@ defmodule OriginsSdk.Apps.CreateEnrollment do
     @type t :: %__MODULE__{
           app_id: String.t(),
           character_id: String.t(),
+          current_personalization_id: String.t() | nil,
           current_phase_id: String.t() | nil,
           current_session_id: String.t() | nil,
           enrolled_at: DateTime.t() | nil,
@@ -19,11 +20,11 @@ defmodule OriginsSdk.Apps.CreateEnrollment do
         }
 
     @enforce_keys [:app_id, :character_id, :user_id]
-    defstruct [:app_id, :character_id, :current_phase_id, :current_session_id, :enrolled_at, :settings, :streak_count, :streak_last_date, :user_id]
+    defstruct [:app_id, :character_id, :current_personalization_id, :current_phase_id, :current_session_id, :enrolled_at, :settings, :streak_count, :streak_last_date, :user_id]
 
     @doc false
     def to_json(%__MODULE__{} = input) do
-      %{"app_id" => input.app_id, "character_id" => input.character_id, "current_phase_id" => input.current_phase_id, "current_session_id" => input.current_session_id, "enrolled_at" => input.enrolled_at, "settings" => input.settings, "streak_count" => input.streak_count, "streak_last_date" => input.streak_last_date, "user_id" => input.user_id}
+      %{"app_id" => input.app_id, "character_id" => input.character_id, "current_personalization_id" => input.current_personalization_id, "current_phase_id" => input.current_phase_id, "current_session_id" => input.current_session_id, "enrolled_at" => input.enrolled_at, "settings" => input.settings, "streak_count" => input.streak_count, "streak_last_date" => input.streak_last_date, "user_id" => input.user_id}
     end
   end
 

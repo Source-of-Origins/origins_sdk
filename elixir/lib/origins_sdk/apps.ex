@@ -11,6 +11,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.AssessmentGraph
   alias OriginsSdk.Apps.AssessmentResponse
   alias OriginsSdk.Apps.AttachLibraryToApp
+  alias OriginsSdk.Apps.CoachingTypes
   alias OriginsSdk.Apps.CompleteActivityStep
   alias OriginsSdk.Apps.CompleteAssessment
   alias OriginsSdk.Apps.CompleteEnrollment
@@ -58,6 +59,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.ProgramTest
   alias OriginsSdk.Apps.PublishApp
   alias OriginsSdk.Apps.ReactivateEnrollment
+  alias OriginsSdk.Apps.RegeneratePersonalization
   alias OriginsSdk.Apps.RestoreAppVersion
   alias OriginsSdk.Apps.ResumeEnrollment
   alias OriginsSdk.Apps.SendAppChatMessage
@@ -147,6 +149,39 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &AppLibrary.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Type source for the coaching payload shapes the LiveView serializer sends
+  to the Vue app. Nested lists and objects are declared inline in the field
+  constraints (`Origins.Apps.CoachingTypesShape`), so ash_typescript emits
+  fully typed nested shapes and `assets/vue/coaching/types.ts` derives every
+  export by indexed access instead of hand-typing. The coaching app is served
+  over LiveView, so this action is never invoked at runtime.
+  
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def coaching_types(%CoachingTypes.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "coaching_types",
+        "input" => CoachingTypes.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -1268,6 +1303,33 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &CourseEnrollment.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `regenerate_personalization` action.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def regenerate_personalization(%RegeneratePersonalization.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "regenerate_personalization",
+        "input" => RegeneratePersonalization.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
     end
   end
 

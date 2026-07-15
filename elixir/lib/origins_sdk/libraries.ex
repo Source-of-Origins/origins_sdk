@@ -54,6 +54,7 @@ defmodule OriginsSdk.Libraries do
   alias OriginsSdk.Libraries.UpdateLibrary
   alias OriginsSdk.Libraries.UpdateLibraryFile
   alias OriginsSdk.Libraries.UpdateLibrarySyncFilter
+  alias OriginsSdk.Libraries.UploadLibraryAsset
   alias OriginsSdk.Libraries.UpsertWebsiteScrapeLibraryFile
 
   @doc """
@@ -1112,6 +1113,36 @@ defmodule OriginsSdk.Libraries do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &Library.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Upload a file into the Origin's raw-upload "Resources" Library and return
+  its canonical VFS path. Store the path in an `<app-content url=...>` markdoc
+  attribute; `Structure.resolve_library_urls/3` re-signs it on every mount.
+  
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def upload_library_asset(%UploadLibraryAsset.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "upload_library_asset",
+        "input" => UploadLibraryAsset.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
     end
   end
 

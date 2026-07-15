@@ -12,15 +12,16 @@ defmodule OriginsSdk.Apps.CompleteActivityStep do
           duration_seconds: integer() | nil,
           enrollment_id: String.t(),
           notes: String.t() | nil,
+          responses: map() | nil,
           step_id: String.t() | nil
         }
 
     @enforce_keys [:activity_id, :completed_date, :enrollment_id]
-    defstruct [:activity_id, :completed_date, :duration_seconds, :enrollment_id, :notes, :step_id]
+    defstruct [:activity_id, :completed_date, :duration_seconds, :enrollment_id, :notes, :responses, :step_id]
 
     @doc false
     def to_json(%__MODULE__{} = input) do
-      %{"activity_id" => input.activity_id, "completed_date" => input.completed_date, "duration_seconds" => input.duration_seconds, "enrollment_id" => input.enrollment_id, "notes" => input.notes, "step_id" => input.step_id}
+      %{"activity_id" => input.activity_id, "completed_date" => input.completed_date, "duration_seconds" => input.duration_seconds, "enrollment_id" => input.enrollment_id, "notes" => input.notes, "responses" => input.responses, "step_id" => input.step_id}
     end
   end
 

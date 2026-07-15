@@ -7,15 +7,16 @@ defmodule OriginsSdk.Apps.AdvanceEnrollmentSession do
     @moduledoc "Required arguments for `advance_enrollment_session`."
 
     @type t :: %__MODULE__{
+          phase_id: String.t() | nil,
           session_id: String.t() | nil
         }
 
     @enforce_keys []
-    defstruct [:session_id]
+    defstruct [:phase_id, :session_id]
 
     @doc false
     def to_json(%__MODULE__{} = input) do
-      %{"session_id" => input.session_id}
+      %{"phase_id" => input.phase_id, "session_id" => input.session_id}
     end
   end
 

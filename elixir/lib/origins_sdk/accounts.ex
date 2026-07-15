@@ -19,8 +19,10 @@ defmodule OriginsSdk.Accounts do
   alias OriginsSdk.Accounts.RegisterWithInvitation
   alias OriginsSdk.Accounts.RegisterWithPassword
   alias OriginsSdk.Accounts.RejectWaitlistEntry
+  alias OriginsSdk.Accounts.RequestMagicLink
   alias OriginsSdk.Accounts.SignInWithAppleToken
   alias OriginsSdk.Accounts.SignInWithGoogleToken
+  alias OriginsSdk.Accounts.SignInWithMagicLink
   alias OriginsSdk.Accounts.SignInWithPassword
   alias OriginsSdk.Accounts.SocialSignInResponse
   alias OriginsSdk.Accounts.StaffTenantGrant
@@ -432,6 +434,32 @@ defmodule OriginsSdk.Accounts do
 
 
   @doc """
+  Email a passwordless sign-in link to a user if one exists for the address.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def request_magic_link(%RequestMagicLink.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, User)
+
+    payload =
+      %{
+        "action" => "request_magic_link",
+        "input" => RequestMagicLink.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &User.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
   Verify an Apple id_token, resolve/create the user, and return a JWT (SDK entrypoint).
 
   ## Options
@@ -477,6 +505,34 @@ defmodule OriginsSdk.Accounts do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &SocialSignInResponse.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Sign in by exchanging a single-use magic link token for a session JWT.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def sign_in_with_magic_link(%SignInWithMagicLink.Input{} = input, opts \\ []) do
+    metadata_fields = opts[:metadata_fields] || SignInWithMagicLink.Metadata.fields()
+    fields = normalize_fields(opts[:fields] || :all, User)
+
+    payload =
+      %{
+        "action" => "sign_in_with_magic_link",
+        "input" => SignInWithMagicLink.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> Map.put("metadata_fields", Enum.map(metadata_fields, &Atom.to_string/1))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &User.from_json/1, &SignInWithMagicLink.Metadata.from_json/1)
     end
   end
 
