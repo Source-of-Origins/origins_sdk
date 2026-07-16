@@ -6,6 +6,7 @@ defmodule OriginsSdk.Accounts do
   alias OriginsSdk.{Client, Error}
   alias OriginsSdk.Accounts.ApproveWaitlistEntry
   alias OriginsSdk.Accounts.ConfirmAnonymousAccount
+  alias OriginsSdk.Accounts.CreateAnonymousUser
   alias OriginsSdk.Accounts.CreateTenantForUser
   alias OriginsSdk.Accounts.DeleteWaitlistEntry
   alias OriginsSdk.Accounts.GetCurrentUser
@@ -79,6 +80,40 @@ defmodule OriginsSdk.Accounts do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &SocialSignInResponse.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Provision an anonymous, passwordless user, minted a JWT the browser uses to
+  act as a real — if anonymous — principal that owns whatever it creates.
+  Created in a caller-supplied tenant (pass `tenant:`), so ownership reads on
+  tenant-scoped resources line up. Upserts on email so a repeat visit reuses
+  the row; a later `:register_with_password` with the same email upgrades it
+  in place, carrying its data over.
+  
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def create_anonymous_user(%CreateAnonymousUser.Input{} = input, opts \\ []) do
+    metadata_fields = opts[:metadata_fields] || CreateAnonymousUser.Metadata.fields()
+    fields = normalize_fields(opts[:fields] || :all, User)
+
+    payload =
+      %{
+        "action" => "create_anonymous_user",
+        "input" => CreateAnonymousUser.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> Map.put("metadata_fields", Enum.map(metadata_fields, &Atom.to_string/1))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &User.from_json/1, &CreateAnonymousUser.Metadata.from_json/1)
     end
   end
 
