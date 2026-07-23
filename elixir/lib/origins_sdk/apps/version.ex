@@ -5,6 +5,8 @@ defmodule OriginsSdk.Apps.Version do
   """
 
   @type t :: %__MODULE__{
+    change_source_message_id: String.t() | nil,
+    change_summary: String.t() | nil,
     changes: map() | nil,
     id: String.t(),
     version_action_name: atom(),
@@ -15,6 +17,8 @@ defmodule OriginsSdk.Apps.Version do
     }
 
   defstruct [
+    :change_source_message_id,
+    :change_summary,
     :changes,
     :id,
     :version_action_name,
@@ -24,7 +28,7 @@ defmodule OriginsSdk.Apps.Version do
     :version_updated_at
   ]
 
-  @primitive_fields ~w(changes id version_action_name version_action_type version_inserted_at version_source_id version_updated_at)a
+  @primitive_fields ~w(change_source_message_id change_summary changes id version_action_name version_action_type version_inserted_at version_source_id version_updated_at)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -35,6 +39,8 @@ defmodule OriginsSdk.Apps.Version do
 
   def from_json(map) when is_map(map) do
     %__MODULE__{
+      change_source_message_id: map["change_source_message_id"],
+      change_summary: map["change_summary"],
       changes: map["changes"],
       id: map["id"],
       version_action_name: OriginsSdk.Internal.decode_atom(map["version_action_name"]),

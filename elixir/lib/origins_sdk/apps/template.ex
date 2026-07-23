@@ -10,6 +10,7 @@ defmodule OriginsSdk.Apps.Template do
     id: String.t(),
     name: String.t(),
     page_type: String.t(),
+    schema_version: integer(),
     seed_markdoc_content: String.t(),
     sort_order: integer(),
     updated_at: DateTime.t()
@@ -21,12 +22,13 @@ defmodule OriginsSdk.Apps.Template do
     :id,
     :name,
     :page_type,
+    :schema_version,
     :seed_markdoc_content,
     :sort_order,
     :updated_at
   ]
 
-  @primitive_fields ~w(created_at description id name page_type seed_markdoc_content sort_order updated_at)a
+  @primitive_fields ~w(created_at description id name page_type schema_version seed_markdoc_content sort_order updated_at)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -42,6 +44,7 @@ defmodule OriginsSdk.Apps.Template do
       id: map["id"],
       name: map["name"],
       page_type: map["page_type"],
+      schema_version: map["schema_version"],
       seed_markdoc_content: map["seed_markdoc_content"],
       sort_order: map["sort_order"],
       updated_at: OriginsSdk.Internal.decode_datetime(map["updated_at"])

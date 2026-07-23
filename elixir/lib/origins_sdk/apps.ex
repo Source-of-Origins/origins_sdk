@@ -7,10 +7,9 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.AdvanceEnrollmentSession
   alias OriginsSdk.Apps.AnswerActivityPrompt
   alias OriginsSdk.Apps.App
-  alias OriginsSdk.Apps.AppLibrary
   alias OriginsSdk.Apps.AssessmentGraph
   alias OriginsSdk.Apps.AssessmentResponse
-  alias OriginsSdk.Apps.AttachLibraryToApp
+  alias OriginsSdk.Apps.AuthoringDocument
   alias OriginsSdk.Apps.CoachingTypes
   alias OriginsSdk.Apps.CompleteActivityStep
   alias OriginsSdk.Apps.CompleteAssessment
@@ -27,7 +26,6 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.DestroyApp
   alias OriginsSdk.Apps.DestroyProgramTest
   alias OriginsSdk.Apps.DestroyWebhookSubscription
-  alias OriginsSdk.Apps.DetachLibraryFromApp
   alias OriginsSdk.Apps.DuplicateApp
   alias OriginsSdk.Apps.EnrollmentCompletions
   alias OriginsSdk.Apps.FindEnrollment
@@ -41,20 +39,16 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.GetProgramAssessment
   alias OriginsSdk.Apps.GetProgramMemory
   alias OriginsSdk.Apps.InitializePersonalization
-  alias OriginsSdk.Apps.ListAppLibraries
   alias OriginsSdk.Apps.ListAppTemplates
   alias OriginsSdk.Apps.ListAppTemplatesForType
   alias OriginsSdk.Apps.ListAppVersions
   alias OriginsSdk.Apps.ListAppsForOrigin
   alias OriginsSdk.Apps.ListAppsForOriginAndType
-  alias OriginsSdk.Apps.ListLibrariesForApp
   alias OriginsSdk.Apps.ListProgramTests
   alias OriginsSdk.Apps.ListWebhookDeliveries
   alias OriginsSdk.Apps.ListWebhookSubscriptions
   alias OriginsSdk.Apps.MarkBriefingRead
-  alias OriginsSdk.Apps.ParseAssessmentBlocks
-  alias OriginsSdk.Apps.ParseCourseBlocks
-  alias OriginsSdk.Apps.ParseLandingBlocks
+  alias OriginsSdk.Apps.ParseAuthoringDocument
   alias OriginsSdk.Apps.PauseEnrollment
   alias OriginsSdk.Apps.ProgramTest
   alias OriginsSdk.Apps.PublishApp
@@ -123,32 +117,6 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &CourseActivityCompletion.from_json/1, nil)
-    end
-  end
-
-
-  @doc """
-  Run the `attach_library_to_app` action.
-
-  ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-  """
-  def attach_library_to_app(%AttachLibraryToApp.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, AppLibrary)
-
-    payload =
-      %{
-        "action" => "attach_library_to_app",
-        "input" => AttachLibraryToApp.Input.to_json(input),
-        "fields" => encode_fields(fields)
-      }
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &AppLibrary.from_json/1, nil)
     end
   end
 
@@ -524,32 +492,6 @@ defmodule OriginsSdk.Apps do
 
 
   @doc """
-  Run the `detach_library_from_app` action.
-
-  ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-  """
-  def detach_library_from_app(%DetachLibraryFromApp.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, AppLibrary)
-
-    payload =
-      %{
-        "action" => "detach_library_from_app",
-        "input" => DetachLibraryFromApp.Input.to_json(input),
-        "fields" => encode_fields(fields)
-      }
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &AppLibrary.from_json/1, nil)
-    end
-  end
-
-
-  @doc """
   Clone an existing instance. Title becomes `Copy of <original>` (numeric suffix on collision); full content carried over; not published.
 
   ## Options
@@ -864,32 +806,6 @@ defmodule OriginsSdk.Apps do
 
 
   @doc """
-  Run the `list_app_libraries` action.
-
-  ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-  """
-  def list_app_libraries(%ListAppLibraries.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, AppLibrary)
-
-    payload =
-      %{
-        "action" => "list_app_libraries",
-        "input" => ListAppLibraries.Input.to_json(input),
-        "fields" => encode_fields(fields)
-      }
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &AppLibrary.from_list/1, nil)
-    end
-  end
-
-
-  @doc """
   Run the `list_app_templates` action.
 
   ## Options
@@ -1020,32 +936,6 @@ defmodule OriginsSdk.Apps do
 
 
   @doc """
-  All libraries attached to a given expert page.
-
-  ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-  """
-  def list_libraries_for_app(%ListLibrariesForApp.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, AppLibrary)
-
-    payload =
-      %{
-        "action" => "list_libraries_for_app",
-        "input" => ListLibrariesForApp.Input.to_json(input),
-        "fields" => encode_fields(fields)
-      }
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &AppLibrary.from_list/1, nil)
-    end
-  end
-
-
-  @doc """
   Run the `list_program_tests` action.
 
   ## Options
@@ -1149,82 +1039,26 @@ defmodule OriginsSdk.Apps do
 
 
   @doc """
-  Run the `parse_assessment_blocks` action.
+  Run the `parse_authoring_document` action.
 
   ## Options
-    * `:fields` — passthrough field list; omitted from the request unless given.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action's declared return is not a single resource, so `data` is
-  returned undecoded (a raw map or list).
+  The action returns an embedded `AuthoringDocument` (a fixed shape, no
+  field selection), decoded from the response body.
   """
-  def parse_assessment_blocks(%ParseAssessmentBlocks.Input{} = input, opts \\ []) do
+  def parse_authoring_document(%ParseAuthoringDocument.Input{} = input, opts \\ []) do
     payload =
       %{
-        "action" => "parse_assessment_blocks",
-        "input" => ParseAssessmentBlocks.Input.to_json(input)
+        "action" => "parse_authoring_document",
+        "input" => ParseAuthoringDocument.Input.to_json(input)
       }
-      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, & &1, nil)
-    end
-  end
-
-
-  @doc """
-  Run the `parse_course_blocks` action.
-
-  ## Options
-    * `:fields` — passthrough field list; omitted from the request unless given.
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-
-  The action's declared return is not a single resource, so `data` is
-  returned undecoded (a raw map or list).
-  """
-  def parse_course_blocks(%ParseCourseBlocks.Input{} = input, opts \\ []) do
-    payload =
-      %{
-        "action" => "parse_course_blocks",
-        "input" => ParseCourseBlocks.Input.to_json(input)
-      }
-      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, & &1, nil)
-    end
-  end
-
-
-  @doc """
-  Run the `parse_landing_blocks` action.
-
-  ## Options
-    * `:fields` — passthrough field list; omitted from the request unless given.
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-
-  The action's declared return is not a single resource, so `data` is
-  returned undecoded (a raw map or list).
-  """
-  def parse_landing_blocks(%ParseLandingBlocks.Input{} = input, opts \\ []) do
-    payload =
-      %{
-        "action" => "parse_landing_blocks",
-        "input" => ParseLandingBlocks.Input.to_json(input)
-      }
-      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, & &1, nil)
+      decode_action_response(body, &AuthoringDocument.from_json/1, nil)
     end
   end
 

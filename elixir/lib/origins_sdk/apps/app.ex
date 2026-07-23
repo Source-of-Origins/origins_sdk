@@ -5,17 +5,18 @@ defmodule OriginsSdk.Apps.App do
   """
 
   @type t :: %__MODULE__{
+    change_source_message_id: String.t() | nil,
+    change_summary: String.t() | nil,
     created_at: DateTime.t(),
-    generation_error: String.t() | nil,
     generation_format: String.t() | nil,
     generation_prompt: String.t() | nil,
-    generation_status: String.t(),
     id: String.t(),
     is_published: boolean() | nil,
     markdoc_content: String.t(),
     meta: map() | nil,
     origin_entity_id: String.t(),
     page_type: String.t(),
+    schema_version: integer(),
     slug: String.t(),
     source: String.t(),
     title: String.t() | nil,
@@ -23,24 +24,25 @@ defmodule OriginsSdk.Apps.App do
     }
 
   defstruct [
+    :change_source_message_id,
+    :change_summary,
     :created_at,
-    :generation_error,
     :generation_format,
     :generation_prompt,
-    :generation_status,
     :id,
     :is_published,
     :markdoc_content,
     :meta,
     :origin_entity_id,
     :page_type,
+    :schema_version,
     :slug,
     :source,
     :title,
     :updated_at
   ]
 
-  @primitive_fields ~w(created_at generation_error generation_format generation_prompt generation_status id is_published markdoc_content meta origin_entity_id page_type slug source title updated_at)a
+  @primitive_fields ~w(change_source_message_id change_summary created_at generation_format generation_prompt id is_published markdoc_content meta origin_entity_id page_type schema_version slug source title updated_at)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -51,17 +53,18 @@ defmodule OriginsSdk.Apps.App do
 
   def from_json(map) when is_map(map) do
     %__MODULE__{
+      change_source_message_id: map["change_source_message_id"],
+      change_summary: map["change_summary"],
       created_at: OriginsSdk.Internal.decode_datetime(map["created_at"]),
-      generation_error: map["generation_error"],
       generation_format: map["generation_format"],
       generation_prompt: map["generation_prompt"],
-      generation_status: map["generation_status"],
       id: map["id"],
       is_published: map["is_published"],
       markdoc_content: map["markdoc_content"],
       meta: map["meta"],
       origin_entity_id: map["origin_entity_id"],
       page_type: map["page_type"],
+      schema_version: map["schema_version"],
       slug: map["slug"],
       source: map["source"],
       title: map["title"],
