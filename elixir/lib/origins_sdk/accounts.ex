@@ -21,6 +21,7 @@ defmodule OriginsSdk.Accounts do
   alias OriginsSdk.Accounts.RegisterWithPassword
   alias OriginsSdk.Accounts.RejectWaitlistEntry
   alias OriginsSdk.Accounts.RequestMagicLink
+  alias OriginsSdk.Accounts.RequestOriginMagicLink
   alias OriginsSdk.Accounts.SignInWithAppleToken
   alias OriginsSdk.Accounts.SignInWithGoogleToken
   alias OriginsSdk.Accounts.SignInWithMagicLink
@@ -495,6 +496,37 @@ defmodule OriginsSdk.Accounts do
 
 
   @doc """
+  Deliver a passwordless sign-in link for an origin: through the origin's
+  active `magic_link.issued` webhook subscription when one exists (the
+  brand's consumer sends the email), the platform email otherwise. Always
+  succeeds so the action can't enumerate accounts.
+  
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def request_origin_magic_link(%RequestOriginMagicLink.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "request_origin_magic_link",
+        "input" => RequestOriginMagicLink.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
   Verify an Apple id_token, resolve/create the user, and return a JWT (SDK entrypoint).
 
   ## Options
@@ -545,7 +577,7 @@ defmodule OriginsSdk.Accounts do
 
 
   @doc """
-  Sign in by exchanging a single-use magic link token for a session JWT.
+  Sign in by exchanging a short-lived magic link token for a session JWT.
 
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).

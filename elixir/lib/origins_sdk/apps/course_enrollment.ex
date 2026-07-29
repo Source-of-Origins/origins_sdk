@@ -18,6 +18,7 @@ defmodule OriginsSdk.Apps.CourseEnrollment do
     status: any(),
     streak_count: integer() | nil,
     streak_last_date: Date.t() | nil,
+    timezone: String.t(),
     updated_at: DateTime.t(),
     user_id: String.t()
     }
@@ -36,11 +37,12 @@ defmodule OriginsSdk.Apps.CourseEnrollment do
     :status,
     :streak_count,
     :streak_last_date,
+    :timezone,
     :updated_at,
     :user_id
   ]
 
-  @primitive_fields ~w(app_id character_id created_at current_personalization_id current_phase_id current_session_id enrolled_at id reactivated_at settings status streak_count streak_last_date updated_at user_id)a
+  @primitive_fields ~w(app_id character_id created_at current_personalization_id current_phase_id current_session_id enrolled_at id reactivated_at settings status streak_count streak_last_date timezone updated_at user_id)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -64,6 +66,7 @@ defmodule OriginsSdk.Apps.CourseEnrollment do
       status: map["status"],
       streak_count: map["streak_count"],
       streak_last_date: OriginsSdk.Internal.decode_date(map["streak_last_date"]),
+      timezone: map["timezone"],
       updated_at: OriginsSdk.Internal.decode_datetime(map["updated_at"]),
       user_id: map["user_id"]
     }

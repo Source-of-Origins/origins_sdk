@@ -12,10 +12,12 @@ defmodule OriginsSdk.Apps.AssessmentResponse do
     created_at: DateTime.t(),
     current_node: String.t() | nil,
     email: String.t() | nil,
+    enrollment_id: String.t() | nil,
     full_name: String.t() | nil,
     graph_snapshot_edges: list() | nil,
     graph_snapshot_nodes: list() | nil,
     id: String.t(),
+    launch_activity_id: String.t() | nil,
     path_history: list() | nil,
     phone: String.t() | nil,
     result: map() | nil,
@@ -31,10 +33,12 @@ defmodule OriginsSdk.Apps.AssessmentResponse do
     :created_at,
     :current_node,
     :email,
+    :enrollment_id,
     :full_name,
     :graph_snapshot_edges,
     :graph_snapshot_nodes,
     :id,
+    :launch_activity_id,
     :path_history,
     :phone,
     :result,
@@ -42,7 +46,7 @@ defmodule OriginsSdk.Apps.AssessmentResponse do
     :user_id
   ]
 
-  @primitive_fields ~w(answers app_id attribution completed_at created_at current_node email full_name graph_snapshot_edges graph_snapshot_nodes id path_history phone result updated_at user_id)a
+  @primitive_fields ~w(answers app_id attribution completed_at created_at current_node email enrollment_id full_name graph_snapshot_edges graph_snapshot_nodes id launch_activity_id path_history phone result updated_at user_id)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -60,10 +64,12 @@ defmodule OriginsSdk.Apps.AssessmentResponse do
       created_at: OriginsSdk.Internal.decode_datetime(map["created_at"]),
       current_node: map["current_node"],
       email: map["email"],
+      enrollment_id: map["enrollment_id"],
       full_name: map["full_name"],
       graph_snapshot_edges: map["graph_snapshot_edges"],
       graph_snapshot_nodes: map["graph_snapshot_nodes"],
       id: map["id"],
+      launch_activity_id: map["launch_activity_id"],
       path_history: map["path_history"],
       phone: map["phone"],
       result: map["result"],

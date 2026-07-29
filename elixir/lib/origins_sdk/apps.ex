@@ -39,6 +39,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.GetProgramAssessment
   alias OriginsSdk.Apps.GetProgramMemory
   alias OriginsSdk.Apps.InitializePersonalization
+  alias OriginsSdk.Apps.ListAppLibraryVfsPaths
   alias OriginsSdk.Apps.ListAppTemplates
   alias OriginsSdk.Apps.ListAppTemplatesForType
   alias OriginsSdk.Apps.ListAppVersions
@@ -795,6 +796,33 @@ defmodule OriginsSdk.Apps do
       %{
         "action" => "initialize_personalization",
         "input" => InitializePersonalization.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `list_app_library_vfs_paths` action.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def list_app_library_vfs_paths(%ListAppLibraryVfsPaths.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "list_app_library_vfs_paths",
+        "input" => ListAppLibraryVfsPaths.Input.to_json(input)
       }
       |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
