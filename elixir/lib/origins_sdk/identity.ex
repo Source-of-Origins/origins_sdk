@@ -873,10 +873,9 @@ defmodule OriginsSdk.Identity do
 
 
   @doc """
-  Fetch a single public Origin by id, regardless of the request's
-  pinned tenant. The `is_public == true` filter is the security
-  boundary — any actor (signed-in or anonymous) may resolve a public
-  OE in any tenant via this action.
+  Fetch a single public Origin by id, regardless of the request's pinned
+  tenant. The `is_public == true` filter is the security boundary — any
+  actor (signed-in or anonymous) may resolve a public OE in any tenant.
   
 
   ## Options
