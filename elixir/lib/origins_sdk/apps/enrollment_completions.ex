@@ -7,6 +7,7 @@ defmodule OriginsSdk.Apps.EnrollmentCompletions do
   @type t :: %__MODULE__{
     activity_completions: list() | nil,
     current_phase_id: String.t() | nil,
+    current_phase_started_at: DateTime.t() | nil,
     current_session_id: String.t() | nil,
     id: String.t(),
     status: atom()
@@ -15,12 +16,13 @@ defmodule OriginsSdk.Apps.EnrollmentCompletions do
   defstruct [
     :activity_completions,
     :current_phase_id,
+    :current_phase_started_at,
     :current_session_id,
     :id,
     :status
   ]
 
-  @primitive_fields ~w(activity_completions current_phase_id current_session_id id status)a
+  @primitive_fields ~w(activity_completions current_phase_id current_phase_started_at current_session_id id status)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -33,6 +35,7 @@ defmodule OriginsSdk.Apps.EnrollmentCompletions do
     %__MODULE__{
       activity_completions: map["activity_completions"],
       current_phase_id: map["current_phase_id"],
+      current_phase_started_at: OriginsSdk.Internal.decode_datetime(map["current_phase_started_at"]),
       current_session_id: map["current_session_id"],
       id: map["id"],
       status: OriginsSdk.Internal.decode_atom(map["status"])

@@ -19,6 +19,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.CreateApp
   alias OriginsSdk.Apps.CreateAppFromTemplate
   alias OriginsSdk.Apps.CreateAssessmentResponse
+  alias OriginsSdk.Apps.CreateAssessmentResponseAtActivity
   alias OriginsSdk.Apps.CreateEnrollment
   alias OriginsSdk.Apps.CreateProgramTest
   alias OriginsSdk.Apps.CreateWebhookSubscription
@@ -33,6 +34,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.GetApp
   alias OriginsSdk.Apps.GetAppForOriginTypeAndSlug
   alias OriginsSdk.Apps.GetAssessmentGraph
+  alias OriginsSdk.Apps.GetAssessmentResponseAtActivity
   alias OriginsSdk.Apps.GetEnrollment
   alias OriginsSdk.Apps.GetEnrollmentCompletions
   alias OriginsSdk.Apps.GetMyAssessmentResponse
@@ -46,6 +48,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.ListAppVersions
   alias OriginsSdk.Apps.ListAppsForOrigin
   alias OriginsSdk.Apps.ListAppsForOriginAndType
+  alias OriginsSdk.Apps.ListAssessmentResponsesForEnrollment
   alias OriginsSdk.Apps.ListProgramTests
   alias OriginsSdk.Apps.ListWebhookDeliveries
   alias OriginsSdk.Apps.ListWebhookSubscriptions
@@ -302,6 +305,32 @@ defmodule OriginsSdk.Apps do
       %{
         "action" => "create_assessment_response",
         "input" => CreateAssessmentResponse.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &AssessmentResponse.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `create_assessment_response_at_activity` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def create_assessment_response_at_activity(%CreateAssessmentResponseAtActivity.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, AssessmentResponse)
+
+    payload =
+      %{
+        "action" => "create_assessment_response_at_activity",
+        "input" => CreateAssessmentResponseAtActivity.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
       |> maybe_put("tenant", opts[:tenant])
@@ -650,6 +679,32 @@ defmodule OriginsSdk.Apps do
 
 
   @doc """
+  Run the `get_assessment_response_at_activity` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def get_assessment_response_at_activity(%GetAssessmentResponseAtActivity.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, AssessmentResponse)
+
+    payload =
+      %{
+        "action" => "get_assessment_response_at_activity",
+        "input" => GetAssessmentResponseAtActivity.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &AssessmentResponse.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
   Run the `get_enrollment` action.
 
   ## Options
@@ -987,6 +1042,32 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &App.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `list_assessment_responses_for_enrollment` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def list_assessment_responses_for_enrollment(%ListAssessmentResponsesForEnrollment.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, AssessmentResponse)
+
+    payload =
+      %{
+        "action" => "list_assessment_responses_for_enrollment",
+        "input" => ListAssessmentResponsesForEnrollment.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &AssessmentResponse.from_list/1, nil)
     end
   end
 

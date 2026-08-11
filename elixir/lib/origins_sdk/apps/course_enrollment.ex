@@ -10,8 +10,10 @@ defmodule OriginsSdk.Apps.CourseEnrollment do
     created_at: DateTime.t(),
     current_personalization_id: String.t() | nil,
     current_phase_id: String.t() | nil,
+    current_phase_started_at: DateTime.t() | nil,
     current_session_id: String.t() | nil,
     enrolled_at: DateTime.t() | nil,
+    entered_session_ids: list(),
     id: String.t(),
     reactivated_at: DateTime.t() | nil,
     settings: map() | nil,
@@ -28,8 +30,10 @@ defmodule OriginsSdk.Apps.CourseEnrollment do
     :created_at,
     :current_personalization_id,
     :current_phase_id,
+    :current_phase_started_at,
     :current_session_id,
     :enrolled_at,
+    :entered_session_ids,
     :id,
     :reactivated_at,
     :settings,
@@ -40,7 +44,7 @@ defmodule OriginsSdk.Apps.CourseEnrollment do
     :user_id
   ]
 
-  @primitive_fields ~w(app_id character_id created_at current_personalization_id current_phase_id current_session_id enrolled_at id reactivated_at settings status streak_count streak_last_date updated_at user_id)a
+  @primitive_fields ~w(app_id character_id created_at current_personalization_id current_phase_id current_phase_started_at current_session_id enrolled_at entered_session_ids id reactivated_at settings status streak_count streak_last_date updated_at user_id)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -56,8 +60,10 @@ defmodule OriginsSdk.Apps.CourseEnrollment do
       created_at: OriginsSdk.Internal.decode_datetime(map["created_at"]),
       current_personalization_id: map["current_personalization_id"],
       current_phase_id: map["current_phase_id"],
+      current_phase_started_at: OriginsSdk.Internal.decode_datetime(map["current_phase_started_at"]),
       current_session_id: map["current_session_id"],
       enrolled_at: OriginsSdk.Internal.decode_datetime(map["enrolled_at"]),
+      entered_session_ids: map["entered_session_ids"],
       id: map["id"],
       reactivated_at: OriginsSdk.Internal.decode_datetime(map["reactivated_at"]),
       settings: map["settings"],
