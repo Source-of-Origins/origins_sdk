@@ -36,6 +36,7 @@ defmodule OriginsSdk.Libraries do
   alias OriginsSdk.Libraries.ListLibraries
   alias OriginsSdk.Libraries.ListLibrariesForOrigin
   alias OriginsSdk.Libraries.ListLibraryAccessGrants
+  alias OriginsSdk.Libraries.ListLibraryFileFacets
   alias OriginsSdk.Libraries.ListLibraryFiles
   alias OriginsSdk.Libraries.ListLibraryFilesForLibrary
   alias OriginsSdk.Libraries.ListVideoStaticRenditions
@@ -768,6 +769,36 @@ defmodule OriginsSdk.Libraries do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &LibraryAccessGrant.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
+  How often each value appears under the named metadata keys, so a search UI
+  can build its options — and their counts — from what is stored rather than
+  a hardcoded list. One entry per key and value.
+  
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def list_library_file_facets(%ListLibraryFileFacets.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "list_library_file_facets",
+        "input" => ListLibraryFileFacets.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
     end
   end
 
