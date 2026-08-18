@@ -31,6 +31,8 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.EnrollmentCompletions
   alias OriginsSdk.Apps.FindEnrollment
   alias OriginsSdk.Apps.ForUserPersonalized
+  alias OriginsSdk.Apps.GatedCoursePayload
+  alias OriginsSdk.Apps.GatedPersonalizedCourseForUser
   alias OriginsSdk.Apps.GetApp
   alias OriginsSdk.Apps.GetAppForOriginTypeAndSlug
   alias OriginsSdk.Apps.GetAssessmentGraph
@@ -597,6 +599,31 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `gated_personalized_course_for_user` action.
+
+  ## Options
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action returns an embedded `GatedCoursePayload` (a fixed shape, no
+  field selection), decoded from the response body.
+  """
+  def gated_personalized_course_for_user(%GatedPersonalizedCourseForUser.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "gated_personalized_course_for_user",
+        "input" => GatedPersonalizedCourseForUser.Input.to_json(input)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &GatedCoursePayload.from_json/1, nil)
     end
   end
 
