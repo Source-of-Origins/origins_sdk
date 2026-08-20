@@ -5,6 +5,7 @@ defmodule OriginsSdk.Libraries do
 
   alias OriginsSdk.{Client, Error}
   alias OriginsSdk.Libraries.AddItem
+  alias OriginsSdk.Libraries.AddMany
   alias OriginsSdk.Libraries.Create
   alias OriginsSdk.Libraries.CreateLibrary
   alias OriginsSdk.Libraries.CreateLibraryAccessGrant
@@ -80,6 +81,32 @@ defmodule OriginsSdk.Libraries do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &PlaylistItem.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Add many items to a playlist in one transaction. Items already in it are skipped, so retrying the same list is safe.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def add_many(%AddMany.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, PlaylistItem)
+
+    payload =
+      %{
+        "action" => "add_many",
+        "input" => AddMany.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &PlaylistItem.from_list/1, nil)
     end
   end
 
