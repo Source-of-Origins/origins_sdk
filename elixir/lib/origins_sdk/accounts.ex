@@ -22,6 +22,8 @@ defmodule OriginsSdk.Accounts do
   alias OriginsSdk.Accounts.RejectWaitlistEntry
   alias OriginsSdk.Accounts.RequestMagicLink
   alias OriginsSdk.Accounts.RequestOriginMagicLink
+  alias OriginsSdk.Accounts.RequestPasswordResetToken
+  alias OriginsSdk.Accounts.ResetPasswordWithToken
   alias OriginsSdk.Accounts.SignInLinkResponse
   alias OriginsSdk.Accounts.SignInWithAppleToken
   alias OriginsSdk.Accounts.SignInWithGoogleToken
@@ -523,6 +525,59 @@ defmodule OriginsSdk.Accounts do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &SignInLinkResponse.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Send password reset instructions to a user if they exist.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def request_password_reset_token(%RequestPasswordResetToken.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "request_password_reset_token",
+        "input" => RequestPasswordResetToken.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `reset_password_with_token` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def reset_password_with_token(%ResetPasswordWithToken.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, User)
+
+    payload =
+      %{
+        "action" => "reset_password_with_token",
+        "input" => ResetPasswordWithToken.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &User.from_json/1, nil)
     end
   end
 

@@ -7,7 +7,7 @@ defmodule OriginsSdk.Apps.GatedCoursePayload do
   @type t :: %__MODULE__{
     enrollment: any() | nil,
     gated_course: any(),
-    state: any() | nil
+    state: list() | nil
     }
 
   defstruct [
