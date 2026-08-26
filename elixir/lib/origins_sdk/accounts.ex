@@ -24,6 +24,7 @@ defmodule OriginsSdk.Accounts do
   alias OriginsSdk.Accounts.RequestOriginMagicLink
   alias OriginsSdk.Accounts.RequestPasswordResetToken
   alias OriginsSdk.Accounts.ResetPasswordWithToken
+  alias OriginsSdk.Accounts.SetOwnPassword
   alias OriginsSdk.Accounts.SignInLinkResponse
   alias OriginsSdk.Accounts.SignInWithAppleToken
   alias OriginsSdk.Accounts.SignInWithGoogleToken
@@ -578,6 +579,31 @@ defmodule OriginsSdk.Accounts do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &User.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Set the caller's password and return a fresh JWT.
+
+  ## Options
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action returns an embedded `SocialSignInResponse` (a fixed shape, no
+  field selection), decoded from the response body.
+  """
+  def set_own_password(%SetOwnPassword.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "set_own_password",
+        "input" => SetOwnPassword.Input.to_json(input)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &SocialSignInResponse.from_json/1, nil)
     end
   end
 

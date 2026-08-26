@@ -5,18 +5,20 @@ defmodule OriginsSdk.Apps.GatedCoursePayload do
   """
 
   @type t :: %__MODULE__{
+    assessment_launches: list() | nil,
     enrollment: any() | nil,
     gated_course: any(),
     state: list() | nil
     }
 
   defstruct [
+    :assessment_launches,
     :enrollment,
     :gated_course,
     :state
   ]
 
-  @primitive_fields ~w(enrollment gated_course state)a
+  @primitive_fields ~w(assessment_launches enrollment gated_course state)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -27,6 +29,7 @@ defmodule OriginsSdk.Apps.GatedCoursePayload do
 
   def from_json(map) when is_map(map) do
     %__MODULE__{
+      assessment_launches: map["assessment_launches"],
       enrollment: map["enrollment"],
       gated_course: map["gated_course"],
       state: map["state"]
