@@ -43,6 +43,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.GetProgram
   alias OriginsSdk.Apps.GetProgramAssessment
   alias OriginsSdk.Apps.GetProgramMemory
+  alias OriginsSdk.Apps.GetProgramTestCredentials
   alias OriginsSdk.Apps.InitializePersonalization
   alias OriginsSdk.Apps.ListAppLibraryVfsPaths
   alias OriginsSdk.Apps.ListAppTemplates
@@ -52,11 +53,13 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.ListAppsForOriginAndType
   alias OriginsSdk.Apps.ListAssessmentResponsesForEnrollment
   alias OriginsSdk.Apps.ListProgramTests
+  alias OriginsSdk.Apps.ListSellablePlansForApp
   alias OriginsSdk.Apps.ListWebhookDeliveries
   alias OriginsSdk.Apps.ListWebhookSubscriptions
   alias OriginsSdk.Apps.MarkBriefingRead
   alias OriginsSdk.Apps.ParseAuthoringDocument
   alias OriginsSdk.Apps.PauseEnrollment
+  alias OriginsSdk.Apps.Plan
   alias OriginsSdk.Apps.ProgramTest
   alias OriginsSdk.Apps.PublishApp
   alias OriginsSdk.Apps.ReactivateEnrollment
@@ -890,6 +893,33 @@ defmodule OriginsSdk.Apps do
 
 
   @doc """
+  Run the `get_program_test_credentials` action.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def get_program_test_credentials(%GetProgramTestCredentials.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "get_program_test_credentials",
+        "input" => GetProgramTestCredentials.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
   Run the `initialize_personalization` action.
 
   ## Options
@@ -1121,6 +1151,32 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &ProgramTest.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
+  The plans still on sale that unlock a given app.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def list_sellable_plans_for_app(%ListSellablePlansForApp.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, Plan)
+
+    payload =
+      %{
+        "action" => "list_sellable_plans_for_app",
+        "input" => ListSellablePlansForApp.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &Plan.from_list/1, nil)
     end
   end
 

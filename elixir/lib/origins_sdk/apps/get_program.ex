@@ -7,15 +7,16 @@ defmodule OriginsSdk.Apps.GetProgram do
     @moduledoc "Required arguments for `get_program`."
 
     @type t :: %__MODULE__{
+          email: String.t() | nil,
           program_id: String.t()
         }
 
     @enforce_keys [:program_id]
-    defstruct [:program_id]
+    defstruct [:email, :program_id]
 
     @doc false
     def to_json(%__MODULE__{} = input) do
-      %{"program_id" => input.program_id}
+      %{"email" => input.email, "program_id" => input.program_id}
     end
   end
 
