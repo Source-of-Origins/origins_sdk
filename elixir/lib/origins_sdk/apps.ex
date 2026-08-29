@@ -16,6 +16,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.CompleteEnrollment
   alias OriginsSdk.Apps.CourseActivityCompletion
   alias OriginsSdk.Apps.CourseEnrollment
+  alias OriginsSdk.Apps.CourseEntitlement
   alias OriginsSdk.Apps.CreateApp
   alias OriginsSdk.Apps.CreateAppFromTemplate
   alias OriginsSdk.Apps.CreateAssessmentResponse
@@ -52,6 +53,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.ListAppsForOrigin
   alias OriginsSdk.Apps.ListAppsForOriginAndType
   alias OriginsSdk.Apps.ListAssessmentResponsesForEnrollment
+  alias OriginsSdk.Apps.ListMyEntitlements
   alias OriginsSdk.Apps.ListProgramTests
   alias OriginsSdk.Apps.ListSellablePlansForApp
   alias OriginsSdk.Apps.ListWebhookDeliveries
@@ -1125,6 +1127,32 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &AssessmentResponse.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
+  Every live entitlement the reading learner holds, app-level and plan-level.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def list_my_entitlements(%ListMyEntitlements.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, CourseEntitlement)
+
+    payload =
+      %{
+        "action" => "list_my_entitlements",
+        "input" => ListMyEntitlements.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &CourseEntitlement.from_list/1, nil)
     end
   end
 
