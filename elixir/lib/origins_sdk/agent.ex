@@ -9,6 +9,7 @@ defmodule OriginsSdk.Agent do
   alias OriginsSdk.Agent.ChatReply
   alias OriginsSdk.Agent.ChatSuggestions
   alias OriginsSdk.Agent.Conversation
+  alias OriginsSdk.Agent.CountUserMessages
   alias OriginsSdk.Agent.CreateConversation
   alias OriginsSdk.Agent.FindRootConversation
   alias OriginsSdk.Agent.GenerateChatSuggestions
@@ -42,6 +43,33 @@ defmodule OriginsSdk.Agent do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &ChatReply.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  How many messages a user sent an Origin between two instants
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def count_user_messages(%CountUserMessages.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "count_user_messages",
+        "input" => CountUserMessages.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
     end
   end
 

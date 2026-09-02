@@ -1,7 +1,7 @@
 defmodule OriginsSdk.MixProject do
   use Mix.Project
 
-  @version "0.24.9"
+  @version "0.24.10"
 
   def project do
     [
@@ -18,7 +18,9 @@ defmodule OriginsSdk.MixProject do
   defp deps do
     [
       {:req, "~> 0.5"},
-      {:jason, "~> 1.4"}
+      {:jason, "~> 1.4"},
+      {:castore, "~> 1.0"},
+      {:mint_web_socket, "~> 1.0"}
     ]
   end
 end
