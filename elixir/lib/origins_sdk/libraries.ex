@@ -1046,6 +1046,12 @@ defmodule OriginsSdk.Libraries do
   file it came from. Scope is the Origin's reachable libraries, resolved
   server-side — a caller cannot widen it.
   
+  `limit` counts passages, not files: one file can supply several, and a
+  corpus mixes transcripts with course documents. A caller narrowing hits
+  down to distinct files of one kind should ask for far more than the
+  number of files it wants, and how many it gets varies by query — measure
+  against real queries rather than assuming a ratio.
+  
 
   ## Options
     * `:fields` — passthrough field list; omitted from the request unless given.
