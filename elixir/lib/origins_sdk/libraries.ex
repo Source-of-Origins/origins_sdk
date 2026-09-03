@@ -49,6 +49,7 @@ defmodule OriginsSdk.Libraries do
   alias OriginsSdk.Libraries.RequestStaticRenditions
   alias OriginsSdk.Libraries.ResolveVideoPlayback
   alias OriginsSdk.Libraries.ResolvedPlayback
+  alias OriginsSdk.Libraries.SemanticSearchLibraryFiles
   alias OriginsSdk.Libraries.StaticRendition
   alias OriginsSdk.Libraries.StaticRenditionRequestResult
   alias OriginsSdk.Libraries.SyncLibraryNow
@@ -1036,6 +1037,36 @@ defmodule OriginsSdk.Libraries do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &ResolvedPlayback.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Passages matching `query` by meaning, ranked best first, each with the
+  file it came from. Scope is the Origin's reachable libraries, resolved
+  server-side — a caller cannot widen it.
+  
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def semantic_search_library_files(%SemanticSearchLibraryFiles.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "semantic_search_library_files",
+        "input" => SemanticSearchLibraryFiles.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
     end
   end
 

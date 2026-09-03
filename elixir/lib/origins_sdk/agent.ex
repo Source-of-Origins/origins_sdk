@@ -15,10 +15,12 @@ defmodule OriginsSdk.Agent do
   alias OriginsSdk.Agent.GenerateChatSuggestions
   alias OriginsSdk.Agent.GetBrandUsers
   alias OriginsSdk.Agent.GetConversationHistory
+  alias OriginsSdk.Agent.GetTurnState
   alias OriginsSdk.Agent.ListConversations
   alias OriginsSdk.Agent.ListMyConversations
   alias OriginsSdk.Agent.PresignStorageUrl
   alias OriginsSdk.Agent.PreviewChat
+  alias OriginsSdk.Agent.TurnState
   alias OriginsSdk.Agent.UpdateConversation
   alias OriginsSdk.Agent.UploadChatAttachment
 
@@ -199,6 +201,31 @@ defmodule OriginsSdk.Agent do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &ChatMessage.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
+  Whether a turn is running on a conversation, and when its claim lapses
+
+  ## Options
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action returns an embedded `TurnState` (a fixed shape, no
+  field selection), decoded from the response body.
+  """
+  def get_turn_state(%GetTurnState.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "get_turn_state",
+        "input" => GetTurnState.Input.to_json(input)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &TurnState.from_json/1, nil)
     end
   end
 
