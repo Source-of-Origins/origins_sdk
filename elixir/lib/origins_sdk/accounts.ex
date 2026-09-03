@@ -95,7 +95,9 @@ defmodule OriginsSdk.Accounts do
   Created in a caller-supplied tenant (pass `tenant:`), so ownership reads on
   tenant-scoped resources line up. Upserts on email so a repeat visit reuses
   the row; a later `:register_with_password` with the same email upgrades it
-  in place, carrying its data over.
+  in place, carrying its data over. An optional `display_name` lands in
+  `raw_user_meta_data`, where the `user_profiles` trigger reads it; omitting
+  it leaves the stored name alone rather than clearing it.
   
 
   ## Options
@@ -392,7 +394,7 @@ defmodule OriginsSdk.Accounts do
 
 
   @doc """
-  Register a new user via waitlist invitation token.
+  Register a new user via a waitlist or Origin membership invitation token.
 
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).

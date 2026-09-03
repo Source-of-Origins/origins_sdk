@@ -7,15 +7,16 @@ defmodule OriginsSdk.Accounts.CreateAnonymousUser do
     @moduledoc "Required arguments for `create_anonymous_user`."
 
     @type t :: %__MODULE__{
+          display_name: String.t() | nil,
           email: String.t()
         }
 
     @enforce_keys [:email]
-    defstruct [:email]
+    defstruct [:display_name, :email]
 
     @doc false
     def to_json(%__MODULE__{} = input) do
-      %{"email" => input.email}
+      %{"display_name" => input.display_name, "email" => input.email}
     end
   end
 
