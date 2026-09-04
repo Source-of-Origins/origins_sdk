@@ -6,6 +6,7 @@ defmodule OriginsSdk.Accounts do
   alias OriginsSdk.{Client, Error}
   alias OriginsSdk.Accounts.ApproveWaitlistEntry
   alias OriginsSdk.Accounts.ConfirmAnonymousAccount
+  alias OriginsSdk.Accounts.ConsentRecord
   alias OriginsSdk.Accounts.CreateAnonymousUser
   alias OriginsSdk.Accounts.CreateTenantForUser
   alias OriginsSdk.Accounts.DeleteWaitlistEntry
@@ -14,9 +15,12 @@ defmodule OriginsSdk.Accounts do
   alias OriginsSdk.Accounts.GetWaitlistEntryByToken
   alias OriginsSdk.Accounts.ListAllTenants
   alias OriginsSdk.Accounts.ListAllUsers
+  alias OriginsSdk.Accounts.ListConsentHistory
+  alias OriginsSdk.Accounts.ListCurrentConsents
   alias OriginsSdk.Accounts.ListMyTenantGrants
   alias OriginsSdk.Accounts.ListMyTenants
   alias OriginsSdk.Accounts.ListWaitlistEntries
+  alias OriginsSdk.Accounts.RecordConsent
   alias OriginsSdk.Accounts.RegisterWithInvitation
   alias OriginsSdk.Accounts.RegisterWithPassword
   alias OriginsSdk.Accounts.RejectWaitlistEntry
@@ -312,6 +316,58 @@ defmodule OriginsSdk.Accounts do
 
 
   @doc """
+  Run the `list_consent_history` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def list_consent_history(%ListConsentHistory.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, ConsentRecord)
+
+    payload =
+      %{
+        "action" => "list_consent_history",
+        "input" => ListConsentHistory.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &ConsentRecord.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `list_current_consents` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def list_current_consents(%ListCurrentConsents.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, ConsentRecord)
+
+    payload =
+      %{
+        "action" => "list_current_consents",
+        "input" => ListCurrentConsents.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &ConsentRecord.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
   Active grants for the calling user. Used by the SPA tenant switcher.
 
   ## Options
@@ -389,6 +445,32 @@ defmodule OriginsSdk.Accounts do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &WaitlistEntry.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `record_consent` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def record_consent(%RecordConsent.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, ConsentRecord)
+
+    payload =
+      %{
+        "action" => "record_consent",
+        "input" => RecordConsent.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &ConsentRecord.from_json/1, nil)
     end
   end
 
