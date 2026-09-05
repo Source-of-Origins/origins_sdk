@@ -7,16 +7,18 @@ defmodule OriginsSdk.Apps.Plan do
   @type t :: %__MODULE__{
     id: String.t(),
     name: String.t(),
-    retired_at: DateTime.t() | nil
+    retired_at: DateTime.t() | nil,
+    scope: any()
     }
 
   defstruct [
     :id,
     :name,
-    :retired_at
+    :retired_at,
+    :scope
   ]
 
-  @primitive_fields ~w(id name retired_at)a
+  @primitive_fields ~w(id name retired_at scope)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -29,7 +31,8 @@ defmodule OriginsSdk.Apps.Plan do
     %__MODULE__{
       id: map["id"],
       name: map["name"],
-      retired_at: OriginsSdk.Internal.decode_datetime(map["retired_at"])
+      retired_at: OriginsSdk.Internal.decode_datetime(map["retired_at"]),
+      scope: map["scope"]
     }
   end
 
