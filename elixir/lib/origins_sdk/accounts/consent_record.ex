@@ -5,6 +5,7 @@ defmodule OriginsSdk.Accounts.ConsentRecord do
   """
 
   @type t :: %__MODULE__{
+    email: String.t() | nil,
     granted: boolean(),
     id: String.t(),
     ip: String.t() | nil,
@@ -17,6 +18,7 @@ defmodule OriginsSdk.Accounts.ConsentRecord do
     }
 
   defstruct [
+    :email,
     :granted,
     :id,
     :ip,
@@ -28,7 +30,7 @@ defmodule OriginsSdk.Accounts.ConsentRecord do
     :user_agent
   ]
 
-  @primitive_fields ~w(granted id ip kind method policy_version recorded_at text_shown user_agent)a
+  @primitive_fields ~w(email granted id ip kind method policy_version recorded_at text_shown user_agent)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -39,6 +41,7 @@ defmodule OriginsSdk.Accounts.ConsentRecord do
 
   def from_json(map) when is_map(map) do
     %__MODULE__{
+      email: map["email"],
       granted: map["granted"],
       id: map["id"],
       ip: map["ip"],

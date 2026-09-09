@@ -9,6 +9,7 @@ defmodule OriginsSdk.Accounts do
   alias OriginsSdk.Accounts.ConsentRecord
   alias OriginsSdk.Accounts.CreateAnonymousUser
   alias OriginsSdk.Accounts.CreateTenantForUser
+  alias OriginsSdk.Accounts.DeleteOwnAccount
   alias OriginsSdk.Accounts.DeleteWaitlistEntry
   alias OriginsSdk.Accounts.GetCurrentUser
   alias OriginsSdk.Accounts.GetTenant
@@ -149,6 +150,33 @@ defmodule OriginsSdk.Accounts do
       %{
         "action" => "create_tenant_for_user",
         "input" => CreateTenantForUser.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
+  Mark the caller's own account for deletion and sign them out everywhere.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def delete_own_account(%DeleteOwnAccount.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "delete_own_account",
+        "input" => DeleteOwnAccount.Input.to_json(input)
       }
       |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
