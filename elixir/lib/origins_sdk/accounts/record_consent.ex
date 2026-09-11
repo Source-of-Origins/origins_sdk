@@ -7,6 +7,7 @@ defmodule OriginsSdk.Accounts.RecordConsent do
     @moduledoc "Required arguments for `record_consent`."
 
     @type t :: %__MODULE__{
+          custom_name: String.t() | nil,
           granted: boolean(),
           ip: String.t() | nil,
           kind: any(),
@@ -17,11 +18,11 @@ defmodule OriginsSdk.Accounts.RecordConsent do
         }
 
     @enforce_keys [:granted, :kind, :method, :policy_version, :text_shown]
-    defstruct [:granted, :ip, :kind, :method, :policy_version, :text_shown, :user_agent]
+    defstruct [:custom_name, :granted, :ip, :kind, :method, :policy_version, :text_shown, :user_agent]
 
     @doc false
     def to_json(%__MODULE__{} = input) do
-      %{"granted" => input.granted, "ip" => input.ip, "kind" => input.kind, "method" => input.method, "policy_version" => input.policy_version, "text_shown" => input.text_shown, "user_agent" => input.user_agent}
+      %{"custom_name" => input.custom_name, "granted" => input.granted, "ip" => input.ip, "kind" => input.kind, "method" => input.method, "policy_version" => input.policy_version, "text_shown" => input.text_shown, "user_agent" => input.user_agent}
     end
   end
 

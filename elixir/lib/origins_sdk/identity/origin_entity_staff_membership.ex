@@ -1,6 +1,6 @@
-defmodule OriginsSdk.Identity.OriginEntityMembership do
+defmodule OriginsSdk.Identity.OriginEntityStaffMembership do
   @moduledoc """
-  Mirror of `Origins.Identity.OriginEntityMembership` over the wire.
+  Mirror of `Origins.Identity.OriginEntityStaffMembership` over the wire.
   Generated — do not edit by hand.
   """
 

@@ -52,7 +52,7 @@ defmodule OriginsSdk.Identity do
   alias OriginsSdk.Identity.ListUserProfiles
   alias OriginsSdk.Identity.OriginAsset
   alias OriginsSdk.Identity.OriginEntity
-  alias OriginsSdk.Identity.OriginEntityMembership
+  alias OriginsSdk.Identity.OriginEntityStaffMembership
   alias OriginsSdk.Identity.PromptContext
   alias OriginsSdk.Identity.PromptTool
   alias OriginsSdk.Identity.ScrapeWebsiteContent
@@ -84,7 +84,7 @@ defmodule OriginsSdk.Identity do
     * `:client` — `%OriginsSdk.Client{}` override.
   """
   def accept_membership_invitation(%AcceptMembershipInvitation.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginEntityMembership)
+    fields = normalize_fields(opts[:fields] || :all, OriginEntityStaffMembership)
 
     payload =
       %{
@@ -95,7 +95,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntityMembership.from_json/1, nil)
+      decode_action_response(body, &OriginEntityStaffMembership.from_json/1, nil)
     end
   end
 
@@ -110,7 +110,7 @@ defmodule OriginsSdk.Identity do
     * `:client` — `%OriginsSdk.Client{}` override.
   """
   def activate_membership(%ActivateMembership.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginEntityMembership)
+    fields = normalize_fields(opts[:fields] || :all, OriginEntityStaffMembership)
 
     payload =
       %{
@@ -121,7 +121,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntityMembership.from_json/1, nil)
+      decode_action_response(body, &OriginEntityStaffMembership.from_json/1, nil)
     end
   end
 
@@ -251,7 +251,7 @@ defmodule OriginsSdk.Identity do
     * `:client` — `%OriginsSdk.Client{}` override.
   """
   def create_origin_entity_membership(%CreateOriginEntityMembership.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginEntityMembership)
+    fields = normalize_fields(opts[:fields] || :all, OriginEntityStaffMembership)
 
     payload =
       %{
@@ -262,7 +262,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntityMembership.from_json/1, nil)
+      decode_action_response(body, &OriginEntityStaffMembership.from_json/1, nil)
     end
   end
 
@@ -407,7 +407,7 @@ defmodule OriginsSdk.Identity do
     * `:client` — `%OriginsSdk.Client{}` override.
   """
   def delete_origin_entity_membership(%DeleteOriginEntityMembership.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginEntityMembership)
+    fields = normalize_fields(opts[:fields] || :all, OriginEntityStaffMembership)
 
     payload =
       %{
@@ -418,7 +418,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntityMembership.from_json/1, nil)
+      decode_action_response(body, &OriginEntityStaffMembership.from_json/1, nil)
     end
   end
 
@@ -647,7 +647,7 @@ defmodule OriginsSdk.Identity do
     * `:client` — `%OriginsSdk.Client{}` override.
   """
   def get_inherited_memberships(%GetInheritedMemberships.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginEntityMembership)
+    fields = normalize_fields(opts[:fields] || :all, OriginEntityStaffMembership)
 
     payload =
       %{
@@ -658,7 +658,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntityMembership.from_list/1, nil)
+      decode_action_response(body, &OriginEntityStaffMembership.from_list/1, nil)
     end
   end
 
@@ -673,7 +673,7 @@ defmodule OriginsSdk.Identity do
     * `:client` — `%OriginsSdk.Client{}` override.
   """
   def get_membership_by_token(%GetMembershipByToken.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginEntityMembership)
+    fields = normalize_fields(opts[:fields] || :all, OriginEntityStaffMembership)
 
     payload =
       %{
@@ -684,7 +684,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntityMembership.from_json/1, nil)
+      decode_action_response(body, &OriginEntityStaffMembership.from_json/1, nil)
     end
   end
 
@@ -699,7 +699,7 @@ defmodule OriginsSdk.Identity do
     * `:client` — `%OriginsSdk.Client{}` override.
   """
   def get_memberships_for_origin(%GetMembershipsForOrigin.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginEntityMembership)
+    fields = normalize_fields(opts[:fields] || :all, OriginEntityStaffMembership)
 
     payload =
       %{
@@ -710,7 +710,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntityMembership.from_list/1, nil)
+      decode_action_response(body, &OriginEntityStaffMembership.from_list/1, nil)
     end
   end
 
@@ -725,7 +725,7 @@ defmodule OriginsSdk.Identity do
     * `:client` — `%OriginsSdk.Client{}` override.
   """
   def get_memberships_for_user(%GetMembershipsForUser.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginEntityMembership)
+    fields = normalize_fields(opts[:fields] || :all, OriginEntityStaffMembership)
 
     payload =
       %{
@@ -736,7 +736,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntityMembership.from_list/1, nil)
+      decode_action_response(body, &OriginEntityStaffMembership.from_list/1, nil)
     end
   end
 
@@ -803,7 +803,7 @@ defmodule OriginsSdk.Identity do
     * `:client` — `%OriginsSdk.Client{}` override.
   """
   def get_origin_entity_membership(%GetOriginEntityMembership.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginEntityMembership)
+    fields = normalize_fields(opts[:fields] || :all, OriginEntityStaffMembership)
 
     payload =
       %{
@@ -814,7 +814,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntityMembership.from_json/1, nil)
+      decode_action_response(body, &OriginEntityStaffMembership.from_json/1, nil)
     end
   end
 
@@ -829,7 +829,7 @@ defmodule OriginsSdk.Identity do
     * `:client` — `%OriginsSdk.Client{}` override.
   """
   def get_pending_memberships(%GetPendingMemberships.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginEntityMembership)
+    fields = normalize_fields(opts[:fields] || :all, OriginEntityStaffMembership)
 
     payload =
       %{
@@ -840,7 +840,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntityMembership.from_list/1, nil)
+      decode_action_response(body, &OriginEntityStaffMembership.from_list/1, nil)
     end
   end
 
@@ -911,7 +911,7 @@ defmodule OriginsSdk.Identity do
     * `:client` — `%OriginsSdk.Client{}` override.
   """
   def invite_to_origin(%InviteToOrigin.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginEntityMembership)
+    fields = normalize_fields(opts[:fields] || :all, OriginEntityStaffMembership)
 
     payload =
       %{
@@ -922,7 +922,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntityMembership.from_json/1, nil)
+      decode_action_response(body, &OriginEntityStaffMembership.from_json/1, nil)
     end
   end
 
@@ -1102,7 +1102,7 @@ defmodule OriginsSdk.Identity do
     * `:client` — `%OriginsSdk.Client{}` override.
   """
   def list_origin_entity_memberships(%ListOriginEntityMemberships.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginEntityMembership)
+    fields = normalize_fields(opts[:fields] || :all, OriginEntityStaffMembership)
 
     payload =
       %{
@@ -1113,7 +1113,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntityMembership.from_list/1, nil)
+      decode_action_response(body, &OriginEntityStaffMembership.from_list/1, nil)
     end
   end
 
@@ -1344,7 +1344,7 @@ defmodule OriginsSdk.Identity do
     * `:client` — `%OriginsSdk.Client{}` override.
   """
   def suspend_membership(%SuspendMembership.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginEntityMembership)
+    fields = normalize_fields(opts[:fields] || :all, OriginEntityStaffMembership)
 
     payload =
       %{
@@ -1355,7 +1355,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntityMembership.from_json/1, nil)
+      decode_action_response(body, &OriginEntityStaffMembership.from_json/1, nil)
     end
   end
 
@@ -1475,7 +1475,7 @@ defmodule OriginsSdk.Identity do
     * `:client` — `%OriginsSdk.Client{}` override.
   """
   def update_origin_entity_membership(%UpdateOriginEntityMembership.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginEntityMembership)
+    fields = normalize_fields(opts[:fields] || :all, OriginEntityStaffMembership)
 
     payload =
       %{
@@ -1486,7 +1486,7 @@ defmodule OriginsSdk.Identity do
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginEntityMembership.from_json/1, nil)
+      decode_action_response(body, &OriginEntityStaffMembership.from_json/1, nil)
     end
   end
 
