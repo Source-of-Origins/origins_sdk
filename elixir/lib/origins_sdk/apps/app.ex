@@ -16,7 +16,8 @@ defmodule OriginsSdk.Apps.App do
     meta: map() | nil,
     origin_entity_id: String.t(),
     page_type: String.t(),
-    schema_version: integer(),
+    resource_snapshot: map() | nil,
+    resource_snapshot_hash: String.t() | nil,
     slug: String.t(),
     source: String.t(),
     title: String.t() | nil,
@@ -35,14 +36,15 @@ defmodule OriginsSdk.Apps.App do
     :meta,
     :origin_entity_id,
     :page_type,
-    :schema_version,
+    :resource_snapshot,
+    :resource_snapshot_hash,
     :slug,
     :source,
     :title,
     :updated_at
   ]
 
-  @primitive_fields ~w(change_source_message_id change_summary created_at generation_format generation_prompt id is_published markdoc_content meta origin_entity_id page_type schema_version slug source title updated_at)a
+  @primitive_fields ~w(change_source_message_id change_summary created_at generation_format generation_prompt id is_published markdoc_content meta origin_entity_id page_type resource_snapshot resource_snapshot_hash slug source title updated_at)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -64,7 +66,8 @@ defmodule OriginsSdk.Apps.App do
       meta: map["meta"],
       origin_entity_id: map["origin_entity_id"],
       page_type: map["page_type"],
-      schema_version: map["schema_version"],
+      resource_snapshot: map["resource_snapshot"],
+      resource_snapshot_hash: map["resource_snapshot_hash"],
       slug: map["slug"],
       source: map["source"],
       title: map["title"],

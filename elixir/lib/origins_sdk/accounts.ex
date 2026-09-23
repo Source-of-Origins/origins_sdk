@@ -30,6 +30,7 @@ defmodule OriginsSdk.Accounts do
   alias OriginsSdk.Accounts.RequestPasswordResetToken
   alias OriginsSdk.Accounts.ResetPasswordWithToken
   alias OriginsSdk.Accounts.SetOwnPassword
+  alias OriginsSdk.Accounts.SetOwnPhone
   alias OriginsSdk.Accounts.SignInLinkResponse
   alias OriginsSdk.Accounts.SignInWithAppleToken
   alias OriginsSdk.Accounts.SignInWithGoogleToken
@@ -716,6 +717,32 @@ defmodule OriginsSdk.Accounts do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &SocialSignInResponse.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Set, replace or clear the phone number on the caller's own account.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def set_own_phone(%SetOwnPhone.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, User)
+
+    payload =
+      %{
+        "action" => "set_own_phone",
+        "input" => SetOwnPhone.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &User.from_json/1, nil)
     end
   end
 

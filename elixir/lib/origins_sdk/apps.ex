@@ -10,6 +10,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.AssessmentGraph
   alias OriginsSdk.Apps.AssessmentResponse
   alias OriginsSdk.Apps.AuthoringDocument
+  alias OriginsSdk.Apps.CancelMyMembership
   alias OriginsSdk.Apps.CoachingTypes
   alias OriginsSdk.Apps.CompleteActivityStep
   alias OriginsSdk.Apps.CompleteAssessment
@@ -59,6 +60,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.ListWebhookDeliveries
   alias OriginsSdk.Apps.ListWebhookSubscriptions
   alias OriginsSdk.Apps.MarkBriefingRead
+  alias OriginsSdk.Apps.MyMembershipCancellation
   alias OriginsSdk.Apps.ParseAuthoringDocument
   alias OriginsSdk.Apps.PauseEnrollment
   alias OriginsSdk.Apps.Plan
@@ -129,6 +131,33 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &CourseActivityCompletion.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Stop the reading learner's membership from renewing; access runs to the end of the paid period.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def cancel_my_membership(%CancelMyMembership.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "cancel_my_membership",
+        "input" => CancelMyMembership.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -1282,6 +1311,33 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &DailyBriefing.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  The day a cancelled membership closes, or nothing when it still renews.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def my_membership_cancellation(%MyMembershipCancellation.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "my_membership_cancellation",
+        "input" => MyMembershipCancellation.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
     end
   end
 
