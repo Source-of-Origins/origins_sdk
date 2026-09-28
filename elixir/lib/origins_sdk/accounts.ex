@@ -13,10 +13,14 @@ defmodule OriginsSdk.Accounts do
   alias OriginsSdk.Accounts.DeleteWaitlistEntry
   alias OriginsSdk.Accounts.GetCurrentUser
   alias OriginsSdk.Accounts.GetTenant
+  alias OriginsSdk.Accounts.GetTenantArr
+  alias OriginsSdk.Accounts.GetTenantNetRevenue
   alias OriginsSdk.Accounts.GetWaitlistEntryByToken
   alias OriginsSdk.Accounts.ListAllTenants
   alias OriginsSdk.Accounts.ListAllUsers
+  alias OriginsSdk.Accounts.ListConfirmedUsers
   alias OriginsSdk.Accounts.ListConsentHistory
+  alias OriginsSdk.Accounts.ListConsentsForKind
   alias OriginsSdk.Accounts.ListCurrentConsents
   alias OriginsSdk.Accounts.ListMyTenantGrants
   alias OriginsSdk.Accounts.ListMyTenants
@@ -267,6 +271,60 @@ defmodule OriginsSdk.Accounts do
 
 
   @doc """
+  The yearly value of the active subscriptions on the tenant's connected account.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def get_tenant_arr(%GetTenantArr.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "get_tenant_arr",
+        "input" => GetTenantArr.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
+  Money settled on the tenant's connected Stripe account over the last `days`.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def get_tenant_net_revenue(%GetTenantNetRevenue.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "get_tenant_net_revenue",
+        "input" => GetTenantNetRevenue.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
   Run the `get_waitlist_entry_by_token` action.
 
   ## Options
@@ -345,6 +403,32 @@ defmodule OriginsSdk.Accounts do
 
 
   @doc """
+  People with a proven address: confirmed and not anonymous.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def list_confirmed_users(%ListConfirmedUsers.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, User)
+
+    payload =
+      %{
+        "action" => "list_confirmed_users",
+        "input" => ListConfirmedUsers.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &User.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
   Run the `list_consent_history` action.
 
   ## Options
@@ -360,6 +444,32 @@ defmodule OriginsSdk.Accounts do
       %{
         "action" => "list_consent_history",
         "input" => ListConsentHistory.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &ConsentRecord.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
+  Everyone's newest answer on one box, one row each. Read `granted`.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def list_consents_for_kind(%ListConsentsForKind.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, ConsentRecord)
+
+    payload =
+      %{
+        "action" => "list_consents_for_kind",
+        "input" => ListConsentsForKind.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
       |> maybe_put("tenant", opts[:tenant])
