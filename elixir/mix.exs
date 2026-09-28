@@ -1,7 +1,7 @@
 defmodule OriginsSdk.MixProject do
   use Mix.Project
 
-  @version "0.0.0-dev"
+  @version "0.24.22"
 
   def project do
     [
