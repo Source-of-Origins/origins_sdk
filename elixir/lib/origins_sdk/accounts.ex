@@ -9,9 +9,11 @@ defmodule OriginsSdk.Accounts do
   alias OriginsSdk.Accounts.ConsentRecord
   alias OriginsSdk.Accounts.CreateAnonymousUser
   alias OriginsSdk.Accounts.CreateTenantForUser
+  alias OriginsSdk.Accounts.CreateTenantStripePrice
   alias OriginsSdk.Accounts.DeleteOwnAccount
   alias OriginsSdk.Accounts.DeleteWaitlistEntry
   alias OriginsSdk.Accounts.GetCurrentUser
+  alias OriginsSdk.Accounts.GetLessonWatchTime
   alias OriginsSdk.Accounts.GetTenant
   alias OriginsSdk.Accounts.GetTenantArr
   alias OriginsSdk.Accounts.GetTenantNetRevenue
@@ -24,6 +26,7 @@ defmodule OriginsSdk.Accounts do
   alias OriginsSdk.Accounts.ListCurrentConsents
   alias OriginsSdk.Accounts.ListMyTenantGrants
   alias OriginsSdk.Accounts.ListMyTenants
+  alias OriginsSdk.Accounts.ListTenantStripePrices
   alias OriginsSdk.Accounts.ListWaitlistEntries
   alias OriginsSdk.Accounts.RecordConsent
   alias OriginsSdk.Accounts.RegisterWithInvitation
@@ -166,6 +169,35 @@ defmodule OriginsSdk.Accounts do
 
 
   @doc """
+  Create a Price, and the Product it sells, on the tenant's connected Stripe
+  account. A nil `interval` makes a one-time price.
+  
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def create_tenant_stripe_price(%CreateTenantStripePrice.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "create_tenant_stripe_price",
+        "input" => CreateTenantStripePrice.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
   Mark the caller's own account for deletion and sign them out everywhere.
 
   ## Options
@@ -240,6 +272,36 @@ defmodule OriginsSdk.Accounts do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &User.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Minutes watched per lesson over a window, most-watched first, read from
+  PostHog. A minute is one progress mark, which the apps raise once a minute
+  while someone is watching.
+  
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def get_lesson_watch_time(%GetLessonWatchTime.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "get_lesson_watch_time",
+        "input" => GetLessonWatchTime.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -558,6 +620,33 @@ defmodule OriginsSdk.Accounts do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &Tenant.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
+  The Prices on the tenant's connected Stripe account, newest first.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def list_tenant_stripe_prices(%ListTenantStripePrices.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "list_tenant_stripe_prices",
+        "input" => ListTenantStripePrices.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
     end
   end
 

@@ -8,17 +8,19 @@ defmodule OriginsSdk.Apps.Plan do
     id: String.t(),
     name: String.t(),
     retired_at: DateTime.t() | nil,
-    scope: any()
+    scope: any(),
+    stripe_price_id: String.t()
     }
 
   defstruct [
     :id,
     :name,
     :retired_at,
-    :scope
+    :scope,
+    :stripe_price_id
   ]
 
-  @primitive_fields ~w(id name retired_at scope)a
+  @primitive_fields ~w(id name retired_at scope stripe_price_id)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -32,7 +34,8 @@ defmodule OriginsSdk.Apps.Plan do
       id: map["id"],
       name: map["name"],
       retired_at: OriginsSdk.Internal.decode_datetime(map["retired_at"]),
-      scope: map["scope"]
+      scope: map["scope"],
+      stripe_price_id: map["stripe_price_id"]
     }
   end
 

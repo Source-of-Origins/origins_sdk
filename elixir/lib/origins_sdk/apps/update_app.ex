@@ -8,13 +8,13 @@ defmodule OriginsSdk.Apps.UpdateApp do
 
     @type t :: %__MODULE__{
           generation_prompt: String.t() | nil,
-          markdoc_content: String.t(),
+          markdoc_content: String.t() | nil,
           meta: map() | nil,
           slug: String.t(),
           title: String.t() | nil
         }
 
-    @enforce_keys [:markdoc_content, :slug]
+    @enforce_keys [:slug]
     defstruct [:generation_prompt, :markdoc_content, :meta, :slug, :title]
 
     @doc false

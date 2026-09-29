@@ -23,10 +23,12 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.CreateAssessmentResponse
   alias OriginsSdk.Apps.CreateAssessmentResponseAtActivity
   alias OriginsSdk.Apps.CreateEnrollment
+  alias OriginsSdk.Apps.CreatePlan
   alias OriginsSdk.Apps.CreateProgramTest
   alias OriginsSdk.Apps.CreateWebhookSubscription
   alias OriginsSdk.Apps.DailyBriefing
   alias OriginsSdk.Apps.DestroyApp
+  alias OriginsSdk.Apps.DestroyPlan
   alias OriginsSdk.Apps.DestroyProgramTest
   alias OriginsSdk.Apps.DestroyWebhookSubscription
   alias OriginsSdk.Apps.DuplicateApp
@@ -55,8 +57,10 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.ListAppsForOriginAndType
   alias OriginsSdk.Apps.ListAssessmentResponsesForEnrollment
   alias OriginsSdk.Apps.ListMyEntitlements
+  alias OriginsSdk.Apps.ListPlans
   alias OriginsSdk.Apps.ListProgramTests
   alias OriginsSdk.Apps.ListSellablePlansForApp
+  alias OriginsSdk.Apps.ListUnlockableApps
   alias OriginsSdk.Apps.ListWebhookDeliveries
   alias OriginsSdk.Apps.ListWebhookSubscriptions
   alias OriginsSdk.Apps.MarkBriefingRead
@@ -78,6 +82,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.Template
   alias OriginsSdk.Apps.UnpublishApp
   alias OriginsSdk.Apps.UpdateApp
+  alias OriginsSdk.Apps.UpdatePlan
   alias OriginsSdk.Apps.UpdateWebhookSubscription
   alias OriginsSdk.Apps.Version
   alias OriginsSdk.Apps.WebhookDelivery
@@ -404,6 +409,32 @@ defmodule OriginsSdk.Apps do
 
 
   @doc """
+  Run the `create_plan` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def create_plan(%CreatePlan.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, Plan)
+
+    payload =
+      %{
+        "action" => "create_plan",
+        "input" => CreatePlan.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &Plan.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
   Run the `create_program_test` action.
 
   ## Options
@@ -502,6 +533,32 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &App.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Delete an offer nobody has bought. A sold offer is retired instead.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def destroy_plan(%DestroyPlan.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, Plan)
+
+    payload =
+      %{
+        "action" => "destroy_plan",
+        "input" => DestroyPlan.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &Plan.from_json/1, nil)
     end
   end
 
@@ -1187,6 +1244,32 @@ defmodule OriginsSdk.Apps do
 
 
   @doc """
+  Run the `list_plans` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def list_plans(%ListPlans.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, Plan)
+
+    payload =
+      %{
+        "action" => "list_plans",
+        "input" => ListPlans.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &Plan.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
   Run the `list_program_tests` action.
 
   ## Options
@@ -1234,6 +1317,33 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &Plan.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
+  The programs and courses an offer in the pinned tenant can unlock.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def list_unlockable_apps(%ListUnlockableApps.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "list_unlockable_apps",
+        "input" => ListUnlockableApps.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -1473,7 +1583,7 @@ defmodule OriginsSdk.Apps do
 
 
   @doc """
-  Restore content from a paper trail version snapshot
+  Restore content from a document version snapshot
 
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
@@ -1705,6 +1815,32 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &App.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Edit the offer. People who already bought it keep what they were granted.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def update_plan(%UpdatePlan.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, Plan)
+
+    payload =
+      %{
+        "action" => "update_plan",
+        "input" => UpdatePlan.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &Plan.from_json/1, nil)
     end
   end
 
