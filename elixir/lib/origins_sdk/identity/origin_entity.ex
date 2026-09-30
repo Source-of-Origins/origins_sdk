@@ -39,6 +39,8 @@ defmodule OriginsSdk.Identity.OriginEntity do
     podcast_button_text_color: String.t() | nil,
     podcast_button_visible: boolean() | nil,
     podcast_content_settings: map() | nil,
+    presigned_banner_url: String.t() | nil,
+    presigned_picture_url: String.t() | nil,
     public_profile_config: any() | nil,
     setup_progress_id: String.t() | nil,
     slug: String.t(),
@@ -92,6 +94,8 @@ defmodule OriginsSdk.Identity.OriginEntity do
     :podcast_button_text_color,
     :podcast_button_visible,
     :podcast_content_settings,
+    :presigned_banner_url,
+    :presigned_picture_url,
     :public_profile_config,
     :setup_progress_id,
     :slug,
@@ -110,7 +114,7 @@ defmodule OriginsSdk.Identity.OriginEntity do
     :youtube_sync_settings
   ]
 
-  @primitive_fields ~w(accent_colors ai_generated_summary appearance_config banner_key banner_url brand_conversation_config categories content_tabs_config content_themes core_values created_at description engagement_metrics extracted_content guardrails_settings id is_active is_featured is_public key_messaging last_website_scrape mission_statement name page_sections_config parent_origin_entity_id personality_traits picture_key picture_url podcast_button_color podcast_button_link podcast_button_text podcast_button_text_color podcast_button_visible podcast_content_settings public_profile_config setup_progress_id slug social_links target_audience tenant_id title tone_of_voice updated_at voice_config voice_settings website_content youtube_channel_data youtube_channel_id youtube_content_settings youtube_sync_settings)a
+  @primitive_fields ~w(accent_colors ai_generated_summary appearance_config banner_key banner_url brand_conversation_config categories content_tabs_config content_themes core_values created_at description engagement_metrics extracted_content guardrails_settings id is_active is_featured is_public key_messaging last_website_scrape mission_statement name page_sections_config parent_origin_entity_id personality_traits picture_key picture_url podcast_button_color podcast_button_link podcast_button_text podcast_button_text_color podcast_button_visible podcast_content_settings presigned_banner_url presigned_picture_url public_profile_config setup_progress_id slug social_links target_audience tenant_id title tone_of_voice updated_at voice_config voice_settings website_content youtube_channel_data youtube_channel_id youtube_content_settings youtube_sync_settings)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -155,6 +159,8 @@ defmodule OriginsSdk.Identity.OriginEntity do
       podcast_button_text_color: map["podcast_button_text_color"],
       podcast_button_visible: map["podcast_button_visible"],
       podcast_content_settings: map["podcast_content_settings"],
+      presigned_banner_url: map["presigned_banner_url"],
+      presigned_picture_url: map["presigned_picture_url"],
       public_profile_config: map["public_profile_config"],
       setup_progress_id: map["setup_progress_id"],
       slug: map["slug"],

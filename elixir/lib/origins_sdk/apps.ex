@@ -10,6 +10,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.AssessmentGraph
   alias OriginsSdk.Apps.AssessmentResponse
   alias OriginsSdk.Apps.AuthoringDocument
+  alias OriginsSdk.Apps.Block
   alias OriginsSdk.Apps.CancelMyMembership
   alias OriginsSdk.Apps.CoachingTypes
   alias OriginsSdk.Apps.CompleteActivityStep
@@ -46,7 +47,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.GetMyAssessmentResponse
   alias OriginsSdk.Apps.GetProgram
   alias OriginsSdk.Apps.GetProgramAssessment
-  alias OriginsSdk.Apps.GetProgramMemory
+  alias OriginsSdk.Apps.GetProgramTest
   alias OriginsSdk.Apps.GetProgramTestCredentials
   alias OriginsSdk.Apps.InitializePersonalization
   alias OriginsSdk.Apps.ListAppLibraryVfsPaths
@@ -56,6 +57,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.ListAppsForOrigin
   alias OriginsSdk.Apps.ListAppsForOriginAndType
   alias OriginsSdk.Apps.ListAssessmentResponsesForEnrollment
+  alias OriginsSdk.Apps.ListBlocks
   alias OriginsSdk.Apps.ListMyEntitlements
   alias OriginsSdk.Apps.ListPlans
   alias OriginsSdk.Apps.ListProgramTests
@@ -954,28 +956,27 @@ defmodule OriginsSdk.Apps do
 
 
   @doc """
-  Run the `get_program_memory` action.
+  Run the `get_program_test` action.
 
   ## Options
-    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
-
-  The action's declared return is not a single resource, so `data` is
-  returned undecoded (a raw map or list).
   """
-  def get_program_memory(%GetProgramMemory.Input{} = input, opts \\ []) do
+  def get_program_test(%GetProgramTest.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, ProgramTest)
+
     payload =
       %{
-        "action" => "get_program_memory",
-        "input" => GetProgramMemory.Input.to_json(input)
+        "action" => "get_program_test",
+        "input" => GetProgramTest.Input.to_json(input),
+        "fields" => encode_fields(fields)
       }
-      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, & &1, nil)
+      decode_action_response(body, &ProgramTest.from_json/1, nil)
     end
   end
 
@@ -1213,6 +1214,32 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &AssessmentResponse.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `list_blocks` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def list_blocks(%ListBlocks.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, Block)
+
+    payload =
+      %{
+        "action" => "list_blocks",
+        "input" => ListBlocks.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &Block.from_list/1, nil)
     end
   end
 

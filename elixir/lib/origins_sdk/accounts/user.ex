@@ -16,6 +16,7 @@ defmodule OriginsSdk.Accounts.User do
     id: String.t(),
     instance_id: String.t() | nil,
     invited_at: DateTime.t() | nil,
+    is_creator: boolean(),
     is_super_admin: boolean() | nil,
     last_sign_in_at: DateTime.t() | nil,
     phone: String.t() | nil,
@@ -42,6 +43,7 @@ defmodule OriginsSdk.Accounts.User do
     :id,
     :instance_id,
     :invited_at,
+    :is_creator,
     :is_super_admin,
     :last_sign_in_at,
     :phone,
@@ -56,7 +58,7 @@ defmodule OriginsSdk.Accounts.User do
     :updated_at
   ]
 
-  @primitive_fields ~w(aud banned_until confirmation_sent_at confirmed_at created_at deleted_at email email_confirmed_at id instance_id invited_at is_super_admin last_sign_in_at phone phone_change_sent_at phone_confirmed_at raw_app_meta_data raw_user_meta_data reauthentication_sent_at recovery_sent_at role tenant_id updated_at)a
+  @primitive_fields ~w(aud banned_until confirmation_sent_at confirmed_at created_at deleted_at email email_confirmed_at id instance_id invited_at is_creator is_super_admin last_sign_in_at phone phone_change_sent_at phone_confirmed_at raw_app_meta_data raw_user_meta_data reauthentication_sent_at recovery_sent_at role tenant_id updated_at)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -78,6 +80,7 @@ defmodule OriginsSdk.Accounts.User do
       id: map["id"],
       instance_id: map["instance_id"],
       invited_at: OriginsSdk.Internal.decode_datetime(map["invited_at"]),
+      is_creator: map["is_creator"],
       is_super_admin: map["is_super_admin"],
       last_sign_in_at: OriginsSdk.Internal.decode_datetime(map["last_sign_in_at"]),
       phone: map["phone"],

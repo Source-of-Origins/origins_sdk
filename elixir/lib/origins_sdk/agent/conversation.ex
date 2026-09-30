@@ -8,9 +8,11 @@ defmodule OriginsSdk.Agent.Conversation do
     channel: String.t() | nil,
     closed_at: DateTime.t() | nil,
     created_at: DateTime.t(),
+    has_letta_agent: boolean() | nil,
     id: String.t(),
     is_root: boolean() | nil,
     last_message_at: DateTime.t(),
+    message_count: integer(),
     metadata: map() | nil,
     origin_entity_id: String.t(),
     phone_number: String.t() | nil,
@@ -29,9 +31,11 @@ defmodule OriginsSdk.Agent.Conversation do
     :channel,
     :closed_at,
     :created_at,
+    :has_letta_agent,
     :id,
     :is_root,
     :last_message_at,
+    :message_count,
     :metadata,
     :origin_entity_id,
     :phone_number,
@@ -46,7 +50,7 @@ defmodule OriginsSdk.Agent.Conversation do
     :user_name
   ]
 
-  @primitive_fields ~w(channel closed_at created_at id is_root last_message_at metadata origin_entity_id phone_number root_conversation_id session_id sms_opt_in started_at status updated_at user_email user_id user_name)a
+  @primitive_fields ~w(channel closed_at created_at has_letta_agent id is_root last_message_at message_count metadata origin_entity_id phone_number root_conversation_id session_id sms_opt_in started_at status updated_at user_email user_id user_name)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -60,9 +64,11 @@ defmodule OriginsSdk.Agent.Conversation do
       channel: map["channel"],
       closed_at: OriginsSdk.Internal.decode_datetime(map["closed_at"]),
       created_at: OriginsSdk.Internal.decode_datetime(map["created_at"]),
+      has_letta_agent: map["has_letta_agent"],
       id: map["id"],
       is_root: map["is_root"],
       last_message_at: OriginsSdk.Internal.decode_datetime(map["last_message_at"]),
+      message_count: map["message_count"],
       metadata: map["metadata"],
       origin_entity_id: map["origin_entity_id"],
       phone_number: map["phone_number"],

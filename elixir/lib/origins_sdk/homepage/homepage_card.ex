@@ -22,6 +22,7 @@ defmodule OriginsSdk.Homepage.HomepageCard do
     name: String.t(),
     order_index: integer(),
     origin_entity_id: String.t() | nil,
+    presigned_avatar_url: String.t() | nil,
     role: String.t(),
     tags: list() | nil,
     updated_at: DateTime.t(),
@@ -46,13 +47,14 @@ defmodule OriginsSdk.Homepage.HomepageCard do
     :name,
     :order_index,
     :origin_entity_id,
+    :presigned_avatar_url,
     :role,
     :tags,
     :updated_at,
     :use_gradient
   ]
 
-  @primitive_fields ~w(ai_enabled avatar_key avatar_shape avatar_size avatar_url avatar_vertical_position background_color created_at custom_url description destination_type gradient id is_active name order_index origin_entity_id role tags updated_at use_gradient)a
+  @primitive_fields ~w(ai_enabled avatar_key avatar_shape avatar_size avatar_url avatar_vertical_position background_color created_at custom_url description destination_type gradient id is_active name order_index origin_entity_id presigned_avatar_url role tags updated_at use_gradient)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
@@ -80,6 +82,7 @@ defmodule OriginsSdk.Homepage.HomepageCard do
       name: map["name"],
       order_index: map["order_index"],
       origin_entity_id: map["origin_entity_id"],
+      presigned_avatar_url: map["presigned_avatar_url"],
       role: map["role"],
       tags: map["tags"],
       updated_at: OriginsSdk.Internal.decode_datetime(map["updated_at"]),
