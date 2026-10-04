@@ -33,6 +33,9 @@ defmodule OriginsSdk.Agent.MessageAttachment do
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
 
+  @doc "Every field as the server's field selector wants it: nested embedded and typed-struct attributes carry their own field lists."
+  def field_tree, do: [:created_at, :file_name, :file_size, :file_type, :id, :message_id, :parsed_content, :pending_message_id, :storage_path]
+
   @doc false
   @spec from_json(map() | nil) :: t() | nil
   def from_json(nil), do: nil

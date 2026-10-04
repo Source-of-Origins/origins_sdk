@@ -81,18 +81,24 @@ defmodule OriginsSdk.Accounts do
   Set a password on an anonymous quiz account from an emailed claim link, and return a JWT.
 
   ## Options
+    * `:fields` — required. The fields to return; a nested embedded or
+      typed-struct attribute is `{name, [...]}`. `SocialSignInResponse.field_tree/0`
+      names everything.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action returns an embedded `SocialSignInResponse` (a fixed shape, no
-  field selection), decoded from the response body.
+  The action returns an embedded `SocialSignInResponse`, decoded from the
+  response body.
   """
-  def confirm_anonymous_account(%ConfirmAnonymousAccount.Input{} = input, opts \\ []) do
+  def confirm_anonymous_account(%ConfirmAnonymousAccount.Input{} = input, opts) do
+    fields = Keyword.fetch!(opts, :fields)
+
     payload =
       %{
         "action" => "confirm_anonymous_account",
-        "input" => ConfirmAnonymousAccount.Input.to_json(input)
+        "input" => ConfirmAnonymousAccount.Input.to_json(input),
+        "fields" => encode_fields(fields)
       }
       |> maybe_put("tenant", opts[:tenant])
 
@@ -821,18 +827,24 @@ defmodule OriginsSdk.Accounts do
   
 
   ## Options
+    * `:fields` — required. The fields to return; a nested embedded or
+      typed-struct attribute is `{name, [...]}`. `SignInLinkResponse.field_tree/0`
+      names everything.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action returns an embedded `SignInLinkResponse` (a fixed shape, no
-  field selection), decoded from the response body.
+  The action returns an embedded `SignInLinkResponse`, decoded from the
+  response body.
   """
-  def request_origin_magic_link(%RequestOriginMagicLink.Input{} = input, opts \\ []) do
+  def request_origin_magic_link(%RequestOriginMagicLink.Input{} = input, opts) do
+    fields = Keyword.fetch!(opts, :fields)
+
     payload =
       %{
         "action" => "request_origin_magic_link",
-        "input" => RequestOriginMagicLink.Input.to_json(input)
+        "input" => RequestOriginMagicLink.Input.to_json(input),
+        "fields" => encode_fields(fields)
       }
       |> maybe_put("tenant", opts[:tenant])
 
@@ -899,18 +911,24 @@ defmodule OriginsSdk.Accounts do
   Set the caller's password and return a fresh JWT.
 
   ## Options
+    * `:fields` — required. The fields to return; a nested embedded or
+      typed-struct attribute is `{name, [...]}`. `SocialSignInResponse.field_tree/0`
+      names everything.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action returns an embedded `SocialSignInResponse` (a fixed shape, no
-  field selection), decoded from the response body.
+  The action returns an embedded `SocialSignInResponse`, decoded from the
+  response body.
   """
-  def set_own_password(%SetOwnPassword.Input{} = input, opts \\ []) do
+  def set_own_password(%SetOwnPassword.Input{} = input, opts) do
+    fields = Keyword.fetch!(opts, :fields)
+
     payload =
       %{
         "action" => "set_own_password",
-        "input" => SetOwnPassword.Input.to_json(input)
+        "input" => SetOwnPassword.Input.to_json(input),
+        "fields" => encode_fields(fields)
       }
       |> maybe_put("tenant", opts[:tenant])
 
@@ -950,18 +968,24 @@ defmodule OriginsSdk.Accounts do
   Verify an Apple id_token, resolve/create the user, and return a JWT (SDK entrypoint).
 
   ## Options
+    * `:fields` — required. The fields to return; a nested embedded or
+      typed-struct attribute is `{name, [...]}`. `SocialSignInResponse.field_tree/0`
+      names everything.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action returns an embedded `SocialSignInResponse` (a fixed shape, no
-  field selection), decoded from the response body.
+  The action returns an embedded `SocialSignInResponse`, decoded from the
+  response body.
   """
-  def sign_in_with_apple_token(%SignInWithAppleToken.Input{} = input, opts \\ []) do
+  def sign_in_with_apple_token(%SignInWithAppleToken.Input{} = input, opts) do
+    fields = Keyword.fetch!(opts, :fields)
+
     payload =
       %{
         "action" => "sign_in_with_apple_token",
-        "input" => SignInWithAppleToken.Input.to_json(input)
+        "input" => SignInWithAppleToken.Input.to_json(input),
+        "fields" => encode_fields(fields)
       }
       |> maybe_put("tenant", opts[:tenant])
 
@@ -975,18 +999,24 @@ defmodule OriginsSdk.Accounts do
   Verify a Google id_token, resolve/create the user, and return a JWT (SDK entrypoint).
 
   ## Options
+    * `:fields` — required. The fields to return; a nested embedded or
+      typed-struct attribute is `{name, [...]}`. `SocialSignInResponse.field_tree/0`
+      names everything.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action returns an embedded `SocialSignInResponse` (a fixed shape, no
-  field selection), decoded from the response body.
+  The action returns an embedded `SocialSignInResponse`, decoded from the
+  response body.
   """
-  def sign_in_with_google_token(%SignInWithGoogleToken.Input{} = input, opts \\ []) do
+  def sign_in_with_google_token(%SignInWithGoogleToken.Input{} = input, opts) do
+    fields = Keyword.fetch!(opts, :fields)
+
     payload =
       %{
         "action" => "sign_in_with_google_token",
-        "input" => SignInWithGoogleToken.Input.to_json(input)
+        "input" => SignInWithGoogleToken.Input.to_json(input),
+        "fields" => encode_fields(fields)
       }
       |> maybe_put("tenant", opts[:tenant])
 

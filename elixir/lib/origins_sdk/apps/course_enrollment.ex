@@ -51,6 +51,9 @@ defmodule OriginsSdk.Apps.CourseEnrollment do
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
 
+  @doc "Every field as the server's field selector wants it: nested embedded and typed-struct attributes carry their own field lists."
+  def field_tree, do: [:app_id, :assessment_answers, :character_id, :created_at, :current_personalization_id, :current_phase_id, :current_phase_started_at, :current_session_id, :enrolled_at, :entered_session_ids, :id, :reactivated_at, :settings, :status, :streak_count, :streak_last_date, :updated_at, :user_id]
+
   @doc false
   @spec from_json(map() | nil) :: t() | nil
   def from_json(nil), do: nil

@@ -47,6 +47,9 @@ defmodule OriginsSdk.Apps.App do
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
 
+  @doc "Every field as the server's field selector wants it: nested embedded and typed-struct attributes carry their own field lists."
+  def field_tree, do: [:created_at, :generation_error, :generation_format, :generation_prompt, :generation_status, :has_letta_agent, :id, :is_published, :markdoc_content, :meta, :origin_entity_id, :page_type, :slug, :source, :title, :updated_at]
+
   @doc false
   @spec from_json(map() | nil) :: t() | nil
   def from_json(nil), do: nil

@@ -55,6 +55,9 @@ defmodule OriginsSdk.Agent.Conversation do
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
 
+  @doc "Every field as the server's field selector wants it: nested embedded and typed-struct attributes carry their own field lists."
+  def field_tree, do: [:channel, :closed_at, :created_at, :has_letta_agent, :id, :is_root, :last_message_at, :message_count, :metadata, :origin_entity_id, :phone_number, :root_conversation_id, :session_id, :sms_opt_in, :started_at, :status, :updated_at, :user_email, :user_id, :user_name]
+
   @doc false
   @spec from_json(map() | nil) :: t() | nil
   def from_json(nil), do: nil

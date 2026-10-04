@@ -28,6 +28,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.CreateProgramTest
   alias OriginsSdk.Apps.CreateWebhookSubscription
   alias OriginsSdk.Apps.DailyBriefing
+  alias OriginsSdk.Apps.DailyBriefingResult
   alias OriginsSdk.Apps.DestroyApp
   alias OriginsSdk.Apps.DestroyPlan
   alias OriginsSdk.Apps.DestroyProgramTest
@@ -492,23 +493,29 @@ defmodule OriginsSdk.Apps do
   Run the `daily_briefing` action.
 
   ## Options
+    * `:fields` — required. The fields to return; a nested embedded or
+      typed-struct attribute is `{name, [...]}`. `DailyBriefingResult.field_tree/0`
+      names everything.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action returns an embedded `DailyBriefing` (a fixed shape, no
-  field selection), decoded from the response body.
+  The action returns an embedded `DailyBriefingResult`, decoded from the
+  response body.
   """
-  def daily_briefing(%DailyBriefing.Input{} = input, opts \\ []) do
+  def daily_briefing(%DailyBriefing.Input{} = input, opts) do
+    fields = Keyword.fetch!(opts, :fields)
+
     payload =
       %{
         "action" => "daily_briefing",
-        "input" => DailyBriefing.Input.to_json(input)
+        "input" => DailyBriefing.Input.to_json(input),
+        "fields" => encode_fields(fields)
       }
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &DailyBriefing.from_json/1, nil)
+      decode_action_response(body, &DailyBriefingResult.from_json/1, nil)
     end
   end
 
@@ -700,18 +707,24 @@ defmodule OriginsSdk.Apps do
   Run the `gated_personalized_course_for_user` action.
 
   ## Options
+    * `:fields` — required. The fields to return; a nested embedded or
+      typed-struct attribute is `{name, [...]}`. `GatedCoursePayload.field_tree/0`
+      names everything.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action returns an embedded `GatedCoursePayload` (a fixed shape, no
-  field selection), decoded from the response body.
+  The action returns an embedded `GatedCoursePayload`, decoded from the
+  response body.
   """
-  def gated_personalized_course_for_user(%GatedPersonalizedCourseForUser.Input{} = input, opts \\ []) do
+  def gated_personalized_course_for_user(%GatedPersonalizedCourseForUser.Input{} = input, opts) do
+    fields = Keyword.fetch!(opts, :fields)
+
     payload =
       %{
         "action" => "gated_personalized_course_for_user",
-        "input" => GatedPersonalizedCourseForUser.Input.to_json(input)
+        "input" => GatedPersonalizedCourseForUser.Input.to_json(input),
+        "fields" => encode_fields(fields)
       }
       |> maybe_put("tenant", opts[:tenant])
 
@@ -777,18 +790,24 @@ defmodule OriginsSdk.Apps do
   Run the `get_assessment_graph` action.
 
   ## Options
+    * `:fields` — required. The fields to return; a nested embedded or
+      typed-struct attribute is `{name, [...]}`. `AssessmentGraph.field_tree/0`
+      names everything.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action returns an embedded `AssessmentGraph` (a fixed shape, no
-  field selection), decoded from the response body.
+  The action returns an embedded `AssessmentGraph`, decoded from the
+  response body.
   """
-  def get_assessment_graph(%GetAssessmentGraph.Input{} = input, opts \\ []) do
+  def get_assessment_graph(%GetAssessmentGraph.Input{} = input, opts) do
+    fields = Keyword.fetch!(opts, :fields)
+
     payload =
       %{
         "action" => "get_assessment_graph",
-        "input" => GetAssessmentGraph.Input.to_json(input)
+        "input" => GetAssessmentGraph.Input.to_json(input),
+        "fields" => encode_fields(fields)
       }
       |> maybe_put("tenant", opts[:tenant])
 
@@ -854,18 +873,24 @@ defmodule OriginsSdk.Apps do
   Run the `get_enrollment_completions` action.
 
   ## Options
+    * `:fields` — required. The fields to return; a nested embedded or
+      typed-struct attribute is `{name, [...]}`. `EnrollmentCompletions.field_tree/0`
+      names everything.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action returns an embedded `EnrollmentCompletions` (a fixed shape, no
-  field selection), decoded from the response body.
+  The action returns an embedded `EnrollmentCompletions`, decoded from the
+  response body.
   """
-  def get_enrollment_completions(%GetEnrollmentCompletions.Input{} = input, opts \\ []) do
+  def get_enrollment_completions(%GetEnrollmentCompletions.Input{} = input, opts) do
+    fields = Keyword.fetch!(opts, :fields)
+
     payload =
       %{
         "action" => "get_enrollment_completions",
-        "input" => GetEnrollmentCompletions.Input.to_json(input)
+        "input" => GetEnrollmentCompletions.Input.to_json(input),
+        "fields" => encode_fields(fields)
       }
       |> maybe_put("tenant", opts[:tenant])
 
@@ -1431,23 +1456,29 @@ defmodule OriginsSdk.Apps do
   Run the `mark_briefing_read` action.
 
   ## Options
+    * `:fields` — required. The fields to return; a nested embedded or
+      typed-struct attribute is `{name, [...]}`. `DailyBriefingResult.field_tree/0`
+      names everything.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action returns an embedded `DailyBriefing` (a fixed shape, no
-  field selection), decoded from the response body.
+  The action returns an embedded `DailyBriefingResult`, decoded from the
+  response body.
   """
-  def mark_briefing_read(%MarkBriefingRead.Input{} = input, opts \\ []) do
+  def mark_briefing_read(%MarkBriefingRead.Input{} = input, opts) do
+    fields = Keyword.fetch!(opts, :fields)
+
     payload =
       %{
         "action" => "mark_briefing_read",
-        "input" => MarkBriefingRead.Input.to_json(input)
+        "input" => MarkBriefingRead.Input.to_json(input),
+        "fields" => encode_fields(fields)
       }
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &DailyBriefing.from_json/1, nil)
+      decode_action_response(body, &DailyBriefingResult.from_json/1, nil)
     end
   end
 
@@ -1483,18 +1514,24 @@ defmodule OriginsSdk.Apps do
   Run the `parse_authoring_document` action.
 
   ## Options
+    * `:fields` — required. The fields to return; a nested embedded or
+      typed-struct attribute is `{name, [...]}`. `AuthoringDocument.field_tree/0`
+      names everything.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action returns an embedded `AuthoringDocument` (a fixed shape, no
-  field selection), decoded from the response body.
+  The action returns an embedded `AuthoringDocument`, decoded from the
+  response body.
   """
-  def parse_authoring_document(%ParseAuthoringDocument.Input{} = input, opts \\ []) do
+  def parse_authoring_document(%ParseAuthoringDocument.Input{} = input, opts) do
+    fields = Keyword.fetch!(opts, :fields)
+
     payload =
       %{
         "action" => "parse_authoring_document",
-        "input" => ParseAuthoringDocument.Input.to_json(input)
+        "input" => ParseAuthoringDocument.Input.to_json(input),
+        "fields" => encode_fields(fields)
       }
       |> maybe_put("tenant", opts[:tenant])
 

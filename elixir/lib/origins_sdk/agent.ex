@@ -28,18 +28,24 @@ defmodule OriginsSdk.Agent do
   Public chat with an Origin (brand or avatar) using Letta agents
 
   ## Options
+    * `:fields` — required. The fields to return; a nested embedded or
+      typed-struct attribute is `{name, [...]}`. `ChatReply.field_tree/0`
+      names everything.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action returns an embedded `ChatReply` (a fixed shape, no
-  field selection), decoded from the response body.
+  The action returns an embedded `ChatReply`, decoded from the
+  response body.
   """
-  def avatar_public_chat(%AvatarPublicChat.Input{} = input, opts \\ []) do
+  def avatar_public_chat(%AvatarPublicChat.Input{} = input, opts) do
+    fields = Keyword.fetch!(opts, :fields)
+
     payload =
       %{
         "action" => "avatar_public_chat",
-        "input" => AvatarPublicChat.Input.to_json(input)
+        "input" => AvatarPublicChat.Input.to_json(input),
+        "fields" => encode_fields(fields)
       }
       |> maybe_put("tenant", opts[:tenant])
 
@@ -132,18 +138,24 @@ defmodule OriginsSdk.Agent do
   Generate contextual chat suggestions based on conversation history
 
   ## Options
+    * `:fields` — required. The fields to return; a nested embedded or
+      typed-struct attribute is `{name, [...]}`. `ChatSuggestions.field_tree/0`
+      names everything.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action returns an embedded `ChatSuggestions` (a fixed shape, no
-  field selection), decoded from the response body.
+  The action returns an embedded `ChatSuggestions`, decoded from the
+  response body.
   """
-  def generate_chat_suggestions(%GenerateChatSuggestions.Input{} = input, opts \\ []) do
+  def generate_chat_suggestions(%GenerateChatSuggestions.Input{} = input, opts) do
+    fields = Keyword.fetch!(opts, :fields)
+
     payload =
       %{
         "action" => "generate_chat_suggestions",
-        "input" => GenerateChatSuggestions.Input.to_json(input)
+        "input" => GenerateChatSuggestions.Input.to_json(input),
+        "fields" => encode_fields(fields)
       }
       |> maybe_put("tenant", opts[:tenant])
 
@@ -184,18 +196,24 @@ defmodule OriginsSdk.Agent do
   Get conversation history from Letta agent
 
   ## Options
+    * `:fields` — required. The fields to return; a nested embedded or
+      typed-struct attribute is `{name, [...]}`. `ChatMessage.field_tree/0`
+      names everything.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action returns an embedded `ChatMessage` (a fixed shape, no
-  field selection), decoded from the response body.
+  The action returns an embedded `ChatMessage`, decoded from the
+  response body.
   """
-  def get_conversation_history(%GetConversationHistory.Input{} = input, opts \\ []) do
+  def get_conversation_history(%GetConversationHistory.Input{} = input, opts) do
+    fields = Keyword.fetch!(opts, :fields)
+
     payload =
       %{
         "action" => "get_conversation_history",
-        "input" => GetConversationHistory.Input.to_json(input)
+        "input" => GetConversationHistory.Input.to_json(input),
+        "fields" => encode_fields(fields)
       }
       |> maybe_put("tenant", opts[:tenant])
 
@@ -209,18 +227,24 @@ defmodule OriginsSdk.Agent do
   Whether a turn is running on a conversation, and when its claim lapses
 
   ## Options
+    * `:fields` — required. The fields to return; a nested embedded or
+      typed-struct attribute is `{name, [...]}`. `TurnState.field_tree/0`
+      names everything.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action returns an embedded `TurnState` (a fixed shape, no
-  field selection), decoded from the response body.
+  The action returns an embedded `TurnState`, decoded from the
+  response body.
   """
-  def get_turn_state(%GetTurnState.Input{} = input, opts \\ []) do
+  def get_turn_state(%GetTurnState.Input{} = input, opts) do
+    fields = Keyword.fetch!(opts, :fields)
+
     payload =
       %{
         "action" => "get_turn_state",
-        "input" => GetTurnState.Input.to_json(input)
+        "input" => GetTurnState.Input.to_json(input),
+        "fields" => encode_fields(fields)
       }
       |> maybe_put("tenant", opts[:tenant])
 
@@ -313,18 +337,24 @@ defmodule OriginsSdk.Agent do
   Preview chat for testing brand/avatar Origin configuration
 
   ## Options
+    * `:fields` — required. The fields to return; a nested embedded or
+      typed-struct attribute is `{name, [...]}`. `ChatReply.field_tree/0`
+      names everything.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action returns an embedded `ChatReply` (a fixed shape, no
-  field selection), decoded from the response body.
+  The action returns an embedded `ChatReply`, decoded from the
+  response body.
   """
-  def preview_chat(%PreviewChat.Input{} = input, opts \\ []) do
+  def preview_chat(%PreviewChat.Input{} = input, opts) do
+    fields = Keyword.fetch!(opts, :fields)
+
     payload =
       %{
         "action" => "preview_chat",
-        "input" => PreviewChat.Input.to_json(input)
+        "input" => PreviewChat.Input.to_json(input),
+        "fields" => encode_fields(fields)
       }
       |> maybe_put("tenant", opts[:tenant])
 

@@ -1286,18 +1286,24 @@ defmodule OriginsSdk.Identity do
   Scrape and extract content from a website URL
 
   ## Options
+    * `:fields` — required. The fields to return; a nested embedded or
+      typed-struct attribute is `{name, [...]}`. `ScrapedWebsiteContent.field_tree/0`
+      names everything.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action returns an embedded `ScrapedWebsiteContent` (a fixed shape, no
-  field selection), decoded from the response body.
+  The action returns an embedded `ScrapedWebsiteContent`, decoded from the
+  response body.
   """
-  def scrape_website_content(%ScrapeWebsiteContent.Input{} = input, opts \\ []) do
+  def scrape_website_content(%ScrapeWebsiteContent.Input{} = input, opts) do
+    fields = Keyword.fetch!(opts, :fields)
+
     payload =
       %{
         "action" => "scrape_website_content",
-        "input" => ScrapeWebsiteContent.Input.to_json(input)
+        "input" => ScrapeWebsiteContent.Input.to_json(input),
+        "fields" => encode_fields(fields)
       }
       |> maybe_put("tenant", opts[:tenant])
 

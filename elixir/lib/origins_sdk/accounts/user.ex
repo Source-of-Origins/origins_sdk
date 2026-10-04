@@ -63,6 +63,9 @@ defmodule OriginsSdk.Accounts.User do
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
 
+  @doc "Every field as the server's field selector wants it: nested embedded and typed-struct attributes carry their own field lists."
+  def field_tree, do: [:aud, :banned_until, :confirmation_sent_at, :confirmed_at, :created_at, :deleted_at, :email, :email_confirmed_at, :id, :instance_id, :invited_at, :is_creator, :is_super_admin, :last_sign_in_at, :phone, :phone_change_sent_at, :phone_confirmed_at, :raw_app_meta_data, :raw_user_meta_data, :reauthentication_sent_at, :recovery_sent_at, :role, :tenant_id, :updated_at]
+
   @doc false
   @spec from_json(map() | nil) :: t() | nil
   def from_json(nil), do: nil

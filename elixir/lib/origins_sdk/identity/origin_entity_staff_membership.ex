@@ -41,6 +41,9 @@ defmodule OriginsSdk.Identity.OriginEntityStaffMembership do
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
 
+  @doc "Every field as the server's field selector wants it: nested embedded and typed-struct attributes carry their own field lists."
+  def field_tree, do: [:accepted_at, :created_at, :expires_at, :id, :invitation_token, :invited_by, :invited_email, :joined_at, :origin_entity_id, :role, :status, :updated_at, :user_id]
+
   @doc false
   @spec from_json(map() | nil) :: t() | nil
   def from_json(nil), do: nil

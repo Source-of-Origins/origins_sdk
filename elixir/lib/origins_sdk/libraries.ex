@@ -887,18 +887,24 @@ defmodule OriginsSdk.Libraries do
   List downloadable static renditions for a library file (read-only, off the playback hot path).
 
   ## Options
+    * `:fields` — required. The fields to return; a nested embedded or
+      typed-struct attribute is `{name, [...]}`. `StaticRendition.field_tree/0`
+      names everything.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action returns an embedded `StaticRendition` (a fixed shape, no
-  field selection), decoded from the response body.
+  The action returns an embedded `StaticRendition`, decoded from the
+  response body.
   """
-  def list_video_static_renditions(%ListVideoStaticRenditions.Input{} = input, opts \\ []) do
+  def list_video_static_renditions(%ListVideoStaticRenditions.Input{} = input, opts) do
+    fields = Keyword.fetch!(opts, :fields)
+
     payload =
       %{
         "action" => "list_video_static_renditions",
-        "input" => ListVideoStaticRenditions.Input.to_json(input)
+        "input" => ListVideoStaticRenditions.Input.to_json(input),
+        "fields" => encode_fields(fields)
       }
       |> maybe_put("tenant", opts[:tenant])
 
@@ -995,18 +1001,24 @@ defmodule OriginsSdk.Libraries do
   Ask Otterwake to mint downloadable static renditions (presigns the source server-side).
 
   ## Options
+    * `:fields` — required. The fields to return; a nested embedded or
+      typed-struct attribute is `{name, [...]}`. `StaticRenditionRequestResult.field_tree/0`
+      names everything.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action returns an embedded `StaticRenditionRequestResult` (a fixed shape, no
-  field selection), decoded from the response body.
+  The action returns an embedded `StaticRenditionRequestResult`, decoded from the
+  response body.
   """
-  def request_static_renditions(%RequestStaticRenditions.Input{} = input, opts \\ []) do
+  def request_static_renditions(%RequestStaticRenditions.Input{} = input, opts) do
+    fields = Keyword.fetch!(opts, :fields)
+
     payload =
       %{
         "action" => "request_static_renditions",
-        "input" => RequestStaticRenditions.Input.to_json(input)
+        "input" => RequestStaticRenditions.Input.to_json(input),
+        "fields" => encode_fields(fields)
       }
       |> maybe_put("tenant", opts[:tenant])
 
@@ -1020,18 +1032,24 @@ defmodule OriginsSdk.Libraries do
   Resolve a VFS path to a playable HLS URL (read-only, zero side effects).
 
   ## Options
+    * `:fields` — required. The fields to return; a nested embedded or
+      typed-struct attribute is `{name, [...]}`. `ResolvedPlayback.field_tree/0`
+      names everything.
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
 
-  The action returns an embedded `ResolvedPlayback` (a fixed shape, no
-  field selection), decoded from the response body.
+  The action returns an embedded `ResolvedPlayback`, decoded from the
+  response body.
   """
-  def resolve_video_playback(%ResolveVideoPlayback.Input{} = input, opts \\ []) do
+  def resolve_video_playback(%ResolveVideoPlayback.Input{} = input, opts) do
+    fields = Keyword.fetch!(opts, :fields)
+
     payload =
       %{
         "action" => "resolve_video_playback",
-        "input" => ResolveVideoPlayback.Input.to_json(input)
+        "input" => ResolveVideoPlayback.Input.to_json(input),
+        "fields" => encode_fields(fields)
       }
       |> maybe_put("tenant", opts[:tenant])
 

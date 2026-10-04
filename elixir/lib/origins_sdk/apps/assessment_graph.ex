@@ -21,6 +21,9 @@ defmodule OriginsSdk.Apps.AssessmentGraph do
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
 
+  @doc "Every field as the server's field selector wants it: nested embedded and typed-struct attributes carry their own field lists."
+  def field_tree, do: [{:edges, [:condition_field, :condition_op, :condition_type, :condition_value, :source, :target]}, {:nodes, [:description, :highlight, :id, :kind, :loading_bars, :max, :min, {:options, [:label, :route, :segment, :value]}, :required, {:sliders, [:high_label, :id, :label, :low_label, :max, :min]}, :subtitle, :summary_items, :title, :type, :weight]}, :start_node]
+
   @doc false
   @spec from_json(map() | nil) :: t() | nil
   def from_json(nil), do: nil

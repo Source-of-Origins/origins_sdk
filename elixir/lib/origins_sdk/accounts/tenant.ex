@@ -31,6 +31,9 @@ defmodule OriginsSdk.Accounts.Tenant do
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
 
+  @doc "Every field as the server's field selector wants it: nested embedded and typed-struct attributes carry their own field lists."
+  def field_tree, do: [:archived_at, :created_at, :id, :name, :root_origin_entity_id, :slug, :status, :updated_at]
+
   @doc false
   @spec from_json(map() | nil) :: t() | nil
   def from_json(nil), do: nil

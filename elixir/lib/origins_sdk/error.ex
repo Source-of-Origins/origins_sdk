@@ -5,14 +5,13 @@ defmodule OriginsSdk.Error do
   error. Transport-level failures come back as raw exceptions from `Req`.
   """
 
-  defstruct [:type, :message, :field, :fields, :code, :details]
+  defstruct [:type, :message, :field, :fields, :details]
 
   @type t :: %__MODULE__{
           type: String.t() | nil,
           message: String.t() | nil,
           field: String.t() | nil,
           fields: [String.t()] | nil,
-          code: String.t() | nil,
           details: map() | nil
         }
 
@@ -23,7 +22,6 @@ defmodule OriginsSdk.Error do
       message: map["message"],
       field: map["field"],
       fields: map["fields"],
-      code: map["code"],
       details: map["details"]
     }
   end

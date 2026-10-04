@@ -59,6 +59,9 @@ defmodule OriginsSdk.Homepage.HomepageCard do
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
 
+  @doc "Every field as the server's field selector wants it: nested embedded and typed-struct attributes carry their own field lists."
+  def field_tree, do: [:ai_enabled, :avatar_key, :avatar_shape, :avatar_size, :avatar_url, :avatar_vertical_position, :background_color, :created_at, :custom_url, :description, :destination_type, :gradient, :id, :is_active, :name, :order_index, :origin_entity_id, :presigned_avatar_url, :role, :tags, :updated_at, :use_gradient]
+
   @doc false
   @spec from_json(map() | nil) :: t() | nil
   def from_json(nil), do: nil

@@ -57,6 +57,9 @@ defmodule OriginsSdk.Podcasts.YoutubeEpisode do
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
 
+  @doc "Every field as the server's field selector wants it: nested embedded and typed-struct attributes carry their own field lists."
+  def field_tree, do: [:conversation_starters, :created_at, :description, :duration, :episode_number, :guest_ids, :guest_names, :host_ids, :id, :origin_entity_id, :playlist_id, :public_profile_config, :publish_date, :thumbnail_url, :title, :transcript_id, :updated_at, :used_in_podcast, :used_in_public_profile, :video_id, :video_url]
+
   @doc false
   @spec from_json(map() | nil) :: t() | nil
   def from_json(nil), do: nil

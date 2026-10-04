@@ -39,6 +39,9 @@ defmodule OriginsSdk.Identity.PromptContext do
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
 
+  @doc "Every field as the server's field selector wants it: nested embedded and typed-struct attributes carry their own field lists."
+  def field_tree, do: [:context_text, :created_at, {:guardrail_config, [:allowed_toxicity_categories, :confidence_threshold, :grounding_check, :grounding_threshold, :input_jailbreak_detection, :input_max_length, :input_prompt_injection_detection, :input_toxicity_detection, :output_content_moderation, :output_data_leakage_prevention, :output_toxicity_detection]}, :id, :is_active, :is_default, :name, :origin_entity_id, :prompt_tool_ids, :public_description, :public_title, :updated_at]
+
   @doc false
   @spec from_json(map() | nil) :: t() | nil
   def from_json(nil), do: nil

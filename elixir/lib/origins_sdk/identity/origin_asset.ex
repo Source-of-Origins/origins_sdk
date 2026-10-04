@@ -39,6 +39,9 @@ defmodule OriginsSdk.Identity.OriginAsset do
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
 
+  @doc "Every field as the server's field selector wants it: nested embedded and typed-struct attributes carry their own field lists."
+  def field_tree, do: [:asset_key, :asset_metadata, :asset_name, :asset_type, :asset_url, :created_at, :id, :is_shared_globally, :origin_entity_id, :shared_with_origin_entity_ids, :source_platform, :updated_at]
+
   @doc false
   @spec from_json(map() | nil) :: t() | nil
   def from_json(nil), do: nil

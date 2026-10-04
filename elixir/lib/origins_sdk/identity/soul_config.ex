@@ -45,6 +45,9 @@ defmodule OriginsSdk.Identity.SoulConfig do
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
 
+  @doc "Every field as the server's field selector wants it: nested embedded and typed-struct attributes carry their own field lists."
+  def field_tree, do: [{:communication_style, [:notes]}, :conversation_starters, :core_instructions, :created_at, {:experience_settings, [:context_awareness, :personalized_responses, :proactive_assistance, :welcome_message]}, :guardrails_settings, :id, :origin_entity_id, :personality_traits, :purpose_statement, {:response_format_preferences, [:include_examples, :use_bullet_points, :use_emojis]}, :response_length, :speaking_tone, :updated_at, :vocabulary_preferences]
+
   @doc false
   @spec from_json(map() | nil) :: t() | nil
   def from_json(nil), do: nil

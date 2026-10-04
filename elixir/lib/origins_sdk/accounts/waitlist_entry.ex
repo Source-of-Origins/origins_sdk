@@ -47,6 +47,9 @@ defmodule OriginsSdk.Accounts.WaitlistEntry do
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
 
+  @doc "Every field as the server's field selector wants it: nested embedded and typed-struct attributes carry their own field lists."
+  def field_tree, do: [:approved_by, :company_name, :created_at, :email, :expires_at, :full_name, :id, :interest_areas, :invitation_token, :invited_at, :message, :metadata, :role, :source, :status, :updated_at]
+
   @doc false
   @spec from_json(map() | nil) :: t() | nil
   def from_json(nil), do: nil
