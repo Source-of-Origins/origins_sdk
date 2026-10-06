@@ -6,21 +6,23 @@ defmodule OriginsSdk.Agent.ChatReply do
 
   @type t :: %__MODULE__{
     conversation_id: String.t(),
+    data: map() | nil,
     response: String.t()
     }
 
   defstruct [
     :conversation_id,
+    :data,
     :response
   ]
 
-  @primitive_fields ~w(conversation_id response)a
+  @primitive_fields ~w(conversation_id data response)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
 
   @doc "Every field as the server's field selector wants it: nested embedded and typed-struct attributes carry their own field lists."
-  def field_tree, do: [:conversation_id, :response]
+  def field_tree, do: [:conversation_id, :data, :response]
 
   @doc false
   @spec from_json(map() | nil) :: t() | nil
@@ -29,6 +31,7 @@ defmodule OriginsSdk.Agent.ChatReply do
   def from_json(map) when is_map(map) do
     %__MODULE__{
       conversation_id: map["conversation_id"],
+      data: map["data"],
       response: map["response"]
     }
   end
