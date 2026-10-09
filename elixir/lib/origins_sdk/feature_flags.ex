@@ -39,18 +39,22 @@ defmodule OriginsSdk.FeatureFlags do
   @doc """
   Run the `delete_feature_flag` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def delete_feature_flag(%DeleteFeatureFlag.Input{} = input, opts \\ []) do
+  def delete_feature_flag(identity, %DeleteFeatureFlag.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, FeatureFlag)
 
     payload =
       %{
         "action" => "delete_feature_flag",
+        "identity" => identity,
         "input" => DeleteFeatureFlag.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -91,18 +95,22 @@ defmodule OriginsSdk.FeatureFlags do
   @doc """
   Run the `update_feature_flag` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update_feature_flag(%UpdateFeatureFlag.Input{} = input, opts \\ []) do
+  def update_feature_flag(identity, %UpdateFeatureFlag.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, FeatureFlag)
 
     payload =
       %{
         "action" => "update_feature_flag",
+        "identity" => identity,
         "input" => UpdateFeatureFlag.Input.to_json(input),
         "fields" => encode_fields(fields)
       }

@@ -79,18 +79,22 @@ defmodule OriginsSdk.Podcasts do
   @doc """
   Run the `delete_youtube_episode` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def delete_youtube_episode(%DeleteYoutubeEpisode.Input{} = input, opts \\ []) do
+  def delete_youtube_episode(identity, %DeleteYoutubeEpisode.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, YoutubeEpisode)
 
     payload =
       %{
         "action" => "delete_youtube_episode",
+        "identity" => identity,
         "input" => DeleteYoutubeEpisode.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -342,18 +346,22 @@ defmodule OriginsSdk.Podcasts do
   @doc """
   Run the `update_podcast_config` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update_podcast_config(%UpdatePodcastConfig.Input{} = input, opts \\ []) do
+  def update_podcast_config(identity, %UpdatePodcastConfig.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, PodcastConfig)
 
     payload =
       %{
         "action" => "update_podcast_config",
+        "identity" => identity,
         "input" => UpdatePodcastConfig.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -368,18 +376,22 @@ defmodule OriginsSdk.Podcasts do
   @doc """
   Run the `update_youtube_episode` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update_youtube_episode(%UpdateYoutubeEpisode.Input{} = input, opts \\ []) do
+  def update_youtube_episode(identity, %UpdateYoutubeEpisode.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, YoutubeEpisode)
 
     payload =
       %{
         "action" => "update_youtube_episode",
+        "identity" => identity,
         "input" => UpdateYoutubeEpisode.Input.to_json(input),
         "fields" => encode_fields(fields)
       }

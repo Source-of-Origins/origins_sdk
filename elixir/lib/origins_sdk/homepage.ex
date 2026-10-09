@@ -39,18 +39,22 @@ defmodule OriginsSdk.Homepage do
   @doc """
   Run the `delete_homepage_card` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def delete_homepage_card(%DeleteHomepageCard.Input{} = input, opts \\ []) do
+  def delete_homepage_card(identity, %DeleteHomepageCard.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, HomepageCard)
 
     payload =
       %{
         "action" => "delete_homepage_card",
+        "identity" => identity,
         "input" => DeleteHomepageCard.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -91,18 +95,22 @@ defmodule OriginsSdk.Homepage do
   @doc """
   Run the `update_homepage_card` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update_homepage_card(%UpdateHomepageCard.Input{} = input, opts \\ []) do
+  def update_homepage_card(identity, %UpdateHomepageCard.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, HomepageCard)
 
     payload =
       %{
         "action" => "update_homepage_card",
+        "identity" => identity,
         "input" => UpdateHomepageCard.Input.to_json(input),
         "fields" => encode_fields(fields)
       }

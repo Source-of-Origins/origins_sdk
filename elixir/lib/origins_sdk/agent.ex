@@ -367,18 +367,22 @@ defmodule OriginsSdk.Agent do
   @doc """
   Run the `update_conversation` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update_conversation(%UpdateConversation.Input{} = input, opts \\ []) do
+  def update_conversation(identity, %UpdateConversation.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, Conversation)
 
     payload =
       %{
         "action" => "update_conversation",
+        "identity" => identity,
         "input" => UpdateConversation.Input.to_json(input),
         "fields" => encode_fields(fields)
       }

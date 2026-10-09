@@ -73,18 +73,22 @@ defmodule OriginsSdk.Interviews do
   @doc """
   Finish an interview and trigger the finalization pipeline
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def finish_interview_session(%FinishInterviewSession.Input{} = input, opts \\ []) do
+  def finish_interview_session(identity, %FinishInterviewSession.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, InterviewSession)
 
     payload =
       %{
         "action" => "finish_interview_session",
+        "identity" => identity,
         "input" => FinishInterviewSession.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -231,18 +235,22 @@ defmodule OriginsSdk.Interviews do
   @doc """
   Run the `update_interview_generated_content` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update_interview_generated_content(%UpdateInterviewGeneratedContent.Input{} = input, opts \\ []) do
+  def update_interview_generated_content(identity, %UpdateInterviewGeneratedContent.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, InterviewGeneratedContent)
 
     payload =
       %{
         "action" => "update_interview_generated_content",
+        "identity" => identity,
         "input" => UpdateInterviewGeneratedContent.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -257,18 +265,22 @@ defmodule OriginsSdk.Interviews do
   @doc """
   Run the `update_interview_session` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update_interview_session(%UpdateInterviewSession.Input{} = input, opts \\ []) do
+  def update_interview_session(identity, %UpdateInterviewSession.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, InterviewSession)
 
     payload =
       %{
         "action" => "update_interview_session",
+        "identity" => identity,
         "input" => UpdateInterviewSession.Input.to_json(input),
         "fields" => encode_fields(fields)
       }

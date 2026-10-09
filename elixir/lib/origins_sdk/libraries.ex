@@ -245,18 +245,22 @@ defmodule OriginsSdk.Libraries do
   @doc """
   Run the `delete_library` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def delete_library(%DeleteLibrary.Input{} = input, opts \\ []) do
+  def delete_library(identity, %DeleteLibrary.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, Library)
 
     payload =
       %{
         "action" => "delete_library",
+        "identity" => identity,
         "input" => DeleteLibrary.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -271,18 +275,22 @@ defmodule OriginsSdk.Libraries do
   @doc """
   Run the `delete_library_access_grant` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def delete_library_access_grant(%DeleteLibraryAccessGrant.Input{} = input, opts \\ []) do
+  def delete_library_access_grant(identity, %DeleteLibraryAccessGrant.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, LibraryAccessGrant)
 
     payload =
       %{
         "action" => "delete_library_access_grant",
+        "identity" => identity,
         "input" => DeleteLibraryAccessGrant.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -297,18 +305,22 @@ defmodule OriginsSdk.Libraries do
   @doc """
   Run the `delete_library_file` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def delete_library_file(%DeleteLibraryFile.Input{} = input, opts \\ []) do
+  def delete_library_file(identity, %DeleteLibraryFile.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, LibraryFile)
 
     payload =
       %{
         "action" => "delete_library_file",
+        "identity" => identity,
         "input" => DeleteLibraryFile.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -323,18 +335,22 @@ defmodule OriginsSdk.Libraries do
   @doc """
   Run the `destroy` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def destroy(%Destroy.Input{} = input, opts \\ []) do
+  def destroy(identity, %Destroy.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, Playlist)
 
     payload =
       %{
         "action" => "destroy",
+        "identity" => identity,
         "input" => Destroy.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -948,18 +964,22 @@ defmodule OriginsSdk.Libraries do
   @doc """
   Remove an item from a playlist.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def remove_item(%RemoveItem.Input{} = input, opts \\ []) do
+  def remove_item(identity, %RemoveItem.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, PlaylistItem)
 
     payload =
       %{
         "action" => "remove_item",
+        "identity" => identity,
         "input" => RemoveItem.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -974,18 +994,22 @@ defmodule OriginsSdk.Libraries do
   @doc """
   Update item position for drag-and-drop reordering.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def reorder(%Reorder.Input{} = input, opts \\ []) do
+  def reorder(identity, %Reorder.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, PlaylistItem)
 
     payload =
       %{
         "action" => "reorder",
+        "identity" => identity,
         "input" => Reorder.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1125,18 +1149,22 @@ defmodule OriginsSdk.Libraries do
   @doc """
   Run the `update` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update(%Update.Input{} = input, opts \\ []) do
+  def update(identity, %Update.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, Playlist)
 
     payload =
       %{
         "action" => "update",
+        "identity" => identity,
         "input" => Update.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1151,18 +1179,22 @@ defmodule OriginsSdk.Libraries do
   @doc """
   Run the `update_library` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update_library(%UpdateLibrary.Input{} = input, opts \\ []) do
+  def update_library(identity, %UpdateLibrary.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, Library)
 
     payload =
       %{
         "action" => "update_library",
+        "identity" => identity,
         "input" => UpdateLibrary.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1177,18 +1209,22 @@ defmodule OriginsSdk.Libraries do
   @doc """
   Run the `update_library_file` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update_library_file(%UpdateLibraryFile.Input{} = input, opts \\ []) do
+  def update_library_file(identity, %UpdateLibraryFile.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, LibraryFile)
 
     payload =
       %{
         "action" => "update_library_file",
+        "identity" => identity,
         "input" => UpdateLibraryFile.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1207,18 +1243,22 @@ defmodule OriginsSdk.Libraries do
   the next sync — the SPA shows `Origins.Libraries.FilterImpact` first.
   
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update_library_sync_filter(%UpdateLibrarySyncFilter.Input{} = input, opts \\ []) do
+  def update_library_sync_filter(identity, %UpdateLibrarySyncFilter.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, Library)
 
     payload =
       %{
         "action" => "update_library_sync_filter",
+        "identity" => identity,
         "input" => UpdateLibrarySyncFilter.Input.to_json(input),
         "fields" => encode_fields(fields)
       }

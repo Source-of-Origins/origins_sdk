@@ -77,18 +77,22 @@ defmodule OriginsSdk.Identity do
   @doc """
   Accept an invitation
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def accept_membership_invitation(%AcceptMembershipInvitation.Input{} = input, opts \\ []) do
+  def accept_membership_invitation(identity, %AcceptMembershipInvitation.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, OriginEntityStaffMembership)
 
     payload =
       %{
         "action" => "accept_membership_invitation",
+        "identity" => identity,
         "input" => AcceptMembershipInvitation.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -103,18 +107,22 @@ defmodule OriginsSdk.Identity do
   @doc """
   Activate a suspended membership
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def activate_membership(%ActivateMembership.Input{} = input, opts \\ []) do
+  def activate_membership(identity, %ActivateMembership.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, OriginEntityStaffMembership)
 
     payload =
       %{
         "action" => "activate_membership",
+        "identity" => identity,
         "input" => ActivateMembership.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -374,18 +382,22 @@ defmodule OriginsSdk.Identity do
   @doc """
   Run the `delete_origin_entity` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def delete_origin_entity(%DeleteOriginEntity.Input{} = input, opts \\ []) do
+  def delete_origin_entity(identity, %DeleteOriginEntity.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, OriginEntity)
 
     payload =
       %{
         "action" => "delete_origin_entity",
+        "identity" => identity,
         "input" => DeleteOriginEntity.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -400,18 +412,22 @@ defmodule OriginsSdk.Identity do
   @doc """
   Run the `delete_origin_entity_membership` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def delete_origin_entity_membership(%DeleteOriginEntityMembership.Input{} = input, opts \\ []) do
+  def delete_origin_entity_membership(identity, %DeleteOriginEntityMembership.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, OriginEntityStaffMembership)
 
     payload =
       %{
         "action" => "delete_origin_entity_membership",
+        "identity" => identity,
         "input" => DeleteOriginEntityMembership.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -426,18 +442,22 @@ defmodule OriginsSdk.Identity do
   @doc """
   Run the `delete_prompt_context` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def delete_prompt_context(%DeletePromptContext.Input{} = input, opts \\ []) do
+  def delete_prompt_context(identity, %DeletePromptContext.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, PromptContext)
 
     payload =
       %{
         "action" => "delete_prompt_context",
+        "identity" => identity,
         "input" => DeletePromptContext.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -452,18 +472,22 @@ defmodule OriginsSdk.Identity do
   @doc """
   Run the `delete_prompt_tool` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def delete_prompt_tool(%DeletePromptTool.Input{} = input, opts \\ []) do
+  def delete_prompt_tool(identity, %DeletePromptTool.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, PromptTool)
 
     payload =
       %{
         "action" => "delete_prompt_tool",
+        "identity" => identity,
         "input" => DeletePromptTool.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1343,18 +1367,22 @@ defmodule OriginsSdk.Identity do
   @doc """
   Suspend a membership
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def suspend_membership(%SuspendMembership.Input{} = input, opts \\ []) do
+  def suspend_membership(identity, %SuspendMembership.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, OriginEntityStaffMembership)
 
     payload =
       %{
         "action" => "suspend_membership",
+        "identity" => identity,
         "input" => SuspendMembership.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1396,18 +1424,22 @@ defmodule OriginsSdk.Identity do
   @doc """
   Run the `update_chat_config` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update_chat_config(%UpdateChatConfig.Input{} = input, opts \\ []) do
+  def update_chat_config(identity, %UpdateChatConfig.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, ChatConfig)
 
     payload =
       %{
         "action" => "update_chat_config",
+        "identity" => identity,
         "input" => UpdateChatConfig.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1422,18 +1454,22 @@ defmodule OriginsSdk.Identity do
   @doc """
   Run the `update_origin_asset` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update_origin_asset(%UpdateOriginAsset.Input{} = input, opts \\ []) do
+  def update_origin_asset(identity, %UpdateOriginAsset.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, OriginAsset)
 
     payload =
       %{
         "action" => "update_origin_asset",
+        "identity" => identity,
         "input" => UpdateOriginAsset.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1448,18 +1484,22 @@ defmodule OriginsSdk.Identity do
   @doc """
   Run the `update_origin_entity` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update_origin_entity(%UpdateOriginEntity.Input{} = input, opts \\ []) do
+  def update_origin_entity(identity, %UpdateOriginEntity.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, OriginEntity)
 
     payload =
       %{
         "action" => "update_origin_entity",
+        "identity" => identity,
         "input" => UpdateOriginEntity.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1474,18 +1514,22 @@ defmodule OriginsSdk.Identity do
   @doc """
   Run the `update_origin_entity_membership` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update_origin_entity_membership(%UpdateOriginEntityMembership.Input{} = input, opts \\ []) do
+  def update_origin_entity_membership(identity, %UpdateOriginEntityMembership.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, OriginEntityStaffMembership)
 
     payload =
       %{
         "action" => "update_origin_entity_membership",
+        "identity" => identity,
         "input" => UpdateOriginEntityMembership.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1500,18 +1544,22 @@ defmodule OriginsSdk.Identity do
   @doc """
   Update profile config without triggering Letta folder provisioning
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update_origin_entity_profile_config(%UpdateOriginEntityProfileConfig.Input{} = input, opts \\ []) do
+  def update_origin_entity_profile_config(identity, %UpdateOriginEntityProfileConfig.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, OriginEntity)
 
     payload =
       %{
         "action" => "update_origin_entity_profile_config",
+        "identity" => identity,
         "input" => UpdateOriginEntityProfileConfig.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1526,18 +1574,22 @@ defmodule OriginsSdk.Identity do
   @doc """
   Run the `update_prompt_context` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update_prompt_context(%UpdatePromptContext.Input{} = input, opts \\ []) do
+  def update_prompt_context(identity, %UpdatePromptContext.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, PromptContext)
 
     payload =
       %{
         "action" => "update_prompt_context",
+        "identity" => identity,
         "input" => UpdatePromptContext.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1552,18 +1604,22 @@ defmodule OriginsSdk.Identity do
   @doc """
   Run the `update_prompt_tool` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update_prompt_tool(%UpdatePromptTool.Input{} = input, opts \\ []) do
+  def update_prompt_tool(identity, %UpdatePromptTool.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, PromptTool)
 
     payload =
       %{
         "action" => "update_prompt_tool",
+        "identity" => identity,
         "input" => UpdatePromptTool.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1578,18 +1634,22 @@ defmodule OriginsSdk.Identity do
   @doc """
   Run the `update_setup_progress` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update_setup_progress(%UpdateSetupProgress.Input{} = input, opts \\ []) do
+  def update_setup_progress(identity, %UpdateSetupProgress.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, SetupProgress)
 
     payload =
       %{
         "action" => "update_setup_progress",
+        "identity" => identity,
         "input" => UpdateSetupProgress.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1604,18 +1664,22 @@ defmodule OriginsSdk.Identity do
   @doc """
   Run the `update_soul_config` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update_soul_config(%UpdateSoulConfig.Input{} = input, opts \\ []) do
+  def update_soul_config(identity, %UpdateSoulConfig.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, SoulConfig)
 
     payload =
       %{
         "action" => "update_soul_config",
+        "identity" => identity,
         "input" => UpdateSoulConfig.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1630,18 +1694,22 @@ defmodule OriginsSdk.Identity do
   @doc """
   Run the `update_user_profile` action.
 
+  `identity` picks the record, as one of:
+    * `%{user_id: value}`
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update_user_profile(%UpdateUserProfile.Input{} = input, opts \\ []) do
+  def update_user_profile(identity, %UpdateUserProfile.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, UserProfile)
 
     payload =
       %{
         "action" => "update_user_profile",
+        "identity" => identity,
         "input" => UpdateUserProfile.Input.to_json(input),
         "fields" => encode_fields(fields)
       }

@@ -50,6 +50,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.GetProgramAssessment
   alias OriginsSdk.Apps.GetProgramTest
   alias OriginsSdk.Apps.GetProgramTestCredentials
+  alias OriginsSdk.Apps.GrantPlanEntitlement
   alias OriginsSdk.Apps.InitializePersonalization
   alias OriginsSdk.Apps.ListAppLibraryVfsPaths
   alias OriginsSdk.Apps.ListAppTemplates
@@ -94,18 +95,22 @@ defmodule OriginsSdk.Apps do
   @doc """
   Run the `advance_enrollment_session` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def advance_enrollment_session(%AdvanceEnrollmentSession.Input{} = input, opts \\ []) do
+  def advance_enrollment_session(identity, %AdvanceEnrollmentSession.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, CourseEnrollment)
 
     payload =
       %{
         "action" => "advance_enrollment_session",
+        "identity" => identity,
         "input" => AdvanceEnrollmentSession.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -232,18 +237,22 @@ defmodule OriginsSdk.Apps do
   @doc """
   Run the `complete_assessment` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def complete_assessment(%CompleteAssessment.Input{} = input, opts \\ []) do
+  def complete_assessment(identity, %CompleteAssessment.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, AssessmentResponse)
 
     payload =
       %{
         "action" => "complete_assessment",
+        "identity" => identity,
         "input" => CompleteAssessment.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -258,18 +267,22 @@ defmodule OriginsSdk.Apps do
   @doc """
   Run the `complete_enrollment` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def complete_enrollment(%CompleteEnrollment.Input{} = input, opts \\ []) do
+  def complete_enrollment(identity, %CompleteEnrollment.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, CourseEnrollment)
 
     payload =
       %{
         "action" => "complete_enrollment",
+        "identity" => identity,
         "input" => CompleteEnrollment.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -308,7 +321,7 @@ defmodule OriginsSdk.Apps do
 
 
   @doc """
-  Create a new instance seeded from an `Apps.Template`. Title defaults to the template name (numeric suffix on collision); slug is derived from title.
+  Create a new instance seeded from an `Apps.Template`. Title defaults to the template name (numeric suffix on collision); slug defaults to one derived from the title. A supplied slug must be free within (origin, page_type).
 
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
@@ -523,18 +536,22 @@ defmodule OriginsSdk.Apps do
   @doc """
   Run the `destroy_app` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def destroy_app(%DestroyApp.Input{} = input, opts \\ []) do
+  def destroy_app(identity, %DestroyApp.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, App)
 
     payload =
       %{
         "action" => "destroy_app",
+        "identity" => identity,
         "input" => DestroyApp.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -549,18 +566,22 @@ defmodule OriginsSdk.Apps do
   @doc """
   Delete an offer nobody has bought. A sold offer is retired instead.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def destroy_plan(%DestroyPlan.Input{} = input, opts \\ []) do
+  def destroy_plan(identity, %DestroyPlan.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, Plan)
 
     payload =
       %{
         "action" => "destroy_plan",
+        "identity" => identity,
         "input" => DestroyPlan.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -575,18 +596,22 @@ defmodule OriginsSdk.Apps do
   @doc """
   Run the `destroy_program_test` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def destroy_program_test(%DestroyProgramTest.Input{} = input, opts \\ []) do
+  def destroy_program_test(identity, %DestroyProgramTest.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, ProgramTest)
 
     payload =
       %{
         "action" => "destroy_program_test",
+        "identity" => identity,
         "input" => DestroyProgramTest.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -601,18 +626,22 @@ defmodule OriginsSdk.Apps do
   @doc """
   Run the `destroy_webhook_subscription` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def destroy_webhook_subscription(%DestroyWebhookSubscription.Input{} = input, opts \\ []) do
+  def destroy_webhook_subscription(identity, %DestroyWebhookSubscription.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, WebhookSubscription)
 
     payload =
       %{
         "action" => "destroy_webhook_subscription",
+        "identity" => identity,
         "input" => DestroyWebhookSubscription.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1029,6 +1058,32 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
+  Grant (or refresh) a plan-level entitlement, for a plan that unlocks no apps.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def grant_plan_entitlement(%GrantPlanEntitlement.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, CourseEntitlement)
+
+    payload =
+      %{
+        "action" => "grant_plan_entitlement",
+        "input" => GrantPlanEntitlement.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &CourseEntitlement.from_json/1, nil)
     end
   end
 
@@ -1544,18 +1599,22 @@ defmodule OriginsSdk.Apps do
   @doc """
   Run the `pause_enrollment` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def pause_enrollment(%PauseEnrollment.Input{} = input, opts \\ []) do
+  def pause_enrollment(identity, %PauseEnrollment.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, CourseEnrollment)
 
     payload =
       %{
         "action" => "pause_enrollment",
+        "identity" => identity,
         "input" => PauseEnrollment.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1570,18 +1629,22 @@ defmodule OriginsSdk.Apps do
   @doc """
   Run the `publish_app` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def publish_app(%PublishApp.Input{} = input, opts \\ []) do
+  def publish_app(identity, %PublishApp.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, App)
 
     payload =
       %{
         "action" => "publish_app",
+        "identity" => identity,
         "input" => PublishApp.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1596,18 +1659,22 @@ defmodule OriginsSdk.Apps do
   @doc """
   Run the `reactivate_enrollment` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def reactivate_enrollment(%ReactivateEnrollment.Input{} = input, opts \\ []) do
+  def reactivate_enrollment(identity, %ReactivateEnrollment.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, CourseEnrollment)
 
     payload =
       %{
         "action" => "reactivate_enrollment",
+        "identity" => identity,
         "input" => ReactivateEnrollment.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1649,18 +1716,22 @@ defmodule OriginsSdk.Apps do
   @doc """
   Restore content from a document version snapshot
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def restore_app_version(%RestoreAppVersion.Input{} = input, opts \\ []) do
+  def restore_app_version(identity, %RestoreAppVersion.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, App)
 
     payload =
       %{
         "action" => "restore_app_version",
+        "identity" => identity,
         "input" => RestoreAppVersion.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1675,18 +1746,22 @@ defmodule OriginsSdk.Apps do
   @doc """
   Run the `resume_enrollment` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def resume_enrollment(%ResumeEnrollment.Input{} = input, opts \\ []) do
+  def resume_enrollment(identity, %ResumeEnrollment.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, CourseEnrollment)
 
     payload =
       %{
         "action" => "resume_enrollment",
+        "identity" => identity,
         "input" => ResumeEnrollment.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1755,18 +1830,22 @@ defmodule OriginsSdk.Apps do
   @doc """
   Run the `start_enrollment` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def start_enrollment(%StartEnrollment.Input{} = input, opts \\ []) do
+  def start_enrollment(identity, %StartEnrollment.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, CourseEnrollment)
 
     payload =
       %{
         "action" => "start_enrollment",
+        "identity" => identity,
         "input" => StartEnrollment.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1808,18 +1887,22 @@ defmodule OriginsSdk.Apps do
   @doc """
   Run the `sync_assessment_progress` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def sync_assessment_progress(%SyncAssessmentProgress.Input{} = input, opts \\ []) do
+  def sync_assessment_progress(identity, %SyncAssessmentProgress.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, AssessmentResponse)
 
     payload =
       %{
         "action" => "sync_assessment_progress",
+        "identity" => identity,
         "input" => SyncAssessmentProgress.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1834,18 +1917,22 @@ defmodule OriginsSdk.Apps do
   @doc """
   Run the `unpublish_app` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def unpublish_app(%UnpublishApp.Input{} = input, opts \\ []) do
+  def unpublish_app(identity, %UnpublishApp.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, App)
 
     payload =
       %{
         "action" => "unpublish_app",
+        "identity" => identity,
         "input" => UnpublishApp.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1860,18 +1947,22 @@ defmodule OriginsSdk.Apps do
   @doc """
   Run the `update_app` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update_app(%UpdateApp.Input{} = input, opts \\ []) do
+  def update_app(identity, %UpdateApp.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, App)
 
     payload =
       %{
         "action" => "update_app",
+        "identity" => identity,
         "input" => UpdateApp.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1886,18 +1977,22 @@ defmodule OriginsSdk.Apps do
   @doc """
   Edit the offer. People who already bought it keep what they were granted.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update_plan(%UpdatePlan.Input{} = input, opts \\ []) do
+  def update_plan(identity, %UpdatePlan.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, Plan)
 
     payload =
       %{
         "action" => "update_plan",
+        "identity" => identity,
         "input" => UpdatePlan.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -1912,18 +2007,22 @@ defmodule OriginsSdk.Apps do
   @doc """
   Run the `update_webhook_subscription` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update_webhook_subscription(%UpdateWebhookSubscription.Input{} = input, opts \\ []) do
+  def update_webhook_subscription(identity, %UpdateWebhookSubscription.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, WebhookSubscription)
 
     payload =
       %{
         "action" => "update_webhook_subscription",
+        "identity" => identity,
         "input" => UpdateWebhookSubscription.Input.to_json(input),
         "fields" => encode_fields(fields)
       }

@@ -15,18 +15,22 @@ defmodule OriginsSdk.Messaging do
   @doc """
   Run the `destroy_chat_binding` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def destroy_chat_binding(%DestroyChatBinding.Input{} = input, opts \\ []) do
+  def destroy_chat_binding(identity, %DestroyChatBinding.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, ChatBinding)
 
     payload =
       %{
         "action" => "destroy_chat_binding",
+        "identity" => identity,
         "input" => DestroyChatBinding.Input.to_json(input),
         "fields" => encode_fields(fields)
       }

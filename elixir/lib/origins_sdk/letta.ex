@@ -11,18 +11,22 @@ defmodule OriginsSdk.Letta do
   @doc """
   Run the `forget_agent_memory` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def forget_agent_memory(%ForgetAgentMemory.Input{} = input, opts \\ []) do
+  def forget_agent_memory(identity, %ForgetAgentMemory.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, Block)
 
     payload =
       %{
         "action" => "forget_agent_memory",
+        "identity" => identity,
         "input" => ForgetAgentMemory.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -37,18 +41,22 @@ defmodule OriginsSdk.Letta do
   @doc """
   Run the `update_agent_memory` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def update_agent_memory(%UpdateAgentMemory.Input{} = input, opts \\ []) do
+  def update_agent_memory(identity, %UpdateAgentMemory.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, Block)
 
     payload =
       %{
         "action" => "update_agent_memory",
+        "identity" => identity,
         "input" => UpdateAgentMemory.Input.to_json(input),
         "fields" => encode_fields(fields)
       }

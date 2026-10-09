@@ -10,6 +10,7 @@ defmodule OriginsSdk.Accounts do
   alias OriginsSdk.Accounts.CreateAnonymousUser
   alias OriginsSdk.Accounts.CreateTenantForUser
   alias OriginsSdk.Accounts.CreateTenantStripePrice
+  alias OriginsSdk.Accounts.CreateUser
   alias OriginsSdk.Accounts.DeleteOwnAccount
   alias OriginsSdk.Accounts.DeleteWaitlistEntry
   alias OriginsSdk.Accounts.GetCurrentUser
@@ -54,18 +55,22 @@ defmodule OriginsSdk.Accounts do
   @doc """
   Run the `approve_waitlist_entry` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def approve_waitlist_entry(%ApproveWaitlistEntry.Input{} = input, opts \\ []) do
+  def approve_waitlist_entry(identity, %ApproveWaitlistEntry.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, WaitlistEntry)
 
     payload =
       %{
         "action" => "approve_waitlist_entry",
+        "identity" => identity,
         "input" => ApproveWaitlistEntry.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -204,6 +209,35 @@ defmodule OriginsSdk.Accounts do
 
 
   @doc """
+  Create a real, passwordless user by email, reached by magic link. Upserts
+  on email, so a rerun reuses the row and an anonymous one becomes real; a
+  registered account keeps everything else.
+  
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def create_user(%CreateUser.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, User)
+
+    payload =
+      %{
+        "action" => "create_user",
+        "input" => CreateUser.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &User.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
   Mark the caller's own account for deletion and sign them out everywhere.
 
   ## Options
@@ -233,18 +267,22 @@ defmodule OriginsSdk.Accounts do
   @doc """
   Run the `delete_waitlist_entry` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def delete_waitlist_entry(%DeleteWaitlistEntry.Input{} = input, opts \\ []) do
+  def delete_waitlist_entry(identity, %DeleteWaitlistEntry.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, WaitlistEntry)
 
     payload =
       %{
         "action" => "delete_waitlist_entry",
+        "identity" => identity,
         "input" => DeleteWaitlistEntry.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -768,18 +806,22 @@ defmodule OriginsSdk.Accounts do
   @doc """
   Run the `reject_waitlist_entry` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def reject_waitlist_entry(%RejectWaitlistEntry.Input{} = input, opts \\ []) do
+  def reject_waitlist_entry(identity, %RejectWaitlistEntry.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, WaitlistEntry)
 
     payload =
       %{
         "action" => "reject_waitlist_entry",
+        "identity" => identity,
         "input" => RejectWaitlistEntry.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -884,18 +926,22 @@ defmodule OriginsSdk.Accounts do
   @doc """
   Run the `reset_password_with_token` action.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def reset_password_with_token(%ResetPasswordWithToken.Input{} = input, opts \\ []) do
+  def reset_password_with_token(identity, %ResetPasswordWithToken.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, User)
 
     payload =
       %{
         "action" => "reset_password_with_token",
+        "identity" => identity,
         "input" => ResetPasswordWithToken.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
@@ -941,18 +987,22 @@ defmodule OriginsSdk.Accounts do
   @doc """
   Set, replace or clear the phone number on the caller's own account.
 
+  `identity` picks the record, as one of:
+    * the `id` value
+
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
     * `:metadata_fields` — metadata atoms to include.
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def set_own_phone(%SetOwnPhone.Input{} = input, opts \\ []) do
+  def set_own_phone(identity, %SetOwnPhone.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, User)
 
     payload =
       %{
         "action" => "set_own_phone",
+        "identity" => identity,
         "input" => SetOwnPhone.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
