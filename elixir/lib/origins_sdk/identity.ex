@@ -9,7 +9,6 @@ defmodule OriginsSdk.Identity do
   alias OriginsSdk.Identity.ChatConfig
   alias OriginsSdk.Identity.CloneCartesiaVoice
   alias OriginsSdk.Identity.CreateChatConfig
-  alias OriginsSdk.Identity.CreateOriginAsset
   alias OriginsSdk.Identity.CreateOriginEntity
   alias OriginsSdk.Identity.CreateOriginEntityMembership
   alias OriginsSdk.Identity.CreatePromptContext
@@ -21,8 +20,6 @@ defmodule OriginsSdk.Identity do
   alias OriginsSdk.Identity.DeletePromptContext
   alias OriginsSdk.Identity.DeletePromptTool
   alias OriginsSdk.Identity.DiscoverAndExtractProfile
-  alias OriginsSdk.Identity.DiscoverEntityLinks
-  alias OriginsSdk.Identity.EditAssetImage
   alias OriginsSdk.Identity.GenerateConversationStarters
   alias OriginsSdk.Identity.GenerateProfileDescription
   alias OriginsSdk.Identity.GenerateSoulConfig
@@ -39,7 +36,6 @@ defmodule OriginsSdk.Identity do
   alias OriginsSdk.Identity.InviteToOrigin
   alias OriginsSdk.Identity.ListCartesiaVoices
   alias OriginsSdk.Identity.ListChatConfigs
-  alias OriginsSdk.Identity.ListOriginAssets
   alias OriginsSdk.Identity.ListOriginEntities
   alias OriginsSdk.Identity.ListOriginEntitiesForSwitcher
   alias OriginsSdk.Identity.ListOriginEntitiesForUser
@@ -50,7 +46,6 @@ defmodule OriginsSdk.Identity do
   alias OriginsSdk.Identity.ListSetupProgress
   alias OriginsSdk.Identity.ListSoulConfigs
   alias OriginsSdk.Identity.ListUserProfiles
-  alias OriginsSdk.Identity.OriginAsset
   alias OriginsSdk.Identity.OriginEntity
   alias OriginsSdk.Identity.OriginEntityStaffMembership
   alias OriginsSdk.Identity.PromptContext
@@ -63,7 +58,6 @@ defmodule OriginsSdk.Identity do
   alias OriginsSdk.Identity.SuspendMembership
   alias OriginsSdk.Identity.TextToSpeech
   alias OriginsSdk.Identity.UpdateChatConfig
-  alias OriginsSdk.Identity.UpdateOriginAsset
   alias OriginsSdk.Identity.UpdateOriginEntity
   alias OriginsSdk.Identity.UpdateOriginEntityMembership
   alias OriginsSdk.Identity.UpdateOriginEntityProfileConfig
@@ -183,32 +177,6 @@ defmodule OriginsSdk.Identity do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &ChatConfig.from_json/1, nil)
-    end
-  end
-
-
-  @doc """
-  Run the `create_origin_asset` action.
-
-  ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-  """
-  def create_origin_asset(%CreateOriginAsset.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginAsset)
-
-    payload =
-      %{
-        "action" => "create_origin_asset",
-        "input" => CreateOriginAsset.Input.to_json(input),
-        "fields" => encode_fields(fields)
-      }
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginAsset.from_json/1, nil)
     end
   end
 
@@ -516,60 +484,6 @@ defmodule OriginsSdk.Identity do
       %{
         "action" => "discover_and_extract_profile",
         "input" => DiscoverAndExtractProfile.Input.to_json(input)
-      }
-      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, & &1, nil)
-    end
-  end
-
-
-  @doc """
-  Discover social media links and official website for an entity using AI with confidence scores
-
-  ## Options
-    * `:fields` — passthrough field list; omitted from the request unless given.
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-
-  The action's declared return is not a single resource, so `data` is
-  returned undecoded (a raw map or list).
-  """
-  def discover_entity_links(%DiscoverEntityLinks.Input{} = input, opts \\ []) do
-    payload =
-      %{
-        "action" => "discover_entity_links",
-        "input" => DiscoverEntityLinks.Input.to_json(input)
-      }
-      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, & &1, nil)
-    end
-  end
-
-
-  @doc """
-  Run the `edit_asset_image` action.
-
-  ## Options
-    * `:fields` — passthrough field list; omitted from the request unless given.
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-
-  The action's declared return is not a single resource, so `data` is
-  returned undecoded (a raw map or list).
-  """
-  def edit_asset_image(%EditAssetImage.Input{} = input, opts \\ []) do
-    payload =
-      %{
-        "action" => "edit_asset_image",
-        "input" => EditAssetImage.Input.to_json(input)
       }
       |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
@@ -1005,32 +919,6 @@ defmodule OriginsSdk.Identity do
 
 
   @doc """
-  Run the `list_origin_assets` action.
-
-  ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-  """
-  def list_origin_assets(%ListOriginAssets.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginAsset)
-
-    payload =
-      %{
-        "action" => "list_origin_assets",
-        "input" => ListOriginAssets.Input.to_json(input),
-        "fields" => encode_fields(fields)
-      }
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginAsset.from_list/1, nil)
-    end
-  end
-
-
-  @doc """
   Run the `list_origin_entities` action.
 
   ## Options
@@ -1447,36 +1335,6 @@ defmodule OriginsSdk.Identity do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &ChatConfig.from_json/1, nil)
-    end
-  end
-
-
-  @doc """
-  Run the `update_origin_asset` action.
-
-  `identity` picks the record, as one of:
-    * the `id` value
-
-  ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-  """
-  def update_origin_asset(identity, %UpdateOriginAsset.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, OriginAsset)
-
-    payload =
-      %{
-        "action" => "update_origin_asset",
-        "identity" => identity,
-        "input" => UpdateOriginAsset.Input.to_json(input),
-        "fields" => encode_fields(fields)
-      }
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &OriginAsset.from_json/1, nil)
     end
   end
 
