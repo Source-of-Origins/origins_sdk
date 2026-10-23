@@ -44,6 +44,8 @@ defmodule OriginsSdk.Libraries do
   alias OriginsSdk.Libraries.Playlist
   alias OriginsSdk.Libraries.PlaylistItem
   alias OriginsSdk.Libraries.PreviewLibrarySyncFilter
+  alias OriginsSdk.Libraries.PullBrandFromLibrary
+  alias OriginsSdk.Libraries.RecommendClips
   alias OriginsSdk.Libraries.RemoveItem
   alias OriginsSdk.Libraries.Reorder
   alias OriginsSdk.Libraries.RequestStaticRenditions
@@ -962,6 +964,63 @@ defmodule OriginsSdk.Libraries do
 
 
   @doc """
+  Start a background agent that fills the Origin's brand theme from its libraries.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def pull_brand_from_library(%PullBrandFromLibrary.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "pull_brand_from_library",
+        "input" => PullBrandFromLibrary.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
+  Clips of a short-form library nearest a person's taste, best first: the
+  average of their onboarding answers and the clips they watched past
+  halfway, without the clips they were already shown.
+  
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def recommend_clips(%RecommendClips.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "recommend_clips",
+        "input" => RecommendClips.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
   Remove an item from a playlist.
 
   `identity` picks the record, as one of:
@@ -992,10 +1051,7 @@ defmodule OriginsSdk.Libraries do
 
 
   @doc """
-  Update item position for drag-and-drop reordering.
-
-  `identity` picks the record, as one of:
-    * the `id` value
+  Move an item to a zero-based slot. Returns the playlist items in their new order.
 
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).
@@ -1003,20 +1059,19 @@ defmodule OriginsSdk.Libraries do
     * `:tenant` — tenant identifier.
     * `:client` — `%OriginsSdk.Client{}` override.
   """
-  def reorder(identity, %Reorder.Input{} = input, opts \\ []) do
+  def reorder(%Reorder.Input{} = input, opts \\ []) do
     fields = normalize_fields(opts[:fields] || :all, PlaylistItem)
 
     payload =
       %{
         "action" => "reorder",
-        "identity" => identity,
         "input" => Reorder.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
       |> maybe_put("tenant", opts[:tenant])
 
     with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &PlaylistItem.from_json/1, nil)
+      decode_action_response(body, &PlaylistItem.from_list/1, nil)
     end
   end
 

@@ -7,15 +7,16 @@ defmodule OriginsSdk.Libraries.Reorder do
     @moduledoc "Required arguments for `reorder`."
 
     @type t :: %__MODULE__{
-          position: integer()
+          id: String.t(),
+          index: integer()
         }
 
-    @enforce_keys [:position]
-    defstruct [:position]
+    @enforce_keys [:id, :index]
+    defstruct [:id, :index]
 
     @doc false
     def to_json(%__MODULE__{} = input) do
-      %{"position" => input.position}
+      %{"id" => input.id, "index" => input.index}
     end
   end
 

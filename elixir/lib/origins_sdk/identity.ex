@@ -59,6 +59,7 @@ defmodule OriginsSdk.Identity do
   alias OriginsSdk.Identity.TextToSpeech
   alias OriginsSdk.Identity.UpdateChatConfig
   alias OriginsSdk.Identity.UpdateOriginEntity
+  alias OriginsSdk.Identity.UpdateOriginEntityBrandTheme
   alias OriginsSdk.Identity.UpdateOriginEntityMembership
   alias OriginsSdk.Identity.UpdateOriginEntityProfileConfig
   alias OriginsSdk.Identity.UpdatePromptContext
@@ -1359,6 +1360,36 @@ defmodule OriginsSdk.Identity do
         "action" => "update_origin_entity",
         "identity" => identity,
         "input" => UpdateOriginEntity.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &OriginEntity.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `update_origin_entity_brand_theme` action.
+
+  `identity` picks the record, as one of:
+    * the `id` value
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def update_origin_entity_brand_theme(identity, %UpdateOriginEntityBrandTheme.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, OriginEntity)
+
+    payload =
+      %{
+        "action" => "update_origin_entity_brand_theme",
+        "identity" => identity,
+        "input" => UpdateOriginEntityBrandTheme.Input.to_json(input),
         "fields" => encode_fields(fields)
       }
       |> maybe_put("tenant", opts[:tenant])

@@ -11,7 +11,7 @@ defmodule OriginsSdk.Libraries.PlaylistItem do
     library_file_id: String.t() | nil,
     library_id: String.t() | nil,
     playlist_id: String.t(),
-    position: integer(),
+    position: Decimal.t(),
     updated_at: DateTime.t()
     }
 

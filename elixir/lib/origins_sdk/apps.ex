@@ -51,6 +51,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.GetProgramTest
   alias OriginsSdk.Apps.GetProgramTestCredentials
   alias OriginsSdk.Apps.GrantPlanEntitlement
+  alias OriginsSdk.Apps.InheritedTheme
   alias OriginsSdk.Apps.InitializePersonalization
   alias OriginsSdk.Apps.ListAppLibraryVfsPaths
   alias OriginsSdk.Apps.ListAppTemplates
@@ -1084,6 +1085,33 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &CourseEntitlement.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  The color each theme token shows when an app sets none: the Origin's brand color, else the page type's default.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def inherited_theme(%InheritedTheme.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "inherited_theme",
+        "input" => InheritedTheme.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
     end
   end
 

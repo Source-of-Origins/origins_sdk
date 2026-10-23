@@ -11,6 +11,7 @@ defmodule OriginsSdk.Identity.OriginEntity do
     banner_key: String.t() | nil,
     banner_url: String.t() | nil,
     brand_conversation_config: any() | nil,
+    brand_theme: any() | nil,
     categories: list() | nil,
     content_tabs_config: map() | nil,
     content_themes: list() | nil,
@@ -66,6 +67,7 @@ defmodule OriginsSdk.Identity.OriginEntity do
     :banner_key,
     :banner_url,
     :brand_conversation_config,
+    :brand_theme,
     :categories,
     :content_tabs_config,
     :content_themes,
@@ -114,13 +116,13 @@ defmodule OriginsSdk.Identity.OriginEntity do
     :youtube_sync_settings
   ]
 
-  @primitive_fields ~w(accent_colors ai_generated_summary appearance_config banner_key banner_url brand_conversation_config categories content_tabs_config content_themes core_values created_at description engagement_metrics extracted_content guardrails_settings id is_active is_featured is_public key_messaging last_website_scrape mission_statement name page_sections_config parent_origin_entity_id personality_traits picture_key picture_url podcast_button_color podcast_button_link podcast_button_text podcast_button_text_color podcast_button_visible podcast_content_settings presigned_banner_url presigned_picture_url public_profile_config setup_progress_id slug social_links target_audience tenant_id title tone_of_voice updated_at voice_config voice_settings website_content youtube_channel_data youtube_channel_id youtube_content_settings youtube_sync_settings)a
+  @primitive_fields ~w(accent_colors ai_generated_summary appearance_config banner_key banner_url brand_conversation_config brand_theme categories content_tabs_config content_themes core_values created_at description engagement_metrics extracted_content guardrails_settings id is_active is_featured is_public key_messaging last_website_scrape mission_statement name page_sections_config parent_origin_entity_id personality_traits picture_key picture_url podcast_button_color podcast_button_link podcast_button_text podcast_button_text_color podcast_button_visible podcast_content_settings presigned_banner_url presigned_picture_url public_profile_config setup_progress_id slug social_links target_audience tenant_id title tone_of_voice updated_at voice_config voice_settings website_content youtube_channel_data youtube_channel_id youtube_content_settings youtube_sync_settings)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
 
   @doc "Every field as the server's field selector wants it: nested embedded and typed-struct attributes carry their own field lists."
-  def field_tree, do: [:accent_colors, :ai_generated_summary, {:appearance_config, [:ai_bubble_bg, :ai_bubble_text, :button_border_radius, :chat_button_bg, :chat_button_text, :checkmark_color, :send_button_bg, :send_button_text, :share_button_bg, :share_button_border, :share_button_text, :show_chat_button, :show_share_button, :user_bubble_bg, :user_bubble_text]}, :banner_key, :banner_url, {:brand_conversation_config, [:ai_bubble_bg, :ai_bubble_text, :avatars_section_label, :button_border_radius, :chat_button_bg, :chat_button_text, :chat_input_active_border, :checkmark_bg_color, :checkmark_color, :enabled_mode_ids, :origins_button_bg, :origins_button_border, :origins_button_text, :origins_button_text_color, :page_background_color, :selected_avatars, :send_button_bg, :send_button_text, :share_button_bg, :share_button_border, :share_button_icon, :show_avatars_section, :show_chat_button, :show_content_section, :show_description, :show_origins_button, :show_podcast_link, :show_share_button, {:social_links, [:custom_icon_url, :custom_label, :custom_url, :icon, :icon_name, :platform, :url, :visible]}, :user_bubble_bg, :user_bubble_text]}, :categories, :content_tabs_config, :content_themes, :core_values, :created_at, :description, :engagement_metrics, :extracted_content, :guardrails_settings, :id, :is_active, :is_featured, :is_public, :key_messaging, :last_website_scrape, :mission_statement, :name, :page_sections_config, :parent_origin_entity_id, :personality_traits, :picture_key, :picture_url, :podcast_button_color, :podcast_button_link, :podcast_button_text, :podcast_button_text_color, :podcast_button_visible, :podcast_content_settings, :presigned_banner_url, :presigned_picture_url, {:public_profile_config, [{:custom_links, [:label, :url]}, :display_order, :show_children_section, :show_content_section, :show_signin_button, :voice_enabled]}, :setup_progress_id, :slug, {:social_links, [:custom_icon_key, :custom_icon_url, :custom_platform_name, :icon_name, :platform, :url, :visible]}, :target_audience, :tenant_id, :title, :tone_of_voice, :updated_at, :voice_config, :voice_settings, :website_content, :youtube_channel_data, :youtube_channel_id, :youtube_content_settings, :youtube_sync_settings]
+  def field_tree, do: [:accent_colors, :ai_generated_summary, {:appearance_config, [:ai_bubble_bg, :ai_bubble_text, :button_border_radius, :chat_button_bg, :chat_button_text, :checkmark_color, :send_button_bg, :send_button_text, :share_button_bg, :share_button_border, :share_button_text, :show_chat_button, :show_share_button, :user_bubble_bg, :user_bubble_text]}, :banner_key, :banner_url, {:brand_conversation_config, [:ai_bubble_bg, :ai_bubble_text, :avatars_section_label, :button_border_radius, :chat_button_bg, :chat_button_text, :chat_input_active_border, :checkmark_bg_color, :checkmark_color, :enabled_mode_ids, :origins_button_bg, :origins_button_border, :origins_button_text, :origins_button_text_color, :page_background_color, :selected_avatars, :send_button_bg, :send_button_text, :share_button_bg, :share_button_border, :share_button_icon, :show_avatars_section, :show_chat_button, :show_content_section, :show_description, :show_origins_button, :show_podcast_link, :show_share_button, {:social_links, [:custom_icon_url, :custom_label, :custom_url, :icon, :icon_name, :platform, :url, :visible]}, :user_bubble_bg, :user_bubble_text]}, {:brand_theme, [:accent, :accent_foreground, :background, :border, :card, :card_foreground, :foreground, :primary, :primary_foreground]}, :categories, :content_tabs_config, :content_themes, :core_values, :created_at, :description, :engagement_metrics, :extracted_content, :guardrails_settings, :id, :is_active, :is_featured, :is_public, :key_messaging, :last_website_scrape, :mission_statement, :name, :page_sections_config, :parent_origin_entity_id, :personality_traits, :picture_key, :picture_url, :podcast_button_color, :podcast_button_link, :podcast_button_text, :podcast_button_text_color, :podcast_button_visible, :podcast_content_settings, :presigned_banner_url, :presigned_picture_url, {:public_profile_config, [{:custom_links, [:label, :url]}, :display_order, :show_children_section, :show_content_section, :show_signin_button, :voice_enabled]}, :setup_progress_id, :slug, {:social_links, [:custom_icon_key, :custom_icon_url, :custom_platform_name, :icon_name, :platform, :url, :visible]}, :target_audience, :tenant_id, :title, :tone_of_voice, :updated_at, :voice_config, :voice_settings, :website_content, :youtube_channel_data, :youtube_channel_id, :youtube_content_settings, :youtube_sync_settings]
 
   @doc false
   @spec from_json(map() | nil) :: t() | nil
@@ -134,6 +136,7 @@ defmodule OriginsSdk.Identity.OriginEntity do
       banner_key: map["banner_key"],
       banner_url: map["banner_url"],
       brand_conversation_config: map["brand_conversation_config"],
+      brand_theme: map["brand_theme"],
       categories: map["categories"],
       content_tabs_config: map["content_tabs_config"],
       content_themes: map["content_themes"],
