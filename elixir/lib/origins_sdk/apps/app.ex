@@ -54,7 +54,7 @@ defmodule OriginsSdk.Apps.App do
     :updated_at
   ]
 
-  @primitive_fields ~w(agent_public cover_image_url created_at generation_error generation_format generation_prompt generation_status has_letta_agent id is_published markdoc_content meta origin_entity_id page_type segment slug source title updated_at)a
+  @primitive_fields ~w(cover_image_url created_at generation_error generation_format generation_prompt generation_status has_letta_agent id is_published markdoc_content meta origin_entity_id page_type segment slug source title updated_at)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
