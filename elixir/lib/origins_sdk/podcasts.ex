@@ -9,6 +9,7 @@ defmodule OriginsSdk.Podcasts do
   alias OriginsSdk.Podcasts.DeleteYoutubeEpisode
   alias OriginsSdk.Podcasts.FetchYoutubeSingleVideo
   alias OriginsSdk.Podcasts.FetchYoutubeTranscript
+  alias OriginsSdk.Podcasts.GenerateConversationStarters
   alias OriginsSdk.Podcasts.GetPodcastEpisodeSettingsForCharacter
   alias OriginsSdk.Podcasts.GetPodcastEpisodeSettingsForPodcastConfig
   alias OriginsSdk.Podcasts.GetYoutubeEpisode
@@ -150,6 +151,33 @@ defmodule OriginsSdk.Podcasts do
       %{
         "action" => "fetch_youtube_transcript",
         "input" => FetchYoutubeTranscript.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
+  Write conversation starter questions from an episode transcript
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def generate_conversation_starters(%GenerateConversationStarters.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "generate_conversation_starters",
+        "input" => GenerateConversationStarters.Input.to_json(input)
       }
       |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])

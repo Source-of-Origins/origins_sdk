@@ -19,6 +19,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.CourseActivityCompletion
   alias OriginsSdk.Apps.CourseEnrollment
   alias OriginsSdk.Apps.CourseEntitlement
+  alias OriginsSdk.Apps.CoursePersonalization
   alias OriginsSdk.Apps.CreateApp
   alias OriginsSdk.Apps.CreateAppFromTemplate
   alias OriginsSdk.Apps.CreateAssessmentResponse
@@ -43,6 +44,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.GetAppForOriginTypeAndSlug
   alias OriginsSdk.Apps.GetAssessmentGraph
   alias OriginsSdk.Apps.GetAssessmentResponseAtActivity
+  alias OriginsSdk.Apps.GetCoursePersonalization
   alias OriginsSdk.Apps.GetEnrollment
   alias OriginsSdk.Apps.GetEnrollmentCompletions
   alias OriginsSdk.Apps.GetMyAssessmentResponse
@@ -64,6 +66,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.ListMyEntitlements
   alias OriginsSdk.Apps.ListPlans
   alias OriginsSdk.Apps.ListProgramTests
+  alias OriginsSdk.Apps.ListReferableApps
   alias OriginsSdk.Apps.ListSellablePlansForApp
   alias OriginsSdk.Apps.ListUnlockableApps
   alias OriginsSdk.Apps.ListWebhookDeliveries
@@ -874,6 +877,32 @@ defmodule OriginsSdk.Apps do
 
 
   @doc """
+  Run the `get_course_personalization` action.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def get_course_personalization(%GetCoursePersonalization.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, CoursePersonalization)
+
+    payload =
+      %{
+        "action" => "get_course_personalization",
+        "input" => GetCoursePersonalization.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &CoursePersonalization.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
   Run the `get_enrollment` action.
 
   ## Options
@@ -1426,6 +1455,32 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &ProgramTest.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
+  The apps of one page type that an origin's content may name, as a save resolves them.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def list_referable_apps(%ListReferableApps.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, App)
+
+    payload =
+      %{
+        "action" => "list_referable_apps",
+        "input" => ListReferableApps.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &App.from_list/1, nil)
     end
   end
 

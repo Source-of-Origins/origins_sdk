@@ -11,18 +11,13 @@ defmodule OriginsSdk.Identity do
   alias OriginsSdk.Identity.CreateChatConfig
   alias OriginsSdk.Identity.CreateOriginEntity
   alias OriginsSdk.Identity.CreateOriginEntityMembership
-  alias OriginsSdk.Identity.CreatePromptContext
   alias OriginsSdk.Identity.CreatePromptTool
   alias OriginsSdk.Identity.CreateSetupProgress
-  alias OriginsSdk.Identity.CreateSoulConfig
   alias OriginsSdk.Identity.DeleteOriginEntity
   alias OriginsSdk.Identity.DeleteOriginEntityMembership
-  alias OriginsSdk.Identity.DeletePromptContext
   alias OriginsSdk.Identity.DeletePromptTool
   alias OriginsSdk.Identity.DiscoverAndExtractProfile
-  alias OriginsSdk.Identity.GenerateConversationStarters
   alias OriginsSdk.Identity.GenerateProfileDescription
-  alias OriginsSdk.Identity.GenerateSoulConfig
   alias OriginsSdk.Identity.GetInheritedMemberships
   alias OriginsSdk.Identity.GetMembershipByToken
   alias OriginsSdk.Identity.GetMembershipsForOrigin
@@ -31,7 +26,6 @@ defmodule OriginsSdk.Identity do
   alias OriginsSdk.Identity.GetOriginEntityBySlug
   alias OriginsSdk.Identity.GetOriginEntityMembership
   alias OriginsSdk.Identity.GetPendingMemberships
-  alias OriginsSdk.Identity.GetPromptContextPublicTitle
   alias OriginsSdk.Identity.GetPublicOriginEntity
   alias OriginsSdk.Identity.InviteToOrigin
   alias OriginsSdk.Identity.ListCartesiaVoices
@@ -40,20 +34,17 @@ defmodule OriginsSdk.Identity do
   alias OriginsSdk.Identity.ListOriginEntitiesForSwitcher
   alias OriginsSdk.Identity.ListOriginEntitiesForUser
   alias OriginsSdk.Identity.ListOriginEntityMemberships
-  alias OriginsSdk.Identity.ListPromptContextsForOrigin
   alias OriginsSdk.Identity.ListPromptToolsForOrigin
   alias OriginsSdk.Identity.ListPublicOriginEntities
   alias OriginsSdk.Identity.ListSetupProgress
-  alias OriginsSdk.Identity.ListSoulConfigs
   alias OriginsSdk.Identity.ListUserProfiles
   alias OriginsSdk.Identity.OriginEntity
   alias OriginsSdk.Identity.OriginEntityStaffMembership
-  alias OriginsSdk.Identity.PromptContext
   alias OriginsSdk.Identity.PromptTool
   alias OriginsSdk.Identity.ScrapeWebsiteContent
   alias OriginsSdk.Identity.ScrapedWebsiteContent
+  alias OriginsSdk.Identity.SetDefaultAgent
   alias OriginsSdk.Identity.SetupProgress
-  alias OriginsSdk.Identity.SoulConfig
   alias OriginsSdk.Identity.SpeechToText
   alias OriginsSdk.Identity.SuspendMembership
   alias OriginsSdk.Identity.TextToSpeech
@@ -62,10 +53,8 @@ defmodule OriginsSdk.Identity do
   alias OriginsSdk.Identity.UpdateOriginEntityBrandTheme
   alias OriginsSdk.Identity.UpdateOriginEntityMembership
   alias OriginsSdk.Identity.UpdateOriginEntityProfileConfig
-  alias OriginsSdk.Identity.UpdatePromptContext
   alias OriginsSdk.Identity.UpdatePromptTool
   alias OriginsSdk.Identity.UpdateSetupProgress
-  alias OriginsSdk.Identity.UpdateSoulConfig
   alias OriginsSdk.Identity.UpdateUserProfile
   alias OriginsSdk.Identity.UserProfile
 
@@ -245,32 +234,6 @@ defmodule OriginsSdk.Identity do
 
 
   @doc """
-  Run the `create_prompt_context` action.
-
-  ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-  """
-  def create_prompt_context(%CreatePromptContext.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, PromptContext)
-
-    payload =
-      %{
-        "action" => "create_prompt_context",
-        "input" => CreatePromptContext.Input.to_json(input),
-        "fields" => encode_fields(fields)
-      }
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &PromptContext.from_json/1, nil)
-    end
-  end
-
-
-  @doc """
   Run the `create_prompt_tool` action.
 
   ## Options
@@ -318,32 +281,6 @@ defmodule OriginsSdk.Identity do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &SetupProgress.from_json/1, nil)
-    end
-  end
-
-
-  @doc """
-  Run the `create_soul_config` action.
-
-  ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-  """
-  def create_soul_config(%CreateSoulConfig.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, SoulConfig)
-
-    payload =
-      %{
-        "action" => "create_soul_config",
-        "input" => CreateSoulConfig.Input.to_json(input),
-        "fields" => encode_fields(fields)
-      }
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &SoulConfig.from_json/1, nil)
     end
   end
 
@@ -409,36 +346,6 @@ defmodule OriginsSdk.Identity do
 
 
   @doc """
-  Run the `delete_prompt_context` action.
-
-  `identity` picks the record, as one of:
-    * the `id` value
-
-  ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-  """
-  def delete_prompt_context(identity, %DeletePromptContext.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, PromptContext)
-
-    payload =
-      %{
-        "action" => "delete_prompt_context",
-        "identity" => identity,
-        "input" => DeletePromptContext.Input.to_json(input),
-        "fields" => encode_fields(fields)
-      }
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &PromptContext.from_json/1, nil)
-    end
-  end
-
-
-  @doc """
   Run the `delete_prompt_tool` action.
 
   `identity` picks the record, as one of:
@@ -496,33 +403,6 @@ defmodule OriginsSdk.Identity do
 
 
   @doc """
-  Generate conversation starters from episode transcript or origin profile using AI
-
-  ## Options
-    * `:fields` — passthrough field list; omitted from the request unless given.
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-
-  The action's declared return is not a single resource, so `data` is
-  returned undecoded (a raw map or list).
-  """
-  def generate_conversation_starters(%GenerateConversationStarters.Input{} = input, opts \\ []) do
-    payload =
-      %{
-        "action" => "generate_conversation_starters",
-        "input" => GenerateConversationStarters.Input.to_json(input)
-      }
-      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, & &1, nil)
-    end
-  end
-
-
-  @doc """
   Generate or enhance a profile description using AI
 
   ## Options
@@ -539,33 +419,6 @@ defmodule OriginsSdk.Identity do
       %{
         "action" => "generate_profile_description",
         "input" => GenerateProfileDescription.Input.to_json(input)
-      }
-      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, & &1, nil)
-    end
-  end
-
-
-  @doc """
-  Generate AI soul configuration (personality, purpose, speaking style, etc.)
-
-  ## Options
-    * `:fields` — passthrough field list; omitted from the request unless given.
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-
-  The action's declared return is not a single resource, so `data` is
-  returned undecoded (a raw map or list).
-  """
-  def generate_soul_config(%GenerateSoulConfig.Input{} = input, opts \\ []) do
-    payload =
-      %{
-        "action" => "generate_soul_config",
-        "input" => GenerateSoulConfig.Input.to_json(input)
       }
       |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
       |> maybe_put("tenant", opts[:tenant])
@@ -780,33 +633,6 @@ defmodule OriginsSdk.Identity do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &OriginEntityStaffMembership.from_list/1, nil)
-    end
-  end
-
-
-  @doc """
-  Run the `get_prompt_context_public_title` action.
-
-  ## Options
-    * `:fields` — passthrough field list; omitted from the request unless given.
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-
-  The action's declared return is not a single resource, so `data` is
-  returned undecoded (a raw map or list).
-  """
-  def get_prompt_context_public_title(%GetPromptContextPublicTitle.Input{} = input, opts \\ []) do
-    payload =
-      %{
-        "action" => "get_prompt_context_public_title",
-        "input" => GetPromptContextPublicTitle.Input.to_json(input)
-      }
-      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -1032,32 +858,6 @@ defmodule OriginsSdk.Identity do
 
 
   @doc """
-  Run the `list_prompt_contexts_for_origin` action.
-
-  ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-  """
-  def list_prompt_contexts_for_origin(%ListPromptContextsForOrigin.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, PromptContext)
-
-    payload =
-      %{
-        "action" => "list_prompt_contexts_for_origin",
-        "input" => ListPromptContextsForOrigin.Input.to_json(input),
-        "fields" => encode_fields(fields)
-      }
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &PromptContext.from_list/1, nil)
-    end
-  end
-
-
-  @doc """
   Run the `list_prompt_tools_for_origin` action.
 
   ## Options
@@ -1144,32 +944,6 @@ defmodule OriginsSdk.Identity do
 
 
   @doc """
-  Run the `list_soul_configs` action.
-
-  ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-  """
-  def list_soul_configs(%ListSoulConfigs.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, SoulConfig)
-
-    payload =
-      %{
-        "action" => "list_soul_configs",
-        "input" => ListSoulConfigs.Input.to_json(input),
-        "fields" => encode_fields(fields)
-      }
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &SoulConfig.from_list/1, nil)
-    end
-  end
-
-
-  @doc """
   Run the `list_user_profiles` action.
 
   ## Options
@@ -1222,6 +996,36 @@ defmodule OriginsSdk.Identity do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &ScrapedWebsiteContent.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Makes one of the origin's own agents its default.
+
+  `identity` picks the record, as one of:
+    * the `id` value
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def set_default_agent(identity, %SetDefaultAgent.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, OriginEntity)
+
+    payload =
+      %{
+        "action" => "set_default_agent",
+        "identity" => identity,
+        "input" => SetDefaultAgent.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &OriginEntity.from_json/1, nil)
     end
   end
 
@@ -1461,36 +1265,6 @@ defmodule OriginsSdk.Identity do
 
 
   @doc """
-  Run the `update_prompt_context` action.
-
-  `identity` picks the record, as one of:
-    * the `id` value
-
-  ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-  """
-  def update_prompt_context(identity, %UpdatePromptContext.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, PromptContext)
-
-    payload =
-      %{
-        "action" => "update_prompt_context",
-        "identity" => identity,
-        "input" => UpdatePromptContext.Input.to_json(input),
-        "fields" => encode_fields(fields)
-      }
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &PromptContext.from_json/1, nil)
-    end
-  end
-
-
-  @doc """
   Run the `update_prompt_tool` action.
 
   `identity` picks the record, as one of:
@@ -1546,36 +1320,6 @@ defmodule OriginsSdk.Identity do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &SetupProgress.from_json/1, nil)
-    end
-  end
-
-
-  @doc """
-  Run the `update_soul_config` action.
-
-  `identity` picks the record, as one of:
-    * the `id` value
-
-  ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-  """
-  def update_soul_config(identity, %UpdateSoulConfig.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, SoulConfig)
-
-    payload =
-      %{
-        "action" => "update_soul_config",
-        "identity" => identity,
-        "input" => UpdateSoulConfig.Input.to_json(input),
-        "fields" => encode_fields(fields)
-      }
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &SoulConfig.from_json/1, nil)
     end
   end
 

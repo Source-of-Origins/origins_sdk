@@ -7,6 +7,7 @@ defmodule OriginsSdk.Agent.AvatarPublicChat do
     @moduledoc "Required arguments for `avatar_public_chat`."
 
     @type t :: %__MODULE__{
+          agent_id: String.t() | nil,
           context_id: String.t() | nil,
           conversation_history: list() | nil,
           conversation_id: String.t() | nil,
@@ -19,11 +20,11 @@ defmodule OriginsSdk.Agent.AvatarPublicChat do
         }
 
     @enforce_keys [:message, :origin_entity_id]
-    defstruct [:context_id, :conversation_history, :conversation_id, :episode_id, :ip_address, :message, :origin_entity_id, :response_schema, :session_id]
+    defstruct [:agent_id, :context_id, :conversation_history, :conversation_id, :episode_id, :ip_address, :message, :origin_entity_id, :response_schema, :session_id]
 
     @doc false
     def to_json(%__MODULE__{} = input) do
-      %{"context_id" => input.context_id, "conversation_history" => input.conversation_history, "conversation_id" => input.conversation_id, "episode_id" => input.episode_id, "ip_address" => input.ip_address, "message" => input.message, "origin_entity_id" => input.origin_entity_id, "response_schema" => input.response_schema, "session_id" => input.session_id}
+      %{"agent_id" => input.agent_id, "context_id" => input.context_id, "conversation_history" => input.conversation_history, "conversation_id" => input.conversation_id, "episode_id" => input.episode_id, "ip_address" => input.ip_address, "message" => input.message, "origin_entity_id" => input.origin_entity_id, "response_schema" => input.response_schema, "session_id" => input.session_id}
     end
   end
 

@@ -1108,7 +1108,7 @@ defmodule OriginsSdk.Libraries do
 
 
   @doc """
-  Resolve a VFS path to a playable HLS URL (read-only, zero side effects).
+  Resolve a VFS path or a LibraryFile id to a playable HLS URL (read-only, zero side effects).
 
   ## Options
     * `:fields` — required. The fields to return; a nested embedded or
