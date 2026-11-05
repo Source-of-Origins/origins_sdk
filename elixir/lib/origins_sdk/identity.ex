@@ -36,6 +36,7 @@ defmodule OriginsSdk.Identity do
   alias OriginsSdk.Identity.ListOriginEntityMemberships
   alias OriginsSdk.Identity.ListPromptToolsForOrigin
   alias OriginsSdk.Identity.ListPublicOriginEntities
+  alias OriginsSdk.Identity.ListReferablePromptTools
   alias OriginsSdk.Identity.ListSetupProgress
   alias OriginsSdk.Identity.ListUserProfiles
   alias OriginsSdk.Identity.OriginEntity
@@ -913,6 +914,32 @@ defmodule OriginsSdk.Identity do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &OriginEntity.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
+  The prompt tools an agent of an origin may name: the origin's own and its brand's.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def list_referable_prompt_tools(%ListReferablePromptTools.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, PromptTool)
+
+    payload =
+      %{
+        "action" => "list_referable_prompt_tools",
+        "input" => ListReferablePromptTools.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &PromptTool.from_list/1, nil)
     end
   end
 

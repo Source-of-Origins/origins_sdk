@@ -50,6 +50,7 @@ defmodule OriginsSdk.Libraries do
   alias OriginsSdk.Libraries.Reorder
   alias OriginsSdk.Libraries.RequestStaticRenditions
   alias OriginsSdk.Libraries.ResolveVideoPlayback
+  alias OriginsSdk.Libraries.ResolveVideoPlaybacks
   alias OriginsSdk.Libraries.ResolvedPlayback
   alias OriginsSdk.Libraries.SemanticSearchLibraryFiles
   alias OriginsSdk.Libraries.StaticRendition
@@ -1134,6 +1135,37 @@ defmodule OriginsSdk.Libraries do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &ResolvedPlayback.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Resolve many VFS paths to playable HLS URLs, one result per given path, in order (read-only, zero side effects).
+
+  ## Options
+    * `:fields` — required. The fields to return; a nested embedded or
+      typed-struct attribute is `{name, [...]}`. `ResolvedPlayback.field_tree/0`
+      names everything.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action returns an embedded `ResolvedPlayback`, decoded from the
+  response body.
+  """
+  def resolve_video_playbacks(%ResolveVideoPlaybacks.Input{} = input, opts) do
+    fields = Keyword.fetch!(opts, :fields)
+
+    payload =
+      %{
+        "action" => "resolve_video_playbacks",
+        "input" => ResolveVideoPlaybacks.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &ResolvedPlayback.from_list/1, nil)
     end
   end
 

@@ -8,7 +8,6 @@ defmodule OriginsSdk.Agent.PreviewChat do
 
     @type t :: %__MODULE__{
           agent_id: String.t() | nil,
-          context_id: String.t() | nil,
           conversation_history: list() | nil,
           conversation_id: String.t() | nil,
           message: String.t(),
@@ -17,11 +16,11 @@ defmodule OriginsSdk.Agent.PreviewChat do
         }
 
     @enforce_keys [:message, :origin_entity_id]
-    defstruct [:agent_id, :context_id, :conversation_history, :conversation_id, :message, :origin_entity_id, :session_id]
+    defstruct [:agent_id, :conversation_history, :conversation_id, :message, :origin_entity_id, :session_id]
 
     @doc false
     def to_json(%__MODULE__{} = input) do
-      %{"agent_id" => input.agent_id, "context_id" => input.context_id, "conversation_history" => input.conversation_history, "conversation_id" => input.conversation_id, "message" => input.message, "origin_entity_id" => input.origin_entity_id, "session_id" => input.session_id}
+      %{"agent_id" => input.agent_id, "conversation_history" => input.conversation_history, "conversation_id" => input.conversation_id, "message" => input.message, "origin_entity_id" => input.origin_entity_id, "session_id" => input.session_id}
     end
   end
 
