@@ -11,7 +11,8 @@ defmodule OriginsSdk.Apps.CourseEntitlement do
     id: String.t(),
     plan_id: String.t() | nil,
     scope: any(),
-    tier: String.t()
+    tier: String.t(),
+    user_id: String.t()
     }
 
   defstruct [
@@ -21,16 +22,17 @@ defmodule OriginsSdk.Apps.CourseEntitlement do
     :id,
     :plan_id,
     :scope,
-    :tier
+    :tier,
+    :user_id
   ]
 
-  @primitive_fields ~w(app_id ended_at granted_at id plan_id scope tier)a
+  @primitive_fields ~w(app_id ended_at granted_at id plan_id scope tier user_id)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
 
   @doc "Every field as the server's field selector wants it: nested embedded and typed-struct attributes carry their own field lists."
-  def field_tree, do: [:app_id, :ended_at, :granted_at, :id, :plan_id, :scope, :tier]
+  def field_tree, do: [:app_id, :ended_at, :granted_at, :id, :plan_id, :scope, :tier, :user_id]
 
   @doc false
   @spec from_json(map() | nil) :: t() | nil
@@ -44,7 +46,8 @@ defmodule OriginsSdk.Apps.CourseEntitlement do
       id: map["id"],
       plan_id: map["plan_id"],
       scope: map["scope"],
-      tier: map["tier"]
+      tier: map["tier"],
+      user_id: map["user_id"]
     }
   end
 

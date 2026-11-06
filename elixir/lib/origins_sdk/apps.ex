@@ -35,6 +35,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.DestroyProgramTest
   alias OriginsSdk.Apps.DestroyWebhookSubscription
   alias OriginsSdk.Apps.DuplicateApp
+  alias OriginsSdk.Apps.EndPlanEntitlement
   alias OriginsSdk.Apps.EnrollmentCompletions
   alias OriginsSdk.Apps.FindEnrollment
   alias OriginsSdk.Apps.ForUserPersonalized
@@ -679,6 +680,36 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &App.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Stop access without losing the receipt — a cancelled or lapsed subscription.
+
+  `identity` picks the record, as one of:
+    * `%{user_id: value, plan_id: value}`
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def end_plan_entitlement(identity, %EndPlanEntitlement.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, CourseEntitlement)
+
+    payload =
+      %{
+        "action" => "end_plan_entitlement",
+        "identity" => identity,
+        "input" => EndPlanEntitlement.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &CourseEntitlement.from_json/1, nil)
     end
   end
 
