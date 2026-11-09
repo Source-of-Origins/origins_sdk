@@ -8,6 +8,7 @@ defmodule OriginsSdk.Agent do
   alias OriginsSdk.Agent.ChatMessage
   alias OriginsSdk.Agent.ChatReply
   alias OriginsSdk.Agent.ChatSuggestions
+  alias OriginsSdk.Agent.ClaimConversation
   alias OriginsSdk.Agent.Conversation
   alias OriginsSdk.Agent.CountUserMessages
   alias OriginsSdk.Agent.CreateConversation
@@ -51,6 +52,36 @@ defmodule OriginsSdk.Agent do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &ChatReply.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Run the `claim_conversation` action.
+
+  `identity` picks the record, as one of:
+    * the `id` value
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def claim_conversation(identity, %ClaimConversation.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, Conversation)
+
+    payload =
+      %{
+        "action" => "claim_conversation",
+        "identity" => identity,
+        "input" => ClaimConversation.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &Conversation.from_json/1, nil)
     end
   end
 
