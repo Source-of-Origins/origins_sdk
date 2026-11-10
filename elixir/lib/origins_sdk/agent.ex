@@ -166,7 +166,7 @@ defmodule OriginsSdk.Agent do
 
 
   @doc """
-  Generate contextual chat suggestions based on conversation history
+  Generate follow-up messages the user could send next in a conversation
 
   ## Options
     * `:fields` — required. The fields to return; a nested embedded or

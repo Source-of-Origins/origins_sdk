@@ -7,15 +7,16 @@ defmodule OriginsSdk.Agent.GetConversationHistory do
     @moduledoc "Required arguments for `get_conversation_history`."
 
     @type t :: %__MODULE__{
-          conversation_id: String.t()
+          conversation_id: String.t(),
+          session_id: String.t() | nil
         }
 
     @enforce_keys [:conversation_id]
-    defstruct [:conversation_id]
+    defstruct [:conversation_id, :session_id]
 
     @doc false
     def to_json(%__MODULE__{} = input) do
-      %{"conversation_id" => input.conversation_id}
+      %{"conversation_id" => input.conversation_id, "session_id" => input.session_id}
     end
   end
 
