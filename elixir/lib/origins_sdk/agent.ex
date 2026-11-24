@@ -14,11 +14,12 @@ defmodule OriginsSdk.Agent do
   alias OriginsSdk.Agent.CreateConversation
   alias OriginsSdk.Agent.FindRootConversation
   alias OriginsSdk.Agent.GenerateChatSuggestions
-  alias OriginsSdk.Agent.GetBrandUsers
   alias OriginsSdk.Agent.GetConversationHistory
   alias OriginsSdk.Agent.GetTurnState
   alias OriginsSdk.Agent.ListConversations
+  alias OriginsSdk.Agent.ListFlaggedConversations
   alias OriginsSdk.Agent.ListMyConversations
+  alias OriginsSdk.Agent.MarkConversationReviewed
   alias OriginsSdk.Agent.PresignStorageUrl
   alias OriginsSdk.Agent.PreviewChat
   alias OriginsSdk.Agent.TurnState
@@ -197,33 +198,6 @@ defmodule OriginsSdk.Agent do
 
 
   @doc """
-  Get users with their conversation statistics for a specific Origin
-
-  ## Options
-    * `:fields` — passthrough field list; omitted from the request unless given.
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-
-  The action's declared return is not a single resource, so `data` is
-  returned undecoded (a raw map or list).
-  """
-  def get_brand_users(%GetBrandUsers.Input{} = input, opts \\ []) do
-    payload =
-      %{
-        "action" => "get_brand_users",
-        "input" => GetBrandUsers.Input.to_json(input)
-      }
-      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, & &1, nil)
-    end
-  end
-
-
-  @doc """
   Get conversation history from Letta agent
 
   ## Options
@@ -312,6 +286,32 @@ defmodule OriginsSdk.Agent do
 
 
   @doc """
+  A member's conversations holding a flagged message no admin has reviewed, newest first.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def list_flagged_conversations(%ListFlaggedConversations.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, Conversation)
+
+    payload =
+      %{
+        "action" => "list_flagged_conversations",
+        "input" => ListFlaggedConversations.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &Conversation.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
   Run the `list_my_conversations` action.
 
   ## Options
@@ -333,6 +333,33 @@ defmodule OriginsSdk.Agent do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &Conversation.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
+  Mark every open flag in one conversation reviewed, all or none.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def mark_conversation_reviewed(%MarkConversationReviewed.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "mark_conversation_reviewed",
+        "input" => MarkConversationReviewed.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
     end
   end
 

@@ -15,7 +15,7 @@ defmodule OriginsSdk.Apps.App do
     generation_format: String.t() | nil,
     generation_prompt: String.t() | nil,
     generation_status: String.t() | nil,
-    has_letta_agent: boolean() | nil,
+    has_agent_state: boolean() | nil,
     id: String.t(),
     is_published: boolean() | nil,
     markdoc_content: String.t(),
@@ -39,7 +39,7 @@ defmodule OriginsSdk.Apps.App do
     :generation_format,
     :generation_prompt,
     :generation_status,
-    :has_letta_agent,
+    :has_agent_state,
     :id,
     :is_published,
     :markdoc_content,
@@ -52,13 +52,13 @@ defmodule OriginsSdk.Apps.App do
     :updated_at
   ]
 
-  @primitive_fields ~w(cover_image_url created_at generation_error generation_format generation_prompt generation_status has_letta_agent id is_published markdoc_content meta origin_entity_id page_type slug source title updated_at)a
+  @primitive_fields ~w(cover_image_url created_at generation_error generation_format generation_prompt generation_status has_agent_state id is_published markdoc_content meta origin_entity_id page_type slug source title updated_at)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
 
   @doc "Every field as the server's field selector wants it: nested embedded and typed-struct attributes carry their own field lists."
-  def field_tree, do: [{:agent_public, [:name, :starters, :welcome_message]}, {:assessment_graph, [{:edges, [:condition_field, :condition_op, :condition_type, :condition_value, :source, :target]}, {:nodes, [:description, :highlight, :id, :kind, :loading_bars, :max, :min, {:options, [:label, :route, :segment, :value]}, :required, {:sliders, [:high_label, :id, :label, :low_label, :max, :min]}, :subtitle, :summary_items, :title, :type, :weight]}, :start_node]}, {:authoring_document, [:blocks, :config, :errors, :page_type]}, :cover_image_url, :created_at, {:example_briefing, [:date, :generated_at, {:pages, [:body]}, :read_at, :session_id]}, :generation_error, :generation_format, :generation_prompt, :generation_status, :has_letta_agent, :id, :is_published, :markdoc_content, :meta, :origin_entity_id, :page_type, :slug, :source, :title, :updated_at]
+  def field_tree, do: [{:agent_public, [:name, :starters, :welcome_message]}, {:assessment_graph, [{:edges, [:condition_field, :condition_op, :condition_type, :condition_value, :source, :target]}, {:nodes, [:description, :highlight, :id, :kind, :loading_bars, :max, :min, {:options, [:label, :route, :segment, :value]}, :required, {:sliders, [:high_label, :id, :label, :low_label, :max, :min]}, :subtitle, :summary_items, :title, :type, :weight]}, :start_node]}, {:authoring_document, [:blocks, :config, :errors, :page_type]}, :cover_image_url, :created_at, {:example_briefing, [:date, :generated_at, {:pages, [:body]}, :read_at, :session_id]}, :generation_error, :generation_format, :generation_prompt, :generation_status, :has_agent_state, :id, :is_published, :markdoc_content, :meta, :origin_entity_id, :page_type, :slug, :source, :title, :updated_at]
 
   @doc false
   @spec from_json(map() | nil) :: t() | nil
@@ -76,7 +76,7 @@ defmodule OriginsSdk.Apps.App do
       generation_format: map["generation_format"],
       generation_prompt: map["generation_prompt"],
       generation_status: map["generation_status"],
-      has_letta_agent: map["has_letta_agent"],
+      has_agent_state: map["has_agent_state"],
       id: map["id"],
       is_published: map["is_published"],
       markdoc_content: map["markdoc_content"],

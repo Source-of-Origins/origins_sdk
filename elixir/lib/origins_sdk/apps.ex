@@ -83,6 +83,7 @@ defmodule OriginsSdk.Apps do
   alias OriginsSdk.Apps.RegeneratePersonalization
   alias OriginsSdk.Apps.RestoreAppVersion
   alias OriginsSdk.Apps.ResumeEnrollment
+  alias OriginsSdk.Apps.SaveAppContent
   alias OriginsSdk.Apps.SendAppChatMessage
   alias OriginsSdk.Apps.SendTestWebhook
   alias OriginsSdk.Apps.StartEnrollment
@@ -1883,6 +1884,32 @@ defmodule OriginsSdk.Apps do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &CourseEnrollment.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Save an App's content and title.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def save_app_content(%SaveAppContent.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, App)
+
+    payload =
+      %{
+        "action" => "save_app_content",
+        "input" => SaveAppContent.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &App.from_json/1, nil)
     end
   end
 

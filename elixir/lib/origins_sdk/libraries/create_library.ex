@@ -7,7 +7,7 @@ defmodule OriginsSdk.Libraries.CreateLibrary do
     @moduledoc "Required arguments for `create_library`."
 
     @type t :: %__MODULE__{
-          adapter_config: map() | nil,
+          adapter_config: any() | nil,
           adapter_kind: any(),
           adapter_secret: map() | nil,
           auto_ingest_videos: boolean(),

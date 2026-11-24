@@ -5,7 +5,7 @@ defmodule OriginsSdk.Libraries.Library do
   """
 
   @type t :: %__MODULE__{
-    adapter_config: map() | nil,
+    adapter_config: any() | nil,
     adapter_kind: any(),
     auto_ingest_videos: boolean(),
     auto_resync_enabled: boolean(),

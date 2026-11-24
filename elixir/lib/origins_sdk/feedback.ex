@@ -36,7 +36,7 @@ defmodule OriginsSdk.Feedback do
 
 
   @doc """
-  Run the `list_feedback` action.
+  Every tenant's feedback, for the super-admin inbox.
 
   ## Options
     * `:fields` — fields to return (default: `:all` primitive fields).

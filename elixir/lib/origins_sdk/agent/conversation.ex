@@ -8,7 +8,7 @@ defmodule OriginsSdk.Agent.Conversation do
     channel: String.t() | nil,
     closed_at: DateTime.t() | nil,
     created_at: DateTime.t(),
-    has_letta_agent: boolean() | nil,
+    has_agent_state: boolean() | nil,
     id: String.t(),
     is_root: boolean() | nil,
     last_message_at: DateTime.t(),
@@ -30,7 +30,7 @@ defmodule OriginsSdk.Agent.Conversation do
     :channel,
     :closed_at,
     :created_at,
-    :has_letta_agent,
+    :has_agent_state,
     :id,
     :is_root,
     :last_message_at,
@@ -48,13 +48,13 @@ defmodule OriginsSdk.Agent.Conversation do
     :user_name
   ]
 
-  @primitive_fields ~w(channel closed_at created_at has_letta_agent id is_root last_message_at message_count metadata origin_entity_id phone_number root_conversation_id sms_opt_in started_at status updated_at user_email user_id user_name)a
+  @primitive_fields ~w(channel closed_at created_at has_agent_state id is_root last_message_at message_count metadata origin_entity_id phone_number root_conversation_id sms_opt_in started_at status updated_at user_email user_id user_name)a
 
   @doc "All primitive field atoms — used when caller passes `fields: :all`."
   def primitive_fields, do: @primitive_fields
 
   @doc "Every field as the server's field selector wants it: nested embedded and typed-struct attributes carry their own field lists."
-  def field_tree, do: [:channel, :closed_at, :created_at, :has_letta_agent, :id, :is_root, :last_message_at, :message_count, :metadata, :origin_entity_id, :phone_number, :root_conversation_id, :sms_opt_in, :started_at, :status, :updated_at, :user_email, :user_id, :user_name]
+  def field_tree, do: [:channel, :closed_at, :created_at, :has_agent_state, :id, :is_root, :last_message_at, :message_count, :metadata, :origin_entity_id, :phone_number, :root_conversation_id, :sms_opt_in, :started_at, :status, :updated_at, :user_email, :user_id, :user_name]
 
   @doc false
   @spec from_json(map() | nil) :: t() | nil
@@ -65,7 +65,7 @@ defmodule OriginsSdk.Agent.Conversation do
       channel: map["channel"],
       closed_at: OriginsSdk.Internal.decode_datetime(map["closed_at"]),
       created_at: OriginsSdk.Internal.decode_datetime(map["created_at"]),
-      has_letta_agent: map["has_letta_agent"],
+      has_agent_state: map["has_agent_state"],
       id: map["id"],
       is_root: map["is_root"],
       last_message_at: OriginsSdk.Internal.decode_datetime(map["last_message_at"]),

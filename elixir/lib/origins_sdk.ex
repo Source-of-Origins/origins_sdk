@@ -3,6 +3,6 @@ defmodule OriginsSdk do
   Origins SDK for Elixir. Generated — do not edit by hand.
   """
 
-  @version "0.26.7"
+  @version "0.26.8"
   def version, do: @version
 end

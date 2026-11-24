@@ -16,6 +16,8 @@ defmodule OriginsSdk.Libraries do
   alias OriginsSdk.Libraries.DeleteLibraryFile
   alias OriginsSdk.Libraries.Destroy
   alias OriginsSdk.Libraries.DriveConnection
+  alias OriginsSdk.Libraries.FetchYoutubeSingleVideo
+  alias OriginsSdk.Libraries.FetchYoutubeTranscript
   alias OriginsSdk.Libraries.GetById
   alias OriginsSdk.Libraries.GetDriveConnectionForEntity
   alias OriginsSdk.Libraries.GetGithubConnectionForEntity
@@ -46,6 +48,7 @@ defmodule OriginsSdk.Libraries do
   alias OriginsSdk.Libraries.PreviewLibrarySyncFilter
   alias OriginsSdk.Libraries.PullBrandFromLibrary
   alias OriginsSdk.Libraries.RecommendClips
+  alias OriginsSdk.Libraries.ReindexLibraryFile
   alias OriginsSdk.Libraries.RemoveItem
   alias OriginsSdk.Libraries.Reorder
   alias OriginsSdk.Libraries.RequestStaticRenditions
@@ -62,6 +65,7 @@ defmodule OriginsSdk.Libraries do
   alias OriginsSdk.Libraries.UpdateLibrarySyncFilter
   alias OriginsSdk.Libraries.UploadLibraryAsset
   alias OriginsSdk.Libraries.UpsertWebsiteScrapeLibraryFile
+  alias OriginsSdk.Libraries.YoutubeFetchPublicData
 
   @doc """
   Add an item to a playlist. Set item_type to :video with library_file_id, or :library with library_id.
@@ -361,6 +365,60 @@ defmodule OriginsSdk.Libraries do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &Playlist.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Add one YouTube video to the Origin's stored channel videos.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def fetch_youtube_single_video(%FetchYoutubeSingleVideo.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "fetch_youtube_single_video",
+        "input" => FetchYoutubeSingleVideo.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
+  Fetch the captions of a YouTube video.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def fetch_youtube_transcript(%FetchYoutubeTranscript.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "fetch_youtube_transcript",
+        "input" => FetchYoutubeTranscript.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -1022,6 +1080,33 @@ defmodule OriginsSdk.Libraries do
 
 
   @doc """
+  Re-ingest this LibraryFile into the retrieval substrate and return the chunk count.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def reindex_library_file(%ReindexLibraryFile.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "reindex_library_file",
+        "input" => ReindexLibraryFile.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
   Remove an item from a playlist.
 
   `identity` picks the record, as one of:
@@ -1325,7 +1410,7 @@ defmodule OriginsSdk.Libraries do
 
   @doc """
   Set this Library's sync filter (include/exclude path globs) under
-  `adapter_config["filters"]`, leaving the rest of the adapter config
+  `adapter_config.filters`, leaving the rest of the adapter config
   intact. Tightening the filter orphan-removes the now-excluded files on
   the next sync — the SPA shows `Origins.Libraries.FilterImpact` first.
   
@@ -1409,6 +1494,33 @@ defmodule OriginsSdk.Libraries do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &LibraryFile.from_json/1, nil)
+    end
+  end
+
+
+  @doc """
+  Fetch a YouTube channel's public data onto the Origin and provision its YouTube Library.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def youtube_fetch_public_data(%YoutubeFetchPublicData.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "youtube_fetch_public_data",
+        "input" => YoutubeFetchPublicData.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
     end
   end
 

@@ -8,24 +8,30 @@ defmodule OriginsSdk.Accounts do
   alias OriginsSdk.Accounts.ConfirmAnonymousAccount
   alias OriginsSdk.Accounts.ConsentRecord
   alias OriginsSdk.Accounts.CreateAnonymousUser
+  alias OriginsSdk.Accounts.CreateBillingCheckout
+  alias OriginsSdk.Accounts.CreateBillingPortal
   alias OriginsSdk.Accounts.CreateTenantForUser
   alias OriginsSdk.Accounts.CreateTenantStripePrice
   alias OriginsSdk.Accounts.CreateUser
   alias OriginsSdk.Accounts.DeleteOwnAccount
   alias OriginsSdk.Accounts.DeleteWaitlistEntry
+  alias OriginsSdk.Accounts.GetBillingSubscription
   alias OriginsSdk.Accounts.GetCurrentUser
   alias OriginsSdk.Accounts.GetLessonWatchTime
   alias OriginsSdk.Accounts.GetMasterclassFunnel
+  alias OriginsSdk.Accounts.GetMember
   alias OriginsSdk.Accounts.GetTenant
   alias OriginsSdk.Accounts.GetTenantArr
   alias OriginsSdk.Accounts.GetTenantNetRevenue
   alias OriginsSdk.Accounts.GetWaitlistEntryByToken
   alias OriginsSdk.Accounts.ListAllTenants
   alias OriginsSdk.Accounts.ListAllUsers
+  alias OriginsSdk.Accounts.ListBillingPrices
   alias OriginsSdk.Accounts.ListConfirmedUsers
   alias OriginsSdk.Accounts.ListConsentHistory
   alias OriginsSdk.Accounts.ListConsentsForKind
   alias OriginsSdk.Accounts.ListCurrentConsents
+  alias OriginsSdk.Accounts.ListMembers
   alias OriginsSdk.Accounts.ListMyTenantGrants
   alias OriginsSdk.Accounts.ListMyTenants
   alias OriginsSdk.Accounts.ListTenantStripePrices
@@ -118,11 +124,13 @@ defmodule OriginsSdk.Accounts do
   Provision an anonymous, passwordless user, minted a JWT the browser uses to
   act as a real — if anonymous — principal that owns whatever it creates.
   Created in a caller-supplied tenant (pass `tenant:`), so ownership reads on
-  tenant-scoped resources line up. Upserts on email so a repeat visit reuses
-  the row; a later `:register_with_password` with the same email upgrades it
-  in place, carrying its data over. An optional `display_name` lands in
-  `raw_user_meta_data`, where the `user_profiles` trigger reads it; omitting
-  it leaves the stored name alone rather than clearing it.
+  tenant-scoped resources line up. Mints a token only for a new account: an
+  email that already has a guest account fails with an error on `email`,
+  one owned by a registered account fails too, and neither mints a token.
+  A later `:register_with_password` with the same email
+  upgrades the row in place, carrying its data over. An optional
+  `display_name` lands in `raw_user_meta_data`, where the `user_profiles`
+  trigger reads it.
   
 
   ## Options
@@ -146,6 +154,60 @@ defmodule OriginsSdk.Accounts do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &User.from_json/1, &CreateAnonymousUser.Metadata.from_json/1)
+    end
+  end
+
+
+  @doc """
+  A Stripe Checkout URL subscribing this tenant to the given plan Price.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def create_billing_checkout(%CreateBillingCheckout.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "create_billing_checkout",
+        "input" => CreateBillingCheckout.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
+  A Stripe hosted Customer Portal URL: plan changes, cards, receipts.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def create_billing_portal(%CreateBillingPortal.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "create_billing_portal",
+        "input" => CreateBillingPortal.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
     end
   end
 
@@ -296,6 +358,35 @@ defmodule OriginsSdk.Accounts do
 
 
   @doc """
+  The tenant's own subscription to Origins, read live from Stripe. Every
+  field nil when billing is not set up; `status` nil is that signal.
+  
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def get_billing_subscription(%GetBillingSubscription.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "get_billing_subscription",
+        "input" => GetBillingSubscription.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
   Get the current authenticated user
 
   ## Options
@@ -376,6 +467,32 @@ defmodule OriginsSdk.Accounts do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
+  Everyone with a proven address in the acting tenant, filterable the way the Members page filters.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def get_member(%GetMember.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, User)
+
+    payload =
+      %{
+        "action" => "get_member",
+        "input" => GetMember.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &User.from_list/1, nil)
     end
   end
 
@@ -539,6 +656,33 @@ defmodule OriginsSdk.Accounts do
 
 
   @doc """
+  The public Origins plans — Prices on Origins' own Stripe account.
+
+  ## Options
+    * `:fields` — passthrough field list; omitted from the request unless given.
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+
+  The action's declared return is not a single resource, so `data` is
+  returned undecoded (a raw map or list).
+  """
+  def list_billing_prices(%ListBillingPrices.Input{} = input, opts \\ []) do
+    payload =
+      %{
+        "action" => "list_billing_prices",
+        "input" => ListBillingPrices.Input.to_json(input)
+      }
+      |> maybe_put("fields", opts[:fields] && encode_fields(opts[:fields]))
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, & &1, nil)
+    end
+  end
+
+
+  @doc """
   People with a proven address: confirmed and not anonymous.
 
   ## Options
@@ -638,6 +782,32 @@ defmodule OriginsSdk.Accounts do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &ConsentRecord.from_list/1, nil)
+    end
+  end
+
+
+  @doc """
+  Everyone with a proven address in the acting tenant, filterable the way the Members page filters.
+
+  ## Options
+    * `:fields` — fields to return (default: `:all` primitive fields).
+    * `:metadata_fields` — metadata atoms to include.
+    * `:tenant` — tenant identifier.
+    * `:client` — `%OriginsSdk.Client{}` override.
+  """
+  def list_members(%ListMembers.Input{} = input, opts \\ []) do
+    fields = normalize_fields(opts[:fields] || :all, User)
+
+    payload =
+      %{
+        "action" => "list_members",
+        "input" => ListMembers.Input.to_json(input),
+        "fields" => encode_fields(fields)
+      }
+      |> maybe_put("tenant", opts[:tenant])
+
+    with {:ok, body} <- Client.run(payload, opts) do
+      decode_action_response(body, &User.from_list/1, nil)
     end
   end
 

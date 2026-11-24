@@ -11,11 +11,9 @@ defmodule OriginsSdk.Identity do
   alias OriginsSdk.Identity.CreateChatConfig
   alias OriginsSdk.Identity.CreateOriginEntity
   alias OriginsSdk.Identity.CreateOriginEntityMembership
-  alias OriginsSdk.Identity.CreatePromptTool
   alias OriginsSdk.Identity.CreateSetupProgress
   alias OriginsSdk.Identity.DeleteOriginEntity
   alias OriginsSdk.Identity.DeleteOriginEntityMembership
-  alias OriginsSdk.Identity.DeletePromptTool
   alias OriginsSdk.Identity.DiscoverAndExtractProfile
   alias OriginsSdk.Identity.GenerateProfileDescription
   alias OriginsSdk.Identity.GetInheritedMemberships
@@ -34,14 +32,11 @@ defmodule OriginsSdk.Identity do
   alias OriginsSdk.Identity.ListOriginEntitiesForSwitcher
   alias OriginsSdk.Identity.ListOriginEntitiesForUser
   alias OriginsSdk.Identity.ListOriginEntityMemberships
-  alias OriginsSdk.Identity.ListPromptToolsForOrigin
   alias OriginsSdk.Identity.ListPublicOriginEntities
-  alias OriginsSdk.Identity.ListReferablePromptTools
   alias OriginsSdk.Identity.ListSetupProgress
   alias OriginsSdk.Identity.ListUserProfiles
   alias OriginsSdk.Identity.OriginEntity
   alias OriginsSdk.Identity.OriginEntityStaffMembership
-  alias OriginsSdk.Identity.PromptTool
   alias OriginsSdk.Identity.ScrapeWebsiteContent
   alias OriginsSdk.Identity.ScrapedWebsiteContent
   alias OriginsSdk.Identity.SetDefaultAgent
@@ -54,7 +49,6 @@ defmodule OriginsSdk.Identity do
   alias OriginsSdk.Identity.UpdateOriginEntityBrandTheme
   alias OriginsSdk.Identity.UpdateOriginEntityMembership
   alias OriginsSdk.Identity.UpdateOriginEntityProfileConfig
-  alias OriginsSdk.Identity.UpdatePromptTool
   alias OriginsSdk.Identity.UpdateSetupProgress
   alias OriginsSdk.Identity.UpdateUserProfile
   alias OriginsSdk.Identity.UserProfile
@@ -235,32 +229,6 @@ defmodule OriginsSdk.Identity do
 
 
   @doc """
-  Run the `create_prompt_tool` action.
-
-  ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-  """
-  def create_prompt_tool(%CreatePromptTool.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, PromptTool)
-
-    payload =
-      %{
-        "action" => "create_prompt_tool",
-        "input" => CreatePromptTool.Input.to_json(input),
-        "fields" => encode_fields(fields)
-      }
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &PromptTool.from_json/1, nil)
-    end
-  end
-
-
-  @doc """
   Run the `create_setup_progress` action.
 
   ## Options
@@ -342,36 +310,6 @@ defmodule OriginsSdk.Identity do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &OriginEntityStaffMembership.from_json/1, nil)
-    end
-  end
-
-
-  @doc """
-  Run the `delete_prompt_tool` action.
-
-  `identity` picks the record, as one of:
-    * the `id` value
-
-  ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-  """
-  def delete_prompt_tool(identity, %DeletePromptTool.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, PromptTool)
-
-    payload =
-      %{
-        "action" => "delete_prompt_tool",
-        "identity" => identity,
-        "input" => DeletePromptTool.Input.to_json(input),
-        "fields" => encode_fields(fields)
-      }
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &PromptTool.from_json/1, nil)
     end
   end
 
@@ -859,32 +797,6 @@ defmodule OriginsSdk.Identity do
 
 
   @doc """
-  Run the `list_prompt_tools_for_origin` action.
-
-  ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-  """
-  def list_prompt_tools_for_origin(%ListPromptToolsForOrigin.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, PromptTool)
-
-    payload =
-      %{
-        "action" => "list_prompt_tools_for_origin",
-        "input" => ListPromptToolsForOrigin.Input.to_json(input),
-        "fields" => encode_fields(fields)
-      }
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &PromptTool.from_list/1, nil)
-    end
-  end
-
-
-  @doc """
   List only public Origins, across every tenant.
   
   Public means public — a request pinned to tenant A (e.g. a super-admin
@@ -914,32 +826,6 @@ defmodule OriginsSdk.Identity do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &OriginEntity.from_list/1, nil)
-    end
-  end
-
-
-  @doc """
-  The prompt tools an agent of an origin may name: the origin's own and its brand's.
-
-  ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-  """
-  def list_referable_prompt_tools(%ListReferablePromptTools.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, PromptTool)
-
-    payload =
-      %{
-        "action" => "list_referable_prompt_tools",
-        "input" => ListReferablePromptTools.Input.to_json(input),
-        "fields" => encode_fields(fields)
-      }
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &PromptTool.from_list/1, nil)
     end
   end
 
@@ -1287,36 +1173,6 @@ defmodule OriginsSdk.Identity do
 
     with {:ok, body} <- Client.run(payload, opts) do
       decode_action_response(body, &OriginEntity.from_json/1, nil)
-    end
-  end
-
-
-  @doc """
-  Run the `update_prompt_tool` action.
-
-  `identity` picks the record, as one of:
-    * the `id` value
-
-  ## Options
-    * `:fields` — fields to return (default: `:all` primitive fields).
-    * `:metadata_fields` — metadata atoms to include.
-    * `:tenant` — tenant identifier.
-    * `:client` — `%OriginsSdk.Client{}` override.
-  """
-  def update_prompt_tool(identity, %UpdatePromptTool.Input{} = input, opts \\ []) do
-    fields = normalize_fields(opts[:fields] || :all, PromptTool)
-
-    payload =
-      %{
-        "action" => "update_prompt_tool",
-        "identity" => identity,
-        "input" => UpdatePromptTool.Input.to_json(input),
-        "fields" => encode_fields(fields)
-      }
-      |> maybe_put("tenant", opts[:tenant])
-
-    with {:ok, body} <- Client.run(payload, opts) do
-      decode_action_response(body, &PromptTool.from_json/1, nil)
     end
   end
 
